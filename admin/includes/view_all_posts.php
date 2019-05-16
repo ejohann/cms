@@ -9,15 +9,21 @@
          switch($bulk_options)
            {
              case 'published':
-               $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE id = $postIdValue";
+               $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE id = {$postIdValue}";
                $update_to_published = mysqli_query($connection, $query);
                confirm_query($update_to_published);
              break;
                  
              case 'draft':
-               $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE id = $postIdValue";
+               $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE id = {$postIdValue}";
                $update_to_draft = mysqli_query($connection, $query);
                confirm_query($update_to_draft);
+             break;
+                 
+             case 'delete':
+               $query = "DELETE FROM posts WHERE id = $postIdValue";
+               $delete_post = mysqli_query($connection, $query);
+               confirm_query($delete_post);
              break;
            
           }
@@ -40,7 +46,7 @@
   </div>
   <div class="col-xs-4"> 
      <input type="submit" name="submit" class="btn btn-success" value="Apply"></input>
-     <a class="btn btn-primary" href="add_post.php">Add New</a>
+     <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
   </div>  
    <thead>
     <tr>
@@ -54,7 +60,6 @@
       <th>Tags</th>                             
       <th>Comments</th>
       <th>Date</th>
-      <th>Post</th>
       <th>Edit</th>
       <th>Delete</th>
     </tr>
@@ -99,7 +104,6 @@
           echo "<td>{$post_tags}</td>";
           echo "<td>{$post_comment_count}</td>";
           echo "<td>{$post_date}</td>";
-          echo "<td>{$post_content}</td>";
           echo "<td><a href='posts.php?source=edit_post&post_id={$post_id }'>Edit</a></td>";
           echo "<td><a href='posts.php?delete={$post_id }'>Delete</a></td>";
           echo "</tr>";
