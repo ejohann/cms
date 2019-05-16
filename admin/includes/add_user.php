@@ -1,0 +1,97 @@
+
+<?php
+ 
+   if(isset($_POST['create_user']))
+    {      
+       $user_firstname = $_POST['user_firstname'];
+       $user_lastname = $_POST['user_lastname'];
+       $username = $_POST['username'];
+       $user_role = $_POST['user_role'];
+       
+      // $post_image = $_FILES['post_image']['name'];
+    //   $post_image_temp = $_FILES['post_image']['tmp_name'];
+       
+       $user_password = $_POST['user_password'];
+       $user_email = $_POST['user_email'];
+    //   $post_date = date('d-m-y');
+      
+             
+     //  move_uploaded_file($post_image_temp, "../images/$post_image");
+    
+      $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_role) ";
+      $query .= "VALUES('{$username}', '{$user_password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}')";
+
+       $create_user_query = mysqli_query($connection, $query);  
+        confirm_query($create_user_query);
+       
+       echo "User {$username} Created: " . "<a href='users.php'>View Users</a>";
+      }
+    ?>
+  
+
+<form action="" method="post" enctype="multipart/form-data">
+  <div class="form-group">
+      <label for="user_firstname">First Name</label>
+      <input type="text" class="form-control" name="user_firstname"></input>
+  </div>
+
+  
+
+<div class="form-group">
+      <label for="user_lastname">Last Name</label>
+      <input type="text" class="form-control" name="user_lastname"></input>
+  </div>
+
+ <div class="form-group">
+      <label for="username">Username</label>
+      <input type="text" class="form-control" name="username"></input>
+  </div>
+
+<!--<div class="form-group">
+      <label for="post_image">Post Image</label>
+      <input type="file" class="form-control" name="post_image"></input>
+  </div> -->
+ <!--  <select name="user_role" id="">
+  <?php 
+    /* $query = "SELECT * FROM users";
+     $select_users = mysqli_query($connection, $query);
+     confirm_query($select_users);
+
+    while($row = mysqli_fetch_assoc($select_users))
+     {
+        
+        $user_id = $row['id'];
+        $user_role = $row['user_role'];
+       
+        echo "<option value='$user_id'>{$user_role}</option>";
+    }
+  
+ */
+   ?>
+</select> -->
+<div class="form-group">
+<label for="user_role">User Role</label>
+<select name="user_role" id="">
+    <option value="Subscriber">Select Options</option>
+    <option value="Admin">Admin</option>
+     <option value="Subscriber">Subscriber</option>
+ 
+</select>
+</div>
+
+ <div class="form-group">
+      <label for="user_email">Email</label>
+      <input type="email" class="form-control" name="user_email"></input>
+  </div>
+
+ <div class="form-group">
+      <label for="user_password">Password</label>
+      <input type="password" class="form-control" name="user_password"></input>
+  </div>
+
+ 
+  
+ <div class="form-group">
+      <input type="submit" class="btn btn-primary" name="create_user" value="Add User"></input>
+  </div>
+</form>
