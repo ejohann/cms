@@ -1,7 +1,7 @@
 <form action="" method="post">
 
  <table class="table table-bordered table-hover">
-  <div id="bulkOptionContainer" class="cols-xs-4">
+  <div id="bulkOptionContainer" class="col-xs-4">
    <select class="form-control" name="" id="">
        <option value="">Select Options</option>
        <option value="">Publish</option>
@@ -15,6 +15,7 @@
   </div>  
    <thead>
     <tr>
+      <th><input id="selectAllBoxes" type="checkbox"></th>
       <th>ID</th>
       <th>Author</th>
       <th>Title</th>
@@ -46,6 +47,12 @@
           $post_comment_count = $row['post_comment_count'];
           $post_date = $row['post_date'];
           echo "<tr>";
+          
+          ?>
+          
+          <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></input></td>
+          
+          <?php
           echo "<td>{$post_id}</td>";
           echo "<td>{$post_author}</td>";
           echo "<td>{$post_title}</td>";
