@@ -36,7 +36,7 @@
 <form action="" method="post">
 
  <table class="table table-bordered table-hover">
-  <div id="bulkOptionContainer" class="col-xs-4">
+  <div id="bulkOptionContainer" class="col-xs-4" style="padding: 0px;">
    <select class="form-control" name="bulk_options" id="">
        <option value="">Select Options</option>
        <option value="published">Publish</option>
