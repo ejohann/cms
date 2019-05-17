@@ -8,22 +8,32 @@
 
   if(isset($_POST['submit']))
    {
-     $username = mysqli_real_escape_string($connection, $_POST['username']);
-     $user_email = mysqli_real_escape_string($connection, $_POST['email']);
-     $user_password = mysqli_real_escape_string($connection, $_POST['password']);
-     $user_role = "subscriber";
-     $query = "SELECT random_salt FROM users";
-     $select_random_salt_query = mysqli_query($connection, $query);
-     if(!$select_random_salt_query)
-      { 
-         die("QUERY FAILED" . mysqli_error($connection));
-      }
-     $row = mysqli_fetch_array($select_random_salt_query);
-     $random_salt = $row['random_salt'];
+     $username = $_POST['username'];
+     $user_email = $_POST['email'];
+     $user_password = $_POST['password'];
       
-     $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
-     $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";
-    
+     if(!empty($username) && !empty($user_email) && !empty($user_password))
+       {
+         $username = mysqli_real_escape_string($connection, $_POST['username']);
+         $user_email = mysqli_real_escape_string($connection, $_POST['email']);
+         $user_password = mysqli_real_escape_string($connection, $_POST['password']);
+         $user_role = "subscriber";
+         $query = "SELECT random_salt FROM users";
+         $select_random_salt_query = mysqli_query($connection, $query);
+         if(!$select_random_salt_query)
+          { 
+            die("QUERY FAILED" . mysqli_error($connection));
+          }
+         $row = mysqli_fetch_array($select_random_salt_query);
+         $random_salt = $row['random_salt'];
+      
+         $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
+         $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";
+       }
+      else
+       {
+         echo "<script>alert('Fields cannot be empty')</script>";   
+       }
    }
 
 ?>                        
