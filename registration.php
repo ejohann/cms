@@ -11,16 +11,19 @@
      $username = mysqli_real_escape_string($connection, $_POST['username']);
      $user_email = mysqli_real_escape_string($connection, $_POST['email']);
      $user_password = mysqli_real_escape_string($connection, $_POST['password']);
+     $user_role = "subscriber";
      $query = "SELECT random_salt FROM users";
      $select_random_salt_query = mysqli_query($connection, $query);
      if(!$select_random_salt_query)
       { 
          die("QUERY FAILED" . mysqli_error($connection));
       }
-     while($row = mysqli_fetch_assoc($select_random_salt_query))
-      {
-        echo $random_salt = $row['random_salt'];
-     }
+     $row = mysqli_fetch_array($select_random_salt_query);
+     $random_salt = $row['random_salt'];
+      
+     $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
+     $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";
+    
    }
 
 ?>                        
