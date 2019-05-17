@@ -91,7 +91,7 @@
   </thead>
   <tbody>
     <?php 
-      $query = "SELECT * FROM posts";
+      $query = "SELECT * FROM posts ORDER BY id DESC";
       $select_all_posts = mysqli_query($connection, $query);
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
