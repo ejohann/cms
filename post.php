@@ -53,17 +53,24 @@
           $comment_date = date('y-m-d');
           $the_post_id = $_GET['post_id'];
           $comment_status = "unapproved";
-                      
-          $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-          $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', '{$comment_status}', now())";
-          $create_comment_query = mysqli_query($connection, $query);
-          if(!$create_comment_query)
+          
+          if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content))
            {
-             die('QUERY FAILED' . mysqli_error($connection));
+              $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
+              $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', '{$comment_status}', now())";
+              $create_comment_query = mysqli_query($connection, $query);
+              if(!$create_comment_query)
+               {
+                 die('QUERY FAILED' . mysqli_error($connection));
+               }
+              $query_comment_count = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+              $query_comment_count .=  "WHERE id = $the_post_id ";
+              $update_comment_count_query = mysqli_query($connection, $query_comment_count);
            }
-          $query_comment_count = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-          $query_comment_count .=  "WHERE id = $the_post_id ";
-          $update_comment_count_query = mysqli_query($connection, $query_comment_count);
+          else
+           {
+             echo "<script>alert('Fields Cannot be Empty!')</script>";   
+           }
         }
     ?>                  
                 
