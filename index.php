@@ -80,7 +80,15 @@
           
           for($i=1; $i<=$post_pages; $i++)
            {
-             echo "<li><a href='index.php?page={$i}'>{$i}</li>";   
+              if($i == $page)
+               {
+                  echo "<li class='active_link'><a href='index.php?page={$i}'>{$i}</li>"; 
+              }
+              else
+              {
+                 echo "<li><a href='index.php?page={$i}'>{$i}</li>";  
+              }
+               
            }
           ?>
       </ul>
