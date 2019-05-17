@@ -29,8 +29,6 @@ $(document).ready(function(){
     // Admin Loader
     var div_box = "<div id='load_screen'><div id='loading'></div></div>";
     
-    //$("body").prepend(div_box);
-    
     $('#load-screen').delay(700).fadeOut(600, function()
      {
        $(this).remove(); 

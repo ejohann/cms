@@ -19,7 +19,7 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = $_GET['post_id'];
-          }
+          
         
         $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
         $select_post_by_id = mysqli_query($connection, $query);
@@ -124,6 +124,13 @@
       </div>     
     <?php
         }
+    
+       }
+      else
+      {
+          header("Location: index.php");
+      }
+    
     ?>                
 
     <!-- Pager -->
