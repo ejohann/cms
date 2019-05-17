@@ -19,7 +19,13 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = $_GET['post_id'];
-          
+            $query_views = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
+            $update_post_views_query = mysqli_query($connection, $query_views);
+            if(!$update_post_views_query)
+              {
+                die("QUERY FAILED: " . mysqli_error($connection));  
+              }
+            
         
         $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
         $select_post_by_id = mysqli_query($connection, $query);
