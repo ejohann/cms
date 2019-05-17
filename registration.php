@@ -26,6 +26,8 @@
           }
          $row = mysqli_fetch_array($select_random_salt_query);
          $random_salt = $row['random_salt'];
+         
+         $user_password = crypt($password, $random_salt);
       
          $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
          $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";
