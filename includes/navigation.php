@@ -40,7 +40,7 @@
            }
           else
           {
-              
+             echo " <li><a href='registration.php'>User Registration</a></li>";   
           }
         ?>
                
