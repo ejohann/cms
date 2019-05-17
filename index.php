@@ -24,12 +24,28 @@
            die("QUERY FAILED: " . mysqli_error($connection));
          }
         $post_count = mysqli_num_rows($find_count_query);
-        
         $post_per_page = 5;
-        
         $post_pages = ceil($post_count / $post_per_page);
         
-        $query = "SELECT * FROM posts";
+        if(isset($_GET['page']))
+         {
+           $page = $_GET['page'];   
+         }
+        else
+         {
+           $page = "";   
+         }
+        
+         if($page == "" || $page == 1)
+          {
+            $page_1 = 0;   
+          }
+         else
+          {
+            $page_1 = ($page * $post_per_page) - $post_per_page;     
+          }
+        
+        $query = "SELECT * FROM posts LIMIT $page_1, $post_per_page";
         $select_all_posts = mysqli_query($connection, $query);
         while($row = mysqli_fetch_assoc($select_all_posts))
           {
