@@ -31,6 +31,7 @@
             $the_user_email = $row['user_email'];
             $the_user_role = $row['user_role'];
          }
+           $password = crypt($password, $the_user_password);
           
           if(($username !== $the_username) && ($password !== $the_user_password))
            {
