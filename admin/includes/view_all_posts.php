@@ -127,14 +127,14 @@
             }
           echo "<td>{$category_title}</td>";
           echo "<td>{$post_status}</td>";
-          echo "<td><img width='100' src='../images/{$post_image }' alt='image'></img></td>";
+          echo "<td><img width='100' src='../images/{$post_image}' alt='image'></img></td>";
           echo "<td>{$post_tags}</td>";
           echo "<td>{$post_comment_count}</td>";
-          echo "<td>{$post_views_count}</td>";
+          echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
-          echo "<td><a href='../post.php?post_id={$post_id }'>View</a></td>";
-          echo "<td><a href='posts.php?source=edit_post&post_id={$post_id }'>Edit</a></td>";
-          echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this post?'); \" href='posts.php?delete={$post_id }'>Delete</a></td>";
+          echo "<td><a href='../post.php?post_id={$post_id}'>View</a></td>";
+          echo "<td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
+          echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this post?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";
           echo "</tr>";
         }
     ?>                  
@@ -150,6 +150,16 @@
       $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
       $delete_post_query = mysqli_query($connection, $query);
       confirm_query($delete_post_query);
+      header("Location: posts.php");
+    }
+
+   if(isset($_GET['reset']))
+    {
+      $the_post_id = $_GET['reset'];
+      $reset_value = 0;
+      $query = "UPDATE posts SET post_views_count = $reset_value WHERE id = {$the_post_id} ";
+      $reset_post_query = mysqli_query($connection, $query);
+      confirm_query($reset_post_query);
       header("Location: posts.php");
     }
 ?>    
