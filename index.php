@@ -23,8 +23,11 @@
          {
            die("QUERY FAILED: " . mysqli_error($connection));
          }
-    echo $post_count = mysqli_num_rows($find_count_query);
+        $post_count = mysqli_num_rows($find_count_query);
         
+        $post_per_page = 5;
+        
+        $post_pages = ceil($post_count / $post_per_page);
         
         $query = "SELECT * FROM posts";
         $select_all_posts = mysqli_query($connection, $query);
@@ -56,8 +59,14 @@
 
       <!-- Pager -->
       <ul class="pager">
-        <li class="previous"><a href="#">&larr; Older</a></li>
-        <li class="next"><a href="#">Newer &rarr;</a></li>
+       
+        <?php
+          
+          for($i=1; $i<=$post_pages; $i++)
+           {
+             echo "<li><a href='index.php?page={$i}'>{$i}</li>";   
+           }
+          ?>
       </ul>
     </div>
 
