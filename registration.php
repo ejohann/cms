@@ -17,7 +17,7 @@
          $username = mysqli_real_escape_string($connection, $_POST['username']);
          $user_email = mysqli_real_escape_string($connection, $_POST['email']);
          $user_password = mysqli_real_escape_string($connection, $_POST['password']);
-         $user_role = "subscriber";
+         $user_role = "Subscriber";
          $query = "SELECT random_salt FROM users";
          $select_random_salt_query = mysqli_query($connection, $query);
          if(!$select_random_salt_query)
