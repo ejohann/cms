@@ -25,6 +25,29 @@
                $delete_post = mysqli_query($connection, $query);
                confirm_query($delete_post);
              break;
+                 
+            case 'clone':
+               $query = "SELECT * FROM posts WHERE id = $postIdValue";
+               $select_post_by_id = mysqli_query($connection, $query);
+               confirm_query($select_post_by_id);
+               while($row_post = mysqli_fetch_array($select_post_by_id))
+                 {
+                   $post_title = $row_post['post_title'];
+                   $post_category_id = $row_post['post_category_id'];
+                   $post_date = $row_post['post_date'];
+                   $post_author = $row_post['post_author'];
+                   $post_status = $row_post['post_status'];
+                   $post_image = $row_post['post_image'];
+                   $post_tags = $row_post['post_tags'];
+                   $post_content = $row_post['post_content'];
+                   $post_comment_count = 0;
+                 }
+                $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
+                $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', '{$post_date}', '{$post_image}', '{$post_content}', '{$post_tags}', $post_comment_count, '{$post_status}' )";
+                $copy_query = mysqli_query($connection, $query);
+                 confirm_query($copy_query);
+                
+             break;
            
           }
           
