@@ -16,6 +16,16 @@
     <!-- Blog Entries Column -->
     <div class="col-md-8">
       <?php
+        
+        $post_count_query = "SELECT * FROM posts";
+        $find_count_query = mysqli_query($connection, $post_count_query);
+        if(!$find_count_query)
+         {
+           die("QUERY FAILED: " . mysqli_error($connection));
+         }
+    echo $post_count = mysqli_num_rows($find_count_query);
+        
+        
         $query = "SELECT * FROM posts";
         $select_all_posts = mysqli_query($connection, $query);
         while($row = mysqli_fetch_assoc($select_all_posts))
