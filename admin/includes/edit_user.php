@@ -14,6 +14,8 @@
          $the_user_email = $row['user_email'];
          $the_user_image = $row['user_image'];
          $the_user_role = $row['user_role'];
+         $the_random_salt = $row['random_salt'];
+         $the_user_password = crypt($the_user_password, $the_random_salt);
        }
     }
       
@@ -28,6 +30,18 @@
       $user_password = $_POST['user_password'];
       $user_email = $_POST['user_email'];  
       //  move_uploaded_file($post_image_temp, "../images/$post_image");
+       
+       $query_salt = "SELECT random_salt FROM users";
+       $select_random_salt_query = mysqli_query($connection, $query_salt);
+       if(!$select_random_salt_query)       
+         {
+           die("QUERY FAILED: " . mysqli_error($connection));  
+         }
+       $row = mysqli_fetch_array($select_random_salt_query);
+       $random_salt = $row['random_salt'];
+       
+       $user_password = crypt($user_password, $random_salt);
+       
       $query = "UPDATE users SET username = '{$username}' , user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
       $update_user_query = mysqli_query($connection, $query);  
       confirm_query($update_user_query);
