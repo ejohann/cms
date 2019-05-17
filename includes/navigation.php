@@ -23,13 +23,14 @@
               echo "<li><a href='category.php?category_id={$category_id}'>{$category_title}</a></li>";
             }
         ?>
-        <li><a href='admin'>Admin</a></li>
+       
         <?php  
           session_start();   
           if(isset($_SESSION['user_role']))
            {
               if($_SESSION['user_role'] == 'Admin')
                {
+                 echo " <li><a href='admin'>Admin</a></li>";
                  if(isset($_GET['post_id']))
                    {
                      $post_id = $_GET['post_id'];
@@ -37,6 +38,10 @@
                    }
               }
            }
+          else
+          {
+              
+          }
         ?>
                
       </ul>
