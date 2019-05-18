@@ -3,14 +3,22 @@
  
 function users_online()
  {
-  $minute = 60;
+    if(isset($_GET['online_users']))
+    {
+         global $connection;
+        
+        if(!$connection)
+         {
+            session_start();
+            include("../includes/db.php");
+             $minute = 60;
   $hour = 60;
   $day = 24;
   $session_id = session_id();
   $session_time = time();
   $time_out_in_seconds = $minute;
   $time_out = $session_time - $time_out_in_seconds;
-  global $connection;
+ 
   $query = "SELECT * FROM users_online WHERE session = '{$session_id}' ";
   $online_users_query = mysqli_query($connection, $query);
   confirm_query($online_users_query);
@@ -34,10 +42,12 @@ function users_online()
  confirm_query($users_online_query);
  
   $users_online_count = mysqli_num_rows($users_online_query);
-  return $users_online_count;
+  echo $users_online_count;
+        }
+    }
 }
 
-
+users_online();
 
   function confirm_query($query_result)
    {

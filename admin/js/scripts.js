@@ -38,3 +38,18 @@ $(document).ready(function(){
     
 }); 
 
+
+function loadUsersOnline()
+ {
+     
+     $.get("functions.php?online_users=result", function(data)
+      {
+         $(".users_online").text(data);
+     });
+ }
+
+setInterval(function()
+           {
+    loadUsersOnline();
+}, 500);
+
