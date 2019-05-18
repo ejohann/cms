@@ -18,6 +18,11 @@
          $user_email = mysqli_real_escape_string($connection, $_POST['email']);
          $user_password = mysqli_real_escape_string($connection, $_POST['password']);
          $user_role = "Subscriber";
+         
+         
+         $user_password = password_hash('{$user_password}', PASSWORD_BCRYPT, array('cost' => 10));
+
+        /* 
          $query = "SELECT random_salt FROM users";
          $select_random_salt_query = mysqli_query($connection, $query);
          if(!$select_random_salt_query)
@@ -28,7 +33,7 @@
          $random_salt = $row['random_salt'];
          
          $user_password = crypt($user_password, $random_salt);
-      
+      */
          $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
          $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";
          
