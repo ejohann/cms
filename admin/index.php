@@ -1,41 +1,5 @@
 <?php include "includes/admin_header.php"; ?>
 
-<?php
-  $minute = 60;
-  $hour = 60;
-  $day = 24;
-  $session_id = session_id();
-  $session_time = time();
-  $time_out_in_seconds = $minute;
-  $time_out = $session_time - $time_out_in_seconds;
- 
-  $query = "SELECT * FROM users_online WHERE session = '{$session_id}' ";
-  $online_users_query = mysqli_query($connection, $query);
-  confirm_query($online_users_query);
-  $session_count = mysqli_num_rows($online_users_query);
-
-  if($session_count == NULL)
-    {
-      $query = "INSERT INTO users_online(session, time) VALUES ('{$session_id}', '{$session_time}')";
-      $add_session_query = mysqli_query($connection, $query);
-      confirm_query($add_session_query);
-   }
- else
-  {
-      $query = "UPDATE users_online SET time = '{$session_time}' WHERE session = '{$session_id}' ";
-      $update_session_query = mysqli_query($connection, $query);
-      confirm_query($update_session_query);
-  }
-  
- $query = "SELECT * FROM users_online WHERE time > '{$time_out}'";
- $users_online_query = mysqli_query($connection, $query);
- confirm_query($users_online_query);
- 
-$users_online_count = mysqli_num_rows($users_online_query);
- 
-
-?>
-
 <div id="wrapper">
         
   <!-- Navigation -->
@@ -48,7 +12,6 @@ $users_online_count = mysqli_num_rows($users_online_query);
       <div class="row">
         <div class="col-lg-12">
           <h1 class="page-header">Welcome to Admin Dashboard <small><?php echo $_SESSION['username']; ?></small></h1>
-          <?php echo $users_online_count; ?>
         </div>
       </div> <!-- /.row -->
                        

@@ -1,7 +1,44 @@
 <?php
   
  
+function users_online()
+ {
+  $minute = 60;
+  $hour = 60;
+  $day = 24;
+  $session_id = session_id();
+  $session_time = time();
+  $time_out_in_seconds = $minute;
+  $time_out = $session_time - $time_out_in_seconds;
+ 
+  $query = "SELECT * FROM users_online WHERE session = '{$session_id}' ";
+  $online_users_query = mysqli_query($connection, $query);
+  confirm_query($online_users_query);
+  $session_count = mysqli_num_rows($online_users_query);
+
+  if($session_count == NULL)
+    {
+      $query = "INSERT INTO users_online(session, time) VALUES ('{$session_id}', '{$session_time}')";
+      $add_session_query = mysqli_query($connection, $query);
+      confirm_query($add_session_query);
+   }
+ else
+  {
+      $query = "UPDATE users_online SET time = '{$session_time}' WHERE session = '{$session_id}' ";
+      $update_session_query = mysqli_query($connection, $query);
+      confirm_query($update_session_query);
+  }
   
+ $query = "SELECT * FROM users_online WHERE time > '{$time_out}'";
+ $users_online_query = mysqli_query($connection, $query);
+ confirm_query($users_online_query);
+ 
+  $users_online_count = mysqli_num_rows($users_online_query);
+  return $users_online_count;
+}
+
+
+
   function confirm_query($query_result)
    {
      global $connection;
@@ -26,7 +63,8 @@ function insert_categories()
          else
           {
             $query = "INSERT INTO categories(category_title) ";
-            $query .= "VALUE('{$category_title}')";                         $create_category_query = mysqli_query($connection, $query);
+            $query .= "VALUE('{$category_title}')";                         
+             $create_category_query = mysqli_query($connection, $query);
             if(!$create_category_query)
              {
               die("Category Query Failed " . mysqli_error($connection));   
