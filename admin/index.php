@@ -2,6 +2,8 @@
 
 <?php
   $minute = 60;
+  $hour = 60;
+  $day = 24;
   $session_id = session_id();
   $session_time = time();
   $time_out_in_seconds = $minute;
@@ -25,7 +27,7 @@
       confirm_query($update_session_query);
   }
   
- $query = "SELECT * FROM users_online WHERE time < '{$time_out}'";
+ $query = "SELECT * FROM users_online WHERE time > '{$time_out}'";
  $users_online_query = mysqli_query($connection, $query);
  confirm_query($users_online_query);
  
