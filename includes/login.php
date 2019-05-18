@@ -31,17 +31,8 @@
             $the_user_email = $row['user_email'];
             $the_user_role = $row['user_role'];
          }
-           $password = crypt($password, $the_user_password);
-          
-          if(($username !== $the_username) && ($password !== $the_user_password))
-           {
-              header("Location: ../index.php");
-          }
-          else if(($username == $the_username) && ($password !== $the_user_password))
-           {
-              header("Location: ../index.php");
-          }
-         else if(($username === $the_username) && ($password === $the_user_password))
+                  
+        if(password_verify($password, $the_user_password))
            {
              // user login successful
              $_SESSION['username'] = $the_username;
