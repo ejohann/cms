@@ -10,7 +10,7 @@ function users_online()
   $session_time = time();
   $time_out_in_seconds = $minute;
   $time_out = $session_time - $time_out_in_seconds;
- 
+  global $connection;
   $query = "SELECT * FROM users_online WHERE session = '{$session_id}' ";
   $online_users_query = mysqli_query($connection, $query);
   confirm_query($online_users_query);
