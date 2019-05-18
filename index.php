@@ -82,11 +82,11 @@
            {
               if($i == $page)
                {
-                  echo "<li class='active_link'><a href='index.php?page={$i}'>{$i}</li>"; 
+                  echo "<li class='active_link'><a href='index.php?page={$i}'>{$i}</a></li>"; 
               }
               else
               {
-                 echo "<li><a href='index.php?page={$i}'>{$i}</li>";  
+                 echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";  
               }
                
            }
