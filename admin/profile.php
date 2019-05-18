@@ -1,5 +1,15 @@
 <?php include "includes/admin_header.php"; ?>
-    
+ 
+ <div id="wrapper">
+
+        <!-- Navigation -->
+        
+          <?php include "includes/admin_navigation.php"; ?>           
+                                            
+        <div id="page-wrapper">    
+       
+          
+                
     <?php
 
     if(!isset($_SESSION['username']))
@@ -28,35 +38,47 @@
     
     <?php
 
-       if(isset($_POST['update_profile']))
+  if(isset($_POST['update_profile']))
     {      
        $user_firstname = $_POST['user_firstname'];
        $user_lastname = $_POST['user_lastname'];
        $this_username = $_POST['username'];
-       $user_role = $_POST['user_role'];     
+      // $user_role = $_POST['user_role'];     
       // $post_image = $_FILES['post_image']['name'];
     //   $post_image_temp = $_FILES['post_image']['tmp_name'];
        $user_password = $_POST['user_password'];
        $user_email = $_POST['user_email'];
     //   $post_date = date('d-m-y');   
      //  move_uploaded_file($post_image_temp, "../images/$post_image");
-      $query = "UPDATE users SET username = '{$this_username}' , user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE username = '{$username}' ";
+    
+      
+      if(!empty($user_password))
+        {
+            
+            if($the_user_password != $user_password)
+             {
+               $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
+                 $query = "UPDATE users SET username = '{$username}', user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' WHERE id = $the_user_id ";
+                 $update_user_query = mysqli_query($connection, $query);  
+                 confirm_query($update_user_query);  
+               echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
+             }
+            
+        }
+       else{
+      $query = "UPDATE users SET username = '{$this_username}',  user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' WHERE username = '{$username}' ";
  
 
        $update_profile_query = mysqli_query($connection, $query);  
         confirm_query($update_profile_query);
+         echo "User {$username} Profile Updated: " . "<a href='users.php'>View Users</a>";
+       }
       }
 
     ?>
     
 
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        
-          <?php include "includes/admin_navigation.php"; ?>           
-                                            
-        <div id="page-wrapper">
+   
             <div class="container-fluid">
                 <!-- Page Heading -->
                 <div class="row">
@@ -86,28 +108,7 @@
       <input type="text" value="<?php echo  $the_username; ?>" class="form-control" name="username"></input>
   </div>
 
- 
-<div class="form-group">
-<label for="user_role">User Role</label>
-<select name="user_role" id="">
-    <option value="<?php echo  $the_user_role; ?>"><?php echo  $the_user_role; ?></option>
-    
-    <?php
-      if($the_user_role == 'Admin')
-       {   
-          echo " <option value='Subscriber'>Subscriber</option>";
-       }
-     else
-      {
-         echo "<option value='Admin'>Admin</option>";
-      }
-    
-    ?>
-  
-    
- 
-</select>
-</div>
+
 
  <div class="form-group">
       <label for="user_email">Email</label>
@@ -116,7 +117,7 @@
 
  <div class="form-group">
       <label for="user_password">Password</label>
-      <input type="password" class="form-control" value="<?php echo $the_user_password; ?>" name="user_password"></input>
+      <input autocomplete="off" type="password" class="form-control" value="" name="user_password"></input>
   </div>
 
  
