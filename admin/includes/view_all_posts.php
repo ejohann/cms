@@ -133,11 +133,12 @@
           $query_comment = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
           $select_comment_by_post_id = mysqli_query($connection, $query_comment);
           confirm_query($select_comment_by_post_id);
+          $row = mysqli_fetch_array($select_comment_by_post_id);
+          $comment_id = $row['id'];
           
-          $post_comment_count = mysqli_num_rows($select_comment_by_post_id);
+          $post_comment_count = mysqli_num_rows($select_comment_by_post_id);   
           
-          
-          echo "<td>{$post_comment_count}</td>";
+          echo "<td><a href='post_comments.php?comment_post_id={$post_id}'>{$post_comment_count}</a></td>";
           
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
