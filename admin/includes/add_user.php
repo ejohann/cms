@@ -14,7 +14,7 @@
        $user_password = $_POST['user_password'];
        $user_email = $_POST['user_email'];
     //   $post_date = date('d-m-y');
-      
+       $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
              
      //  move_uploaded_file($post_image_temp, "../images/$post_image");
     
