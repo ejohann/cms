@@ -155,21 +155,50 @@
 
 <?php
   if(isset($_GET['delete']))
-    {
+    { 
+      if(isset($_SESSION['user_role']))
+       {
+        if($_SESSION['user_role'] == "Admin")
+          {
       $the_post_id = $_GET['delete'];
       $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
       $delete_post_query = mysqli_query($connection, $query);
       confirm_query($delete_post_query);
       header("Location: posts.php");
+              }
+        else
+          {    
+           header("Location: index.php");
+          }
+        }
+      else
+        {
+          header("Location: ../index.php");
+      }
     }
 
+
    if(isset($_GET['reset']))
-    {
+    { 
+        if(isset($_SESSION['user_role']))
+       {
+        if($_SESSION['user_role'] == "Admin")
+          {
       $the_post_id = $_GET['reset'];
       $reset_value = 0;
       $query = "UPDATE posts SET post_views_count = $reset_value WHERE id = {$the_post_id} ";
       $reset_post_query = mysqli_query($connection, $query);
       confirm_query($reset_post_query);
       header("Location: posts.php");
+                       }
+        else
+          {    
+           header("Location: index.php");
+          }
+        }
+      else
+        {
+          header("Location: ../index.php");
+      }
     }
 ?>    
