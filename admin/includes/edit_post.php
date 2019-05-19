@@ -80,10 +80,33 @@
       ?>     
     </select>
   </div>
-  <div class="form-group">
+  
+   
+    <div class="form-group">
     <label for="post_author">Post Author</label>
-    <input type="text" value="<?php echo $post_author; ?>" class="form-control" name="post_author"></input>
+    <select name="post_author" id="post_author">
+      <option value="<?php echo $post_author; ?>">Select Author</option>
+      <?php
+        $query = "SELECT * FROM users";
+        $select_author = mysqli_query($connection, $query);
+        confirm_query($select_author);
+        while($row = mysqli_fetch_assoc($select_author))
+          {
+            $username = $row['username'];
+            $user_id = $row['id'];
+            echo "<option value='{$username}'>{$username}</option>";
+          }
+      ?>     
+    </select>
   </div>
+   
+   
+   <!--<div class="form-group">
+    <label for="post_author">Post Author</label>
+    <input type="text" value="" class="form-control" name="post_author"></input>
+  </div>-->
+  
+  
   <div class="form-group">
     <label for="post_status">Post Status</label>
     <select name="post_status" id="">
