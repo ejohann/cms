@@ -1,6 +1,13 @@
 <?php
   
  
+function escape($string)
+ {
+    global $connection;
+    return mysqli_real_escape_string($connection, trim(strip_tags($string)));
+ }
+
+
 function users_online()
  {
     if(isset($_GET['online_users']))
