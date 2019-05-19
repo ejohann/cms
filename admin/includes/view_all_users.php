@@ -56,38 +56,72 @@
             <?php
                 if(isset($_GET['delete']))
                  {
-                   $the_user_id = $_GET['delete'];
-                   $query = "DELETE FROM users WHERE id = {$the_user_id} ";
-                   $delete_user_query = mysqli_query($connection, $query);
-                    
-                   confirm_query($delete_user_query);
-                   
-                header("Location: users.php");
-                    
+                   if(isset($_SESSION['user_role']))
+                     {
+                      if($_SESSION['user_role'] == "Admin")
+                        {
+                          $the_user_id = $_GET['delete'];
+                          $query = "DELETE FROM users WHERE id = {$the_user_id} ";
+                          $delete_user_query = mysqli_query($connection, $query);
+                         confirm_query($delete_user_query);
+                          header("Location: users.php");
+                       }
+                      else
+                       {    
+                         header("Location: index.php");
+                       }
+                    }
+                  else
+                    {
+                        header("Location: ../index.php");
+                    }
                  }
 
+
                 if(isset($_GET['downgrade']))
-                 {
-                   $the_user_id = $_GET['downgrade'];
-                   $query = "UPDATE users SET user_role = 'Subscriber' WHERE id = $the_user_id ";
-                   $downgrade_user_query = mysqli_query($connection, $query);
-                    
-                   confirm_query($downgrade_user_query);
-                   
-                header("Location: users.php");
-                    
+                 { 
+                   if(isset($_SESSION['user_role']))
+                     {
+                       if($_SESSION['user_role'] == "Admin")
+                        {
+                          $the_user_id = $_GET['downgrade'];
+                          $query = "UPDATE users SET user_role = 'Subscriber' WHERE id = $the_user_id ";
+                          $downgrade_user_query = mysqli_query($connection, $query);
+                          confirm_query($downgrade_user_query);
+                          header("Location: users.php");
+                        }
+                      else
+                       {    
+                         header("Location: index.php");
+                       }
+                    }
+                  else
+                    {
+                        header("Location: ../index.php");
+                    }
                  }
 
                 if(isset($_GET['upgrade']))
                  {
+                     if(isset($_SESSION['user_role']))
+                     {
+                       if($_SESSION['user_role'] == "Admin")
+                        {
                    $the_user_id = $_GET['upgrade'];
                    $query = "UPDATE users SET user_role = 'Admin' WHERE id = $the_user_id ";
                    $upgrade_user_query = mysqli_query($connection, $query);
-                    
                    confirm_query($upgrade_user_query);
-                   
-                header("Location: users.php");
-                    
+                   header("Location: users.php"); 
+                            }
+                      else
+                       {    
+                         header("Location: index.php");
+                       }
+                    }
+                  else
+                    {
+                        header("Location: ../index.php");
+                    }
                  }
                    
                    
