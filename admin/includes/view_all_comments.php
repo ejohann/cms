@@ -9,9 +9,8 @@
   }
 
 ?>
- 
 
- <table class="table table-bordered table-hover">
+<table class="table table-bordered table-hover">
   <thead>
     <tr>
       <th>ID</th>
@@ -66,29 +65,71 @@
 <?php
   if(isset($_GET['delete']))
    {
-     $the_comment_id = $_GET['delete'];
-     $query = "DELETE FROM comments WHERE id = {$the_comment_id} ";
-     $delete_comment_query = mysqli_query($connection, $query);
-     confirm_query($delete_comment_query);
-     header("Location: comments.php");
+     if(isset($_SESSION['user_role']))
+       {
+         if($_SESSION['user_role'] == "Admin")
+           {
+             $the_comment_id = $_GET['delete'];
+             $query = "DELETE FROM comments WHERE id = {$the_comment_id} ";
+             $delete_comment_query = mysqli_query($connection, $query);
+             confirm_query($delete_comment_query);
+             header("Location: comments.php");
+           }
+          else
+           {    
+             header("Location: index.php");
+           }
+       }
+      else
+        {
+          header("Location: ../index.php");
+        }
    }
 
   if(isset($_GET['unapprove']))
     {
-      $the_comment_id = $_GET['unapprove'];
-      $query = "UPDATE comments SET comment_status = 'unapproved' WHERE id = $the_comment_id ";
-      $unapprove_comment_query = mysqli_query($connection, $query);
-      confirm_query($unapprove_comment_query);
-      header("Location: comments.php");
+      if(isset($_SESSION['user_role']))
+        {
+          if($_SESSION['user_role'] == "Admin")
+            {
+               $the_comment_id = $_GET['unapprove'];
+               $query = "UPDATE comments SET comment_status = 'unapproved' WHERE id = $the_comment_id ";
+               $unapprove_comment_query = mysqli_query($connection, $query);
+               confirm_query($unapprove_comment_query);
+               header("Location: comments.php");
+            }
+          else
+            {    
+               header("Location: index.php");
+            }
+        }
+      else
+        {
+          header("Location: ../index.php");
+        }
     }
 
   if(isset($_GET['approve']))
     {
-      $the_comment_id = $_GET['approve'];
-      $query = "UPDATE comments SET comment_status = 'approved' WHERE id = $the_comment_id ";
-      $approve_comment_query = mysqli_query($connection, $query);
-      confirm_query($approve_comment_query);
-      header("Location: comments.php");
+      if(isset($_SESSION['user_role']))
+        {
+          if($_SESSION['user_role'] == "Admin")
+            {
+              $the_comment_id = $_GET['approve'];
+              $query = "UPDATE comments SET comment_status = 'approved' WHERE id = $the_comment_id ";
+              $approve_comment_query = mysqli_query($connection, $query);
+              confirm_query($approve_comment_query);
+              header("Location: comments.php");
+            }
+          else
+            {    
+              header("Location: index.php");
+            }
+        }
+      else
+        {
+          header("Location: ../index.php");
+        }
     }
 ?>
         
