@@ -4,8 +4,9 @@
       foreach($_POST['checkBoxArray'] as $postIdValue)
         {
          // echo $checkBoxValue;
-         $bulk_options = $_POST['bulk_options'];
-         
+         $bulk_options = escape($_POST['bulk_options']);
+         $postIdValue = escape($postIdValue);
+          
          switch($bulk_options)
            {
              case 'published':
@@ -32,14 +33,14 @@
                confirm_query($select_post_by_id);
                while($row_post = mysqli_fetch_array($select_post_by_id))
                  {
-                   $post_title = $row_post['post_title'];
-                   $post_category_id = $row_post['post_category_id'];
-                   $post_date = $row_post['post_date'];
-                   $post_author = $row_post['post_author'];
-                   $post_status = $row_post['post_status'];
-                   $post_image = $row_post['post_image'];
-                   $post_tags = $row_post['post_tags'];
-                   $post_content = $row_post['post_content'];
+                   $post_title = escape($row_post['post_title']);
+                   $post_category_id = escape($row_post['post_category_id']);
+                   $post_date = escape($row_post['post_date']);
+                   $post_author = escape($row_post['post_author']);
+                   $post_status = escape($row_post['post_status']);
+                   $post_image = escape($row_post['post_image']);
+                   $post_tags = escape($row_post['post_tags']);
+                   $post_content = escape($row_post['post_content']);
                    $post_comment_count = 0;
                  }
                 $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
@@ -96,10 +97,10 @@
       $select_all_posts = mysqli_query($connection, $query);
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
-          $post_id = $row['id'];
+          $post_id = escape($row['id']);
           $post_author = $row['post_author'];
           $post_title = $row['post_title'];
-          $post_cateogry_id = $row['post_category_id'];
+          $post_cateogry_id = escape($row['post_category_id']);
           $post_status = $row['post_status'];
           $post_image = $row['post_image'];
           $post_content = $row['post_content'];
@@ -160,12 +161,12 @@
        {
         if($_SESSION['user_role'] == "Admin")
           {
-      $the_post_id = $_GET['delete'];
-      $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
-      $delete_post_query = mysqli_query($connection, $query);
-      confirm_query($delete_post_query);
-      header("Location: posts.php");
-              }
+            $the_post_id = escape($_GET['delete']);
+            $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
+            $delete_post_query = mysqli_query($connection, $query);
+            confirm_query($delete_post_query);
+            header("Location: posts.php");
+          }
         else
           {    
            header("Location: index.php");
@@ -180,21 +181,21 @@
 
    if(isset($_GET['reset']))
     { 
-        if(isset($_SESSION['user_role']))
-       {
-        if($_SESSION['user_role'] == "Admin")
-          {
-      $the_post_id = $_GET['reset'];
-      $reset_value = 0;
-      $query = "UPDATE posts SET post_views_count = $reset_value WHERE id = {$the_post_id} ";
-      $reset_post_query = mysqli_query($connection, $query);
-      confirm_query($reset_post_query);
-      header("Location: posts.php");
-                       }
-        else
-          {    
-           header("Location: index.php");
-          }
+      if(isset($_SESSION['user_role']))
+        {
+          if($_SESSION['user_role'] == "Admin")
+            {
+              $the_post_id = escape($_GET['reset']);
+              $reset_value = 0;
+              $query = "UPDATE posts SET post_views_count = $reset_value WHERE id = {$the_post_id} ";
+              $reset_post_query = mysqli_query($connection, $query);
+              confirm_query($reset_post_query);
+              header("Location: posts.php");
+            }
+          else
+           {    
+             header("Location: index.php");
+           }
         }
       else
         {
