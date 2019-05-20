@@ -1,7 +1,7 @@
 <?php
   if(isset($_GET['edit']))
     {       
-      $the_user_id = $_GET['edit'];
+      $the_user_id = escape($_GET['edit']);
       $query = "SELECT * FROM users WHERE id = $the_user_id ";
       $select_user_by_id = mysqli_query($connection, $query);
       confirm_query($select_user_by_id);
@@ -15,57 +15,48 @@
          $the_user_image = $row['user_image'];
          $the_user_role = $row['user_role'];
          $the_random_salt = $row['random_salt'];
-         $the_user_password = crypt($the_user_password, $the_random_salt);
        }
-    
-      
+        
    if(isset($_POST['edit_user']))
     {      
-      $user_firstname = $_POST['user_firstname'];
-      $user_lastname = $_POST['user_lastname'];
-      $username = $_POST['username'];
-      $user_role = $_POST['user_role'];     
+      $user_firstname = escape($_POST['user_firstname']);
+      $user_lastname = escape($_POST['user_lastname']);
+      $username = escape($_POST['username']);
+      $user_role = escape($_POST['user_role']);     
       // $post_image = $_FILES['post_image']['name'];
       //   $post_image_temp = $_FILES['post_image']['tmp_name'];
-      $user_password = $_POST['user_password'];
-      $user_email = $_POST['user_email'];  
+      $user_password = escape($_POST['user_password']);
+      $user_email = escape($_POST['user_email']);  
       //  move_uploaded_file($post_image_temp, "../images/$post_image");
-       
-       
-        if(!empty($user_password))
+      if(!empty($user_password))
         {
-            $query_password = "SELECT user_password FROM users WHERE id = $the_user_id ";
-            $get_user_password_query = mysqli_query($connection, $query_password);
-            confirm_query($get_user_password_query);
-            
-            $row = mysqli_fetch_array($get_user_password_query);
-            
-            $the_user_password = $row['user_password'];
-            
-            if($the_user_password != $user_password)
-             {
-               $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
-                 $query = "UPDATE users SET username = '{$username}', user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
-                 $update_user_query = mysqli_query($connection, $query);  
-                 confirm_query($update_user_query);  
-               echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
-             }
-            
+          $query_password = "SELECT user_password FROM users WHERE id = $the_user_id ";
+          $get_user_password_query = mysqli_query($connection, $query_password);
+          confirm_query($get_user_password_query);
+          $row = mysqli_fetch_array($get_user_password_query);
+          $the_user_password = $row['user_password'];
+          if($the_user_password != $user_password)
+            {
+              $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
+              $query = "UPDATE users SET username = '{$username}', user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
+              $update_user_query = mysqli_query($connection, $query);  
+              confirm_query($update_user_query);  
+              echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
+            }
         }
        else
-       {
-      $query = "UPDATE users SET username = '{$username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
-      $update_user_query = mysqli_query($connection, $query);  
-      confirm_query($update_user_query);
+        {
+          $query = "UPDATE users SET username = '{$username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
+          $update_user_query = mysqli_query($connection, $query);  
+          confirm_query($update_user_query);
           echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
        }
     }
   }
-else
- {
-  header("LOCATION: ../index.php");   
-    
- }
+ else
+  {
+    header("LOCATION: ../index.php");   
+  }
 ?>
 
 <form action="" method="post" enctype="multipart/form-data">
