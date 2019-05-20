@@ -10,7 +10,7 @@
            }
          else    
           {      
-            $username = $_SESSION['username'];   
+            $username = escape($_SESSION['username']);   
             $query = "SELECT * FROM users WHERE username = '{$username}' ";   
             $select_user_profile = mysqli_query($connection, $query);    
             while($row = mysqli_fetch_array($select_user_profile))
@@ -28,13 +28,13 @@
        <?php
          if(isset($_POST['update_profile']))
            {      
-             $user_firstname = $_POST['user_firstname'];
-             $user_lastname = $_POST['user_lastname'];
-             $this_username = $_POST['username'];     
+             $user_firstname = escape($_POST['user_firstname']);
+             $user_lastname = escape($_POST['user_lastname']);
+             $this_username = escape($_POST['username']);     
              // $post_image = $_FILES['post_image']['name'];
              // $post_image_temp = $_FILES['post_image']['tmp_name'];
-             $user_password = $_POST['user_password'];
-             $user_email = $_POST['user_email'];
+             $user_password = escape($_POST['user_password']);
+             $user_email = escape($_POST['user_email']);
              // $post_date = date('d-m-y');   
              // move_uploaded_file($post_image_temp, "../images/$post_image");
       
