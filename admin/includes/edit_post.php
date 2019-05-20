@@ -1,10 +1,10 @@
 <?php
   if(isset($_GET['post_id']))
     {
-      $the_post_id = $_GET['post_id'];
+      $the_post_id = escape($_GET['post_id']);
     }
 
-  $query = "SELECT * FROM posts WHERE id = '{$the_post_id}}'";
+  $query = "SELECT * FROM posts WHERE id = '{$the_post_id}'";
   $select_post_by_id = mysqli_query($connection, $query); 
   confirm_query($select_post_by_id);
   while($row = mysqli_fetch_assoc($select_post_by_id))
