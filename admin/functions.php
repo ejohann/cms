@@ -119,7 +119,7 @@ function delete_categories()
           {
             if($_SESSION['user_role'] == "Admin")
               {
-                $delete_category_id = $_GET['delete'];
+                $delete_category_id = escape($_GET['delete']);
                 $query = "DELETE FROM categories WHERE id = {$delete_category_id}";
                 $delete_query = mysqli_query($connection, $query);
                 header("Location: categories.php");      
