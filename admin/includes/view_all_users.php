@@ -1,4 +1,19 @@
-    <table class="table table-bordered table-hover">
+<?php 
+
+ if(!isset($_SESSION['user_role']))
+  {
+    header("Location: ../../index.php");
+     
+    if(!$_SESSION['user_role'] == "Admin")
+      {
+        header("Location: ../index.php");
+      }
+ }
+                        
+?>    
+
+                                                      
+<table class="table table-bordered table-hover">
                             <thead>
                              <tr>
                                  <th>ID</th>
