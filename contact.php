@@ -13,14 +13,28 @@
      $message_content =  $_POST['message_content'];
      $message_email =  $_POST['message_email'];
      $message_contact =  $_POST['contact_name'];
-   }
+     $headers = "From: ".$message_email." " ."\r\n";
+     // the message
+     $message_content= "".$message_content."\n ".$message_contact."";
+     // use wordwrap() if lines are longer than 70 characters
+     $message_content = wordwrap($message_content,70);
+
+     // send email
+     mail($to_my_email, $message_subject, $message_content, $headers);
+ 
+  
+  
+  }
+
+
+
 
 
 ?>
 
 
 
-<section id="login">
+<section id="contact">
     <div class="container">
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
@@ -54,38 +68,6 @@
         </div> <!-- /.row -->
     </div> <!-- /.container -->
 </section>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
