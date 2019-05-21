@@ -5,13 +5,18 @@
 <?php  include "includes/navigation.php"; ?>
 
 
+<?php
+  if(isset($_POST['submit']))
+   {
+     $to_my_email = "info@hannedigital.com";
+     $message_subject = $_POST['message_subject'];
+     $message_content =  $_POST['message_content'];
+     $message_email =  $_POST['message_email'];
+     $message_contact =  $_POST['contact_name'];
+   }
 
 
-
-
-
-
-
+?>
 
 
 
@@ -28,8 +33,8 @@
                             <input type="text" name="contact_name" id="contact_name" class="form-control" placeholder="Enter Name">
                         </div>
                          <div class="form-group">
-                            <label for="email" class="">Your Email: </label>
-                            <input type="email" name="email" id="email" class="form-control" placeholder="Enter  Your Email">
+                            <label for="message_email" class="">Your Email: </label>
+                            <input type="email" name="message_email" id="message_email" class="form-control" placeholder="Enter  Your Email">
                         </div>
                         <div class="form-group">
                             <label for="message_subject" class="">Subject: </label>
@@ -38,7 +43,7 @@
                         
                         <div class="form-group">
                           <label for="message_content">Message: </label>
-                          <textarea class="form-control" id="message_content" name="message_content" placeholder="Enter Message"></textarea>
+                          <textarea class="form-control" id="message_content" cols="50" rows="10" name="message_content" placeholder="Enter Message"></textarea>
                         </div>
                 
                         <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Contact Us">
