@@ -22,7 +22,7 @@
      // send email
      mail($to_my_email, $message_subject, $message_content, $headers);
  
-  
+    echo "Thank you for contacting us, we will get back to you as soon as possible";
   
   }
 
