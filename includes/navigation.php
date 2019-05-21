@@ -23,7 +23,7 @@
               echo "<li><a href='category.php?category_id={$category_id}'>{$category_title}</a></li>";
             }
         ?>
-       
+        <li><a href='contact.php'>Contact</a></li>  
         <?php  
           session_start();   
           if(isset($_SESSION['user_role']))
@@ -43,7 +43,7 @@
              echo " <li><a href='registration.php'>User Registration</a></li>";   
           }
         ?>
-               
+             
       </ul>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container -->
