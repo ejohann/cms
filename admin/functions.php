@@ -152,7 +152,7 @@ function record_count($table)
 function check_status($table, $column, $status)
  {
     global $connection;
-    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+    $query = "SELECT * FROM " .$table. " WHERE " .$column. " = '" .$status. "' ";
     $select_records_by_status = mysqli_query($connection, $query);     
     confirm_query($select_records_by_status);
     $records_by_status_count = mysqli_num_rows($select_records_by_status);
