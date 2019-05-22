@@ -1,6 +1,8 @@
 <?php
   
- 
+
+
+
 function escape($string)
  {
     global $connection;
@@ -135,6 +137,16 @@ function delete_categories()
            }
       }
   }
+
+
+function record_count($table) 
+ {
+   $query = "SELECT * FROM " . $table ;
+   $select_all_records = mysqli_query($connection, $query);
+   confirm_query($select_all_records);
+   $record_count = mysqli_num_rows($select_all_records);
+   return $record_count; 
+ }
   
  
 ?>
