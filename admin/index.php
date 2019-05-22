@@ -51,10 +51,7 @@
               </div>
               <div class="col-xs-9 text-right">
                 <?php
-                  $query = "SELECT * FROM comments";
-                  $select_all_comments = mysqli_query($connection, $query);
-                  confirm_query($select_all_comments);
-                  $comment_count = mysqli_num_rows($select_all_comments);
+                  $comment_count = record_count('comments');
                   echo "<div class='huge'>{$comment_count}</div>";
                 ?>
                 <div>Comments</div>
