@@ -19,8 +19,25 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = $_GET['post_id'];
-            $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
+            
+            if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
+              {
+             $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
+              }
+             else
+              {
+                  $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' WHERE post_status = 'published'";
+             }
+                
             $select_post_by_id = mysqli_query($connection, $query);
+            
+            // $post_count = mysqli_num_rows($select_post_by_id);
+        if(!$select_post_by_id)
+            {
+               echo "<h1 class='text-center'>No posts to display</h1>"; 
+            }
+          else      
+            { 
             while($row = mysqli_fetch_assoc($select_post_by_id))
               {
                 $post_title = $row['post_title'];
@@ -124,11 +141,12 @@
         }
     
        }
+        }
       else
       {
           header("Location: index.php");
       }
-    
+        
     ?>                
 
     <!-- Pager -->
