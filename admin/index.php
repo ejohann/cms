@@ -77,10 +77,7 @@
               </div>
               <div class="col-xs-9 text-right">
                 <?php
-                  $query = "SELECT * FROM users";
-                  $select_all_users = mysqli_query($connection, $query);
-                  confirm_query($select_all_users);
-                  $user_count = mysqli_num_rows($select_all_users);
+                  $user_count = record_count('users');
                   echo "<div class='huge'>{$user_count}</div>";
                 ?>              
                 <div> Users</div>
