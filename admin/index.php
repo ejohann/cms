@@ -25,11 +25,8 @@
                 </div>
                 <div class="col-xs-9 text-right">
                   <?php
-                    $query = "SELECT * FROM posts";
-                    $select_all_posts = mysqli_query($connection, $query);
-                    confirm_query($select_all_posts);
-                    $post_count = mysqli_num_rows($select_all_posts);
-                    echo "<div class='huge'>{$post_count}</div>";
+                     $post_count = record_count('posts');
+                     echo "<div class='huge'>{$post_count}</div>";
                   ?>
                   <div>Posts</div>
                 </div>
