@@ -152,8 +152,8 @@
               {
                 chart: 
                   {
-                    title: ' ',
-                    subtitle: ' '
+                    title: '',
+                    subtitle: '',
                   }
               };
 
