@@ -132,10 +132,7 @@
                 
       $approve_comment_count = check_status('comments', 'comment_status', 'approved');
                 
-      $users_query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
-      $select_subcribers = mysqli_query($connection, $users_query);          
-      confirm_query($select_subcribers);
-      $subscriber_count = mysqli_num_rows($select_subcribers);
+      $subscriber_count = check_status('users', 'user_role', 'subscriber');
     ?>
     <div class="row">
       <script type="text/javascript">
