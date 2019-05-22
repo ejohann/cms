@@ -141,7 +141,7 @@ function delete_categories()
 
 function record_count($table) 
  {
-    global $connection;
+   global $connection;
    $query = "SELECT * FROM " . $table ;
    $select_all_records = mysqli_query($connection, $query);
    confirm_query($select_all_records);
@@ -149,5 +149,15 @@ function record_count($table)
    return $record_count; 
  }
   
+function check_status($table, $column, $status)
+ {
+    global $connection;
+    $query = "SELECT * FROM posts WHERE post_status = 'published' ";
+    $select_records_by_status = mysqli_query($connection, $query);     
+    confirm_query($select_records_by_status);
+    $records_by_status_count = mysqli_num_rows($select_records_by_status);
+    return $records_by_status_count;
+ }
+
  
 ?>
