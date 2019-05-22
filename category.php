@@ -25,8 +25,9 @@
           if(mysqli_num_rows($select_posts_by_id) == 0)
             {
                echo "<h1 class='text-center'>No posts to display</h1>"; 
-            }   
-              
+            }
+          else      
+            {  
           while($row = mysqli_fetch_assoc($select_posts_by_id ))
             {
               $post_id = $row['id'];
@@ -49,6 +50,7 @@
         <hr>
         <?php          
             }
+          }
           }
           else
            {
