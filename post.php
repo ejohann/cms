@@ -19,23 +19,15 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = $_GET['post_id'];
-         //   $query_views = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
-           // $update_post_views_query = mysqli_query($connection, $query_views);
-        //    if(!$update_post_views_query)
-        //      {
-          //      die("QUERY FAILED: " . mysqli_error($connection));  
-        //      }
-            
-        
-        $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
-        $select_post_by_id = mysqli_query($connection, $query);
-        while($row = mysqli_fetch_assoc($select_post_by_id))
-          {
-            $post_title = $row['post_title'];
-            $post_author = $row['post_author'];
-            $post_date = $row['post_date'];
-            $post_image = $row['post_image'];
-            $post_content = $row['post_content'];
+            $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
+            $select_post_by_id = mysqli_query($connection, $query);
+            while($row = mysqli_fetch_assoc($select_post_by_id))
+              {
+                $post_title = $row['post_title'];
+                $post_author = $row['post_author'];
+                $post_date = $row['post_date'];
+                $post_image = $row['post_image'];
+                $post_content = $row['post_content'];
       ?>
       <h2><a href="#"><?php echo $post_title; ?></a></h2>
       <p class="lead">by <a href="author_post.php?author=<?php echo $post_author; ?>&post_id=<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
@@ -46,7 +38,7 @@
       <p><?php echo $post_content; ?></p>
       <hr>
       <?php          
-          }
+              }
       ?>
 
     <!-- Blog Comments -->
