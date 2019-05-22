@@ -22,6 +22,11 @@
             
           $query = "SELECT * FROM posts WHERE post_category_id = '{$the_category_id}' AND post_status = 'published' ";
           $select_posts_by_id = mysqli_query($connection, $query);
+          if(mysqli_num_rows($select_posts_by_id) == 0)
+            {
+               echo "<h1 class='text-center'>No posts to display</h1>"; 
+            }   
+              
           while($row = mysqli_fetch_assoc($select_posts_by_id ))
             {
               $post_id = $row['id'];
