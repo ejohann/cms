@@ -141,6 +141,7 @@ function delete_categories()
 
 function record_count($table) 
  {
+    global $connection;
    $query = "SELECT * FROM " . $table ;
    $select_all_records = mysqli_query($connection, $query);
    confirm_query($select_all_records);
