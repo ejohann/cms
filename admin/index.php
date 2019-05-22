@@ -122,20 +122,18 @@
     </div><!-- /.row -->
     
     <?php
-      $post_query = "SELECT * FROM posts WHERE post_status = 'published' ";
-      $select_published_posts = mysqli_query($connection, $post_query);     
-      confirm_query($select_published_posts);
-      $published_post_count = mysqli_num_rows($select_published_posts);
-                 
+    
+        
+      $published_post_count = check_status('posts', 'post_status', 'published');
+        
+        
+        
       $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
       $select_draft_posts = mysqli_query($connection, $query);     
       confirm_query($select_draft_posts);
       $draft_post_count = mysqli_num_rows($select_draft_posts);
-                
-      $comment_query = "SELECT * FROM comments WHERE comment_status = 'unapproved' ";
-      $select_unapproved_comments = mysqli_query($connection, $comment_query);          
-      confirm_query($select_unapproved_comments);
-      $unapprove_comment_count = mysqli_num_rows($select_unapproved_comments);
+ 
+      $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
                 
       $active_comment_query = "SELECT * FROM comments WHERE comment_status = 'approved' ";
       $select_active_comments = mysqli_query($connection, $active_comment_query);          
@@ -158,7 +156,7 @@
               ([
                 ['Data', 'Count'],
                 <?php
-                  $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Active Comments', 'Pending Comments', 'Users', 'Subscribers', 'Categories'];
+                  $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Active Comments', 'Comments Pending', 'Users', 'Subscribers', 'Categories'];
                   $element_count = [$post_count, $published_post_count, $draft_post_count, $comment_count, $approve_comment_count, $unapprove_comment_count, $user_count, $subscriber_count, $category_count];
                   for($i=0; $i < 9; $i++)
                     {
@@ -172,7 +170,7 @@
                 chart: 
                   {
                     title: ' ',
-                    subtitle: ' ',
+                    subtitle: ' '
                   }
               };
 
