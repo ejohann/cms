@@ -27,7 +27,7 @@
         
         if($post_count == 0 )
          {
-           echo "No posts to display";   
+           echo "<h1 class='text-center'>No posts to display</h1>";   
          }
         else
          { 
