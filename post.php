@@ -31,7 +31,6 @@
                 
             $select_post_by_id = mysqli_query($connection, $query);
             
-            // $post_count = mysqli_num_rows($select_post_by_id);
         if(!$select_post_by_id)
             {
                echo "<h1 class='text-center'>No posts to display</h1>"; 
