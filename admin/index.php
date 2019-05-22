@@ -130,7 +130,7 @@
  
       $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
                 
-      $approve_comment_count = = check_status('comments', 'comment_status', 'approved');
+      $approve_comment_count = check_status('comments', 'comment_status', 'approved');
                 
       $users_query = "SELECT * FROM users WHERE user_role = 'subscriber' ";
       $select_subcribers = mysqli_query($connection, $users_query);          
