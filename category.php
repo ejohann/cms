@@ -19,7 +19,7 @@
           if(isset($_GET['category_id']))
             {
               $the_category_id = $_GET['category_id']; 
-            }
+            
           $query = "SELECT * FROM posts WHERE post_category_id = '{$the_category_id}' ";
           $select_posts_by_id = mysqli_query($connection, $query);
           while($row = mysqli_fetch_assoc($select_posts_by_id ))
@@ -44,6 +44,11 @@
         <hr>
         <?php          
             }
+          }
+          else
+           {
+              header("Location: index.php");   
+           }
         ?>
              
         <!-- Pager -->
