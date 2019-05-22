@@ -27,6 +27,11 @@
         $post_per_page = 5;
         $post_pages = ceil($post_count / $post_per_page);
         
+        if($post_count < 1)
+         {
+            echo "No posts to display";   
+         }
+        
         if(isset($_GET['page']))
          {
            $page = $_GET['page'];   
@@ -57,7 +62,7 @@
             $post_content = "" . substr($row['post_content'], 0, 100) . "...";
             $post_status = $row['post_status'];
             if($post_status == 'published')
-              {
+              {                
       ?>
                 <h2><a href="post.php?post_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
                 <p class="lead">by <a href="author_post.php?author=<?php echo $post_author; ?>&post_id=<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
