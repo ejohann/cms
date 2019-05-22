@@ -124,14 +124,9 @@
     <?php
     
         
-      $published_post_count = check_status('posts', 'post_status', 'published');
+      $published_post_count = check_status('posts', 'post_status', 'published');   
         
-        
-        
-      $query = "SELECT * FROM posts WHERE post_status = 'draft' ";
-      $select_draft_posts = mysqli_query($connection, $query);     
-      confirm_query($select_draft_posts);
-      $draft_post_count = mysqli_num_rows($select_draft_posts);
+      $draft_post_count = check_status('posts', 'post_status', 'draft');  
  
       $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
                 
