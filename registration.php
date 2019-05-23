@@ -12,6 +12,8 @@
      $username = escape($_POST['username']);
      $user_email = escape($_POST['email']);
      $user_password = escape($_POST['password']);
+     $user_role = "Subscriber";     
+     $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
      $error = [
          'username' => '',
          'user_email' => '',
@@ -54,9 +56,13 @@
         {
           if(empty($value))
            {
-             // register and login user  
-           }
-           
+             unset($error[$key]);  
+           } 
+        }
+      
+      if(empty($error))
+        {
+          register_user($username, $user_password, $user_email,);  
         }
       
     /* if(!username_exists($username))
