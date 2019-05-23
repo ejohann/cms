@@ -254,9 +254,8 @@ function is_admin($username = '')
            $_SESSION['user_email'] = $the_user_email;
            $_SESSION['user_role'] = $the_user_role;
            $_SESSION['user_id'] = $the_user_id;
-           header("Location: admin/index.php");
-          }
-        
+           
+          }      
    }
 
 ?>
