@@ -75,7 +75,15 @@
           { 
             $category_title = $row['category_title'];
             $category_id = $row['id'];
-            echo "<option value='{$category_id}'>{$category_title}</option>";
+            
+            if($category_id == $post_category_id)
+             {
+                 echo "<option selected value='{$category_id}'>{$category_title}</option>";
+             }
+            else
+             {
+                 echo "<option value='{$category_id}'>{$category_title}</option>";
+             }  
           }
       ?>     
     </select>
@@ -84,7 +92,6 @@
     <div class="form-group">
     <label for="post_author">Post Author</label>
     <select name="post_author" id="post_author">
-      <option value="<?php echo $post_author; ?>">Select Author</option>
       <?php
         $query = "SELECT * FROM users";
         $select_author = mysqli_query($connection, $query);
@@ -93,7 +100,15 @@
           {
             $username = $row['username'];
             $user_id = $row['id'];
-            echo "<option value='{$username}'>{$username}</option>";
+            if($post_author == $username)
+             {
+                echo "<option selected value='{$username}'>{$username}</option>";
+             }
+            else
+             {
+                echo "<option value='{$username}'>{$username}</option>";
+             }
+            
           }
       ?>     
     </select>
