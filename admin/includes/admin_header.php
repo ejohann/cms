@@ -9,17 +9,6 @@
 ?>
 
 <?php
-  if(isset($_SESSION['user_role']))
-    {
-      if($_SESSION['user_role'] !== 'Admin')
-        {
-          header("Location: ../index.php");   
-        }   
-    }
-  else
-    {
-      header("Location: ../index.php"); 
-    }
 ?>
 
 <!DOCTYPE html>
