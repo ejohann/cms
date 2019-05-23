@@ -18,18 +18,16 @@
          'user_password' => ''
      ];  
        
-      
+      // validate username
       if(!username_exists($username))
        {
          $error['username'] = "This username already exists, please select another username";   
        }
-      
-      if($username == '')
+      else if($username == '')
        {
          $error['username'] = "Username field cannot be empty";   
        }
-      
-      if(strlen($username) < 4 )
+      else if(strlen($username) < 4 )
        {
           $error['username'] = "Username needs to be longer that 3 characters";   
        }
@@ -100,6 +98,8 @@
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input autocomplete="on" type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" value="<?php echo isset($username) ? $username : '' ?>">
+                            <!-- Display username validation error -->
+                            <p><?php echo isset($error['username']) ? $error['username'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
