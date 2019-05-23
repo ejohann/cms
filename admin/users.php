@@ -1,5 +1,13 @@
 <?php include "includes/admin_header.php"; ?>
   <div id="wrapper">
+   
+   <?php 
+      if(!is_admin($_SESSION['username']))
+       {
+         header("Location: index.php");   
+       }
+    ?>
+   
     <!-- Navigation -->
     <?php include "includes/admin_navigation.php"; ?>           
     <div id="page-wrapper">
