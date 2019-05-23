@@ -36,9 +36,7 @@
                echo "<h1 class='text-center'>No posts to display</h1>"; 
             }
           else      
-            { 
-              
-              
+            {   
               $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
               $update_post_views = mysqli_query($connection, $views_query);
               if(!$update_post_views)
