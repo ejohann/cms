@@ -131,11 +131,11 @@
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
           echo "<td><a href='../post.php?post_id={$post_id}'>View</a></td>";
-          echo "<td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
+          echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
         ?>
       <form method="post">
             <input type="hidden" name="post_id" value="<?php echo $post_id; ?>"></input>
-            <td><input class="btn btn-danger" type="submit" value="Delete"> </td>             
+            <td><input class="btn btn-danger" type="submit" name="delete" value="Delete"> </td>             
          </form>
         
         <?php  
@@ -149,13 +149,13 @@
 </form>
 
 <?php
-  if(isset($_GET['delete']))
+  if(isset($_POST['delete']))
     { 
       if(isset($_SESSION['user_role']))
        {
         if($_SESSION['user_role'] == "Admin")
           {
-            $the_post_id = escape($_GET['delete']);
+            $the_post_id = $_POST['post_id'];
             $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
             $delete_post_query = mysqli_query($connection, $query);
             confirm_query($delete_post_query);
