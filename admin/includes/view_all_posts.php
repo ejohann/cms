@@ -149,13 +149,13 @@
 </form>
 
 <?php
-  if(isset($_POST['delete']))
+  if(isset($_POST['delete_item']))
     { 
       if(isset($_SESSION['user_role']))
        {
         if($_SESSION['user_role'] == "Admin")
           {
-            $the_post_id = $_POST['post_id'];
+            $the_post_id = escape($_POST['delete_item']);
             $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
             $delete_post_query = mysqli_query($connection, $query);
             confirm_query($delete_post_query);
@@ -203,7 +203,7 @@ $(document).ready(function(){
       e.preventDefault();
       var post_id = $(this).attr("rel");   
       $(".modal_delete_link").val(post_id);  
-      $(".modal-body").html("<h6>Are you sure you want to delete this post?  " + post_id + "</h6>");    
+      $(".modal-body").html("<h6>Are you sure you want to delete this post ID  " + post_id + "</h6>");    
       $("#myModal").modal('show');   
     });
 });  
