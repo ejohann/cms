@@ -11,7 +11,8 @@
    {
      $username = escape($_POST['username']);
      $user_email = escape($_POST['email']);
-     $user_password = $_POST['password'];
+     $user_password = escape($_POST['password']);
+      
      if(!username_exists($username))
        {
          $message = "This username already exists, please select another username";   
@@ -23,12 +24,7 @@
     else if(!empty($username) && !empty($user_email) && !empty($user_password))
        {
          
-        
-         $username = mysqli_real_escape_string($connection, $_POST['username']);
-         $user_email = mysqli_real_escape_string($connection, $_POST['email']);
-         $user_password = mysqli_real_escape_string($connection, $_POST['password']);
-         $user_role = "Subscriber";
-         
+         $user_role = "Subscriber";     
          
          $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
 
