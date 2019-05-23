@@ -13,7 +13,7 @@
      $user_email = escape($_POST['email']);
      $user_password = escape($_POST['password']);
      $user_role = "Subscriber";     
-     $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
+  
      $error = [
          'username' => '',
          'user_email' => '',
