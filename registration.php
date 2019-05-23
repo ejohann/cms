@@ -10,14 +10,16 @@
   if(isset($_POST['submit']))
    {
      $username = escape($_POST['username']);
-     $user_email = $_POST['email'];
+     $user_email = escape($_POST['email']);
      $user_password = $_POST['password'];
-       if(!username_exists($username))
-          {
-           $message = "This username already exists, please select another username";   
-          }
-         
-      
+     if(!username_exists($username))
+       {
+         $message = "This username already exists, please select another username";   
+       }
+     else if(!email_exists($user_email))
+      {
+         $message = "This email address already exists, please select another email address or use forget password link"; 
+     }
     else if(!empty($username) && !empty($user_email) && !empty($user_password))
        {
          
