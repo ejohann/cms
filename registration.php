@@ -23,25 +23,13 @@
      }
     else if(!empty($username) && !empty($user_email) && !empty($user_password))
        {
-         
          $user_role = "Subscriber";     
-         
          $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
-
          $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
-         $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";
-         
-         $register_user_query = mysqli_query($connection, $query);
-         
-         if(!$register_user_query)
-          {
-            die("QUERY FAILED: " . mysqli_error($connection));   
-          }
-         else
-          {
-              $message = "Registration has been submitted successfully";  
-          }  
-        
+         $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";    
+         $register_user_query = mysqli_query($connection, $query);  
+         confirm_query($register_user_query);
+         $message = "Registration has been submitted successfully";       
        }
       else
        {
