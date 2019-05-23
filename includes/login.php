@@ -10,6 +10,7 @@
      $username = escape($_POST['username']);
      $password = escape($_POST['password']);
      login_user($username, $password);
+      redirect("../admin");
    }
   
 
