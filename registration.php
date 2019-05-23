@@ -36,18 +36,16 @@
        {
          $error['user_email'] = "This email address already exists, please select another email address or <a href='index.php'> login</a>";   
        }
-      
-      if($user_email == '')
+      else if($user_email == '')
        {
          $error['user_email'] = "Email address field cannot be empty";   
        }
       
-       if($user_password == '')
+      if($user_password == '')
        {
          $error['user_password'] = "Password field cannot be empty";   
        }
-      
-       if(strlen($user_password) < 7 )
+      else if(strlen($user_password) < 7 )
         {
           $error['user_password'] = "Password should be longer than 6 characters";   
         }
@@ -104,10 +102,14 @@
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
                             <input autocomplete="on" type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" value="<?php echo isset($user_email) ? $user_email : '' ?>">
+                            <!-- Display user email validation error -->
+                            <p><?php echo isset($error['user_email']) ? $error['user_email'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
                             <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                               <!-- Display user email validation error -->
+                            <p><?php echo isset($error['user_password']) ? $error['user_password'] : '' ?></p>
                         </div>
                 
                         <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
