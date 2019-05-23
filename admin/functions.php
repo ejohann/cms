@@ -209,4 +209,9 @@ function is_admin($username = '')
       }
   }
 
+ function redirect($location)
+  {
+     return header("Location: " . $location . ""); 
+  }
+
 ?>
