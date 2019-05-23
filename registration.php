@@ -1,5 +1,6 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
+<?php  include "admin/functions.php"; ?>
 
 <!-- Navigation -->
 <?php  include "includes/navigation.php"; ?>
@@ -8,12 +9,19 @@
 
   if(isset($_POST['submit']))
    {
-     $username = $_POST['username'];
+     $username = escape($_POST['username']);
      $user_email = $_POST['email'];
      $user_password = $_POST['password'];
+       if(!username_exists($username))
+          {
+           $message = "This username already exists, please select another username";   
+          }
+         
       
-     if(!empty($username) && !empty($user_email) && !empty($user_password))
+    else if(!empty($username) && !empty($user_email) && !empty($user_password))
        {
+         
+        
          $username = mysqli_real_escape_string($connection, $_POST['username']);
          $user_email = mysqli_real_escape_string($connection, $_POST['email']);
          $user_password = mysqli_real_escape_string($connection, $_POST['password']);
@@ -35,6 +43,7 @@
           {
               $message = "Registration has been submitted successfully";  
           }  
+        
        }
       else
        {
