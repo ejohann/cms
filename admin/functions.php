@@ -159,5 +159,22 @@ function check_status($table, $column, $status)
     return $records_by_status_count;
  }
 
+
+function is_admin($username = '')
+ {
+    global $connection;
+    $query = "SELECT user_role FROM users WHERE username = '$username'";
+    $results = mysqli_query($connection, $query);
+    confirm_query($results);
+    $row = mysqli_fetch_array($results);
+    if($row['user_role'] == "Admin")
+     {
+       return true;  
+     }
+    else
+     {
+       return false;
+     } 
+ }
  
 ?>
