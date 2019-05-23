@@ -25,10 +25,7 @@
        {
          $user_role = "Subscriber";     
          $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
-         $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
-         $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";    
-         $register_user_query = mysqli_query($connection, $query);  
-         confirm_query($register_user_query);
+         register_user($username, $user_password, $user_email, $user_role);
          $message = "Registration has been submitted successfully";       
        }
       else
