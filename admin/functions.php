@@ -193,4 +193,20 @@ function is_admin($username = '')
       }
   }
 
+ function email_exists($email)
+  {
+     global $connection;
+     $query = "SELECT user_email FROM users WHERE user_email = '$email'";
+     $results = mysqli_query($connection, $query);
+     confirm_query($results);
+     if(mysqli_num_rows($results) == 0)
+      {
+         return true;
+      }
+     else
+      {
+        return false;
+      }
+  }
+
 ?>
