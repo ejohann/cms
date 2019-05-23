@@ -132,7 +132,14 @@
           echo "<td>{$post_date}</td>";
           echo "<td><a href='../post.php?post_id={$post_id}'>View</a></td>";
           echo "<td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
-          echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
+        ?>
+      <form method="post">
+            <input type="hidden" name="post_id" value="<?php echo $post_id; ?>"></input>
+            <td><input class="btn btn-danger" type="submit" value="Delete"> </td>             
+         </form>
+        
+        <?php  
+        //  echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
           echo "</tr>";
         }
     ?>                  
