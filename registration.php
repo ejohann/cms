@@ -62,7 +62,7 @@
       
       if(empty($error))
         {
-          register_user($username, $user_password, $user_email,);  
+          register_user($username, $user_password, $user_email, $user_role);  
         }
       
     /* if(!username_exists($username))
