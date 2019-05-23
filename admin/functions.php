@@ -222,6 +222,7 @@ function is_admin($username = '')
      $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";    
      $register_user_query = mysqli_query($connection, $query);  
      confirm_query($register_user_query);
+     login_user($username, $user_password);
       
    }
 
