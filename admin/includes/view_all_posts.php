@@ -130,12 +130,12 @@
           echo "<td><a href='post_comments.php?comment_post_id={$post_id}'>{$post_comment_count}</a></td>";
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
-          echo "<td><a href='../post.php?post_id={$post_id}'>View</a></td>";
+          echo "<td><a class='btn btn-primary' href='../post.php?post_id={$post_id}'>View</a></td>";
           echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
         ?>
       <form method="post">
             <input type="hidden" name="post_id" value="<?php echo $post_id; ?>"></input>
-            <td><input class="btn btn-danger" type="submit" name="delete" value="Delete"> </td>             
+            <td><input rel="<?php echo $post_id; ?>" class="btn btn-danger del_link" type="submit" name="delete" value="Delete"> </input></td>             
          </form>
         
         <?php  
@@ -199,10 +199,11 @@
 
 <script>
 $(document).ready(function(){
-    $(".delete_link").on('click', function(){
+    $(".del_link").on('click', function(e){
+      e.preventDefault();
       var post_id = $(this).attr("rel");   
-      var delete_url = "posts.php?delete="+ post_id +""; 
-      $(".modal_delete_link").attr("href", delete_url);  
+      $(".modal_delete_link").val(post_id);  
+      $(".modal-body").html("<h6>Are you sure you want to delete this post?  " + post_id + "</h6>");    
       $("#myModal").modal('show');   
     });
 });  
