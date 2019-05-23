@@ -1,14 +1,12 @@
 <?php
   include("delete_modal.php");
 ?>
- 
 
 <?php
   if(isset($_POST['checkBoxArray']))
    {
       foreach($_POST['checkBoxArray'] as $postIdValue)
         {
-         // echo $checkBoxValue;
          $bulk_options = escape($_POST['bulk_options']);
          $postIdValue = escape($postIdValue);
           
@@ -51,12 +49,9 @@
                 $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
                 $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', '{$post_date}', '{$post_image}', '{$post_content}', '{$post_tags}', $post_comment_count, '{$post_status}' )";
                 $copy_query = mysqli_query($connection, $query);
-                 confirm_query($copy_query);
-                
-             break;
-           
+                confirm_query($copy_query);             
+                break;    
           }
-          
         }
    }
 ?>
@@ -98,16 +93,10 @@
   </thead>
   <tbody>
     <?php 
-    //  $query = "SELECT * FROM posts ORDER BY id DESC";
-      
       $query = "SELECT posts.id as p_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id as c_id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id";
-      
       $select_all_posts = mysqli_query($connection, $query);
-       
-      
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
-          
           $post_id = escape($row['p_id']);
           $post_author = $row['post_author'];
           $post_title = $row['post_title'];
@@ -116,13 +105,11 @@
           $post_image = $row['post_image'];
           $post_content = $row['post_content'];
           $post_tags = $row['post_tags'];
-         // $post_comment_count = $row['post_comment_count'];
           $post_date = $row['post_date'];
           $post_views_count = $row['post_views_count'];
           $category_title = $row['category_title'];
           $category_id = $row['c_id'];
-          echo "<tr>";
-          
+          echo "<tr>"; 
           ?>
           
           <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></input></td>
@@ -131,36 +118,21 @@
           echo "<td>{$post_id}</td>";
           echo "<td>{$post_author}</td>";
           echo "<td>{$post_title}</td>";
-        /*  $query = "SELECT * FROM categories WHERE id= $post_cateogry_id";
-          $select_category_by_id = mysqli_query($connection, $query);
-          confirm_query( $select_category_by_id);
-          while($row = mysqli_fetch_assoc($select_category_by_id))
-            {
-              $category_title = $row['category_title'];
-              $category_id = $row['id'];
-            } */
           echo "<td>{$category_title}</td>";
           echo "<td>{$post_status}</td>";
           echo "<td><img width='100' src='../images/{$post_image}' alt='image'></img></td>";
           echo "<td>{$post_tags}</td>";
-          
           $query_comment = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
           $select_comment_by_post_id = mysqli_query($connection, $query_comment);
           confirm_query($select_comment_by_post_id);
           $row = mysqli_fetch_array($select_comment_by_post_id);
-       //   $comment_id = $row['id'];
-          
           $post_comment_count = mysqli_num_rows($select_comment_by_post_id);   
-          
           echo "<td><a href='post_comments.php?comment_post_id={$post_id}'>{$post_comment_count}</a></td>";
-          
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
           echo "<td><a href='../post.php?post_id={$post_id}'>View</a></td>";
           echo "<td><a href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
-          
-            echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
-         // echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this post?'); \" href='posts.php?delete={$post_id}'>Delete</a></td>";
+          echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
           echo "</tr>";
         }
     ?>                  
@@ -193,7 +165,6 @@
       }
     }
 
-
    if(isset($_GET['reset']))
     { 
       if(isset($_SESSION['user_role']))
@@ -219,20 +190,13 @@
     }
 ?>    
 
-
 <script>
 $(document).ready(function(){
-    
     $(".delete_link").on('click', function(){
-       
       var post_id = $(this).attr("rel");   
       var delete_url = "posts.php?delete="+ post_id +""; 
-    
-    $(".modal_delete_link").attr("href", delete_url);  
-    $("#myModal").modal('show');   
-      
+      $(".modal_delete_link").attr("href", delete_url);  
+      $("#myModal").modal('show');   
     });
-    
-});
-    
+});  
 </script>
