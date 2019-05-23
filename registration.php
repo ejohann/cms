@@ -64,27 +64,6 @@
         {
           register_user($username, $user_password, $user_email, $user_role);  
         }
-      
-    /* if(!username_exists($username))
-       {
-         $message = "This username already exists, please select another username";   
-       }
-      
-     else if(!email_exists($user_email))
-      {
-         $message = "This email address already exists, please select another email address or use forget password link"; 
-     }
-    else if(!empty($username) && !empty($user_email) && !empty($user_password))
-       {
-         $user_role = "Subscriber";     
-         $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
-         register_user($username, $user_password, $user_email, $user_role);
-         $message = "Registration has been submitted successfully";       
-       }
-      else
-       {
-         $message = "Fields cannot be empty";   
-       } */
    } 
 
 ?>                        
