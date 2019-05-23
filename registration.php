@@ -19,10 +19,55 @@
      ];  
        
       
-     if(!username_exists($username))
+      if(!username_exists($username))
+       {
+         $error['username'] = "This username already exists, please select another username";   
+       }
+      
+      if($username == '')
+       {
+         $error['username'] = "Username field cannot be empty";   
+       }
+      
+      if(strlen($username) < 4 )
+       {
+          $error['username'] = "Username needs to be longer that 3 characters";   
+       }
+      
+      if(!email_exists($user_email))
+       {
+         $error['user_email'] = "This email address already exists, please select another email address or <a href='index.php'> login</a>";   
+       }
+      
+      if($user_email == '')
+       {
+         $error['user_email'] = "Email address field cannot be empty";   
+       }
+      
+       if($user_password == '')
+       {
+         $error['user_password'] = "Password field cannot be empty";   
+       }
+      
+       if(strlen($user_password) < 7 )
+        {
+          $error['user_password'] = "Password should be longer than 6 characters";   
+        }
+       
+       foreach($error as $key => $value)
+        {
+          if(empty($value))
+           {
+             // register and login user  
+           }
+           
+        }
+      
+    /* if(!username_exists($username))
        {
          $message = "This username already exists, please select another username";   
        }
+      
      else if(!email_exists($user_email))
       {
          $message = "This email address already exists, please select another email address or use forget password link"; 
@@ -37,12 +82,8 @@
       else
        {
          $message = "Fields cannot be empty";   
-       }
-   }
- else
-  {
-    $message = "";   
-  }
+       } */
+   } 
 
 ?>                        
 
@@ -56,7 +97,6 @@
                 <div class="form-wrap">
                 <h1>Register</h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
-                        <h6 class="text-center"><?php echo $message; ?></h6>
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
                             <input type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username">
