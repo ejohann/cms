@@ -183,7 +183,7 @@ function is_admin($username = '')
      $query = "SELECT username FROM users WHERE username = '$username'";
      $results = mysqli_query($connection, $query);
      confirm_query($results);
-     if(mysqli_num_rows($results) = 0)
+     if(mysqli_num_rows($results) == 0)
       {
          return true;
       }
