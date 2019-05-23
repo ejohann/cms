@@ -93,7 +93,7 @@
   </thead>
   <tbody>
     <?php 
-      $query = "SELECT posts.id as p_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id as c_id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id";
+      $query = "SELECT posts.id as p_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id as c_id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id ORDER BY p_id DESC";
       $select_all_posts = mysqli_query($connection, $query);
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
