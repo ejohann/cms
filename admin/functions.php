@@ -218,8 +218,9 @@ function is_admin($username = '')
   function register_user($username, $user_password, $user_email, $user_role)
    {
      global $connection;
+     $user_hash_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
      $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
-     $query .= "VALUES ('{$username}', '{$user_password}', '{$user_email}', '{$user_role}' )";    
+     $query .= "VALUES ('{$username}', '{$user_hash_password}', '{$user_email}', '{$user_role}' )";    
      $register_user_query = mysqli_query($connection, $query);  
      confirm_query($register_user_query);
      login_user($username, $user_password);
@@ -229,6 +230,7 @@ function is_admin($username = '')
   function login_user($username, $user_password)
    {
      global $connection;  
+
      $query = "SELECT * FROM users WHERE username = '{$username}' ";
      $select_user_by_name = mysqli_query($connection, $query);
      confirm_query($select_user_by_name);
@@ -252,12 +254,9 @@ function is_admin($username = '')
            $_SESSION['user_email'] = $the_user_email;
            $_SESSION['user_role'] = $the_user_role;
            $_SESSION['user_id'] = $the_user_id;
-           header("Location: ../admin/index.php");
+           header("Location: admin/index.php");
           }
-         else
-          {      
-            header("Location: ../index.php");
-          }
+        
    }
 
 ?>
