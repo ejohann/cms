@@ -100,12 +100,15 @@
     <?php 
     //  $query = "SELECT * FROM posts ORDER BY id DESC";
       
-      $query = "SELECT posts.id, post.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_categories = categories.id";
+      $query = "SELECT posts.id as p_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id as c_id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id";
       
       $select_all_posts = mysqli_query($connection, $query);
+       
+      
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
-          $post_id = escape($row['id']);
+          
+          $post_id = escape($row['p_id']);
           $post_author = $row['post_author'];
           $post_title = $row['post_title'];
           $post_cateogry_id = escape($row['post_category_id']);
@@ -116,6 +119,8 @@
          // $post_comment_count = $row['post_comment_count'];
           $post_date = $row['post_date'];
           $post_views_count = $row['post_views_count'];
+          $category_title = $row['category_title'];
+          $category_id = $row['c_id'];
           echo "<tr>";
           
           ?>
@@ -126,14 +131,14 @@
           echo "<td>{$post_id}</td>";
           echo "<td>{$post_author}</td>";
           echo "<td>{$post_title}</td>";
-          $query = "SELECT * FROM categories WHERE id= $post_cateogry_id";
+        /*  $query = "SELECT * FROM categories WHERE id= $post_cateogry_id";
           $select_category_by_id = mysqli_query($connection, $query);
           confirm_query( $select_category_by_id);
           while($row = mysqli_fetch_assoc($select_category_by_id))
             {
               $category_title = $row['category_title'];
               $category_id = $row['id'];
-            }
+            } */
           echo "<td>{$category_title}</td>";
           echo "<td>{$post_status}</td>";
           echo "<td><img width='100' src='../images/{$post_image}' alt='image'></img></td>";
@@ -143,7 +148,7 @@
           $select_comment_by_post_id = mysqli_query($connection, $query_comment);
           confirm_query($select_comment_by_post_id);
           $row = mysqli_fetch_array($select_comment_by_post_id);
-          $comment_id = $row['id'];
+       //   $comment_id = $row['id'];
           
           $post_comment_count = mysqli_num_rows($select_comment_by_post_id);   
           
