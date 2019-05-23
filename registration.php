@@ -7,7 +7,7 @@
     
 <?php
 
-  if(isset($_POST['submit']))
+  if(isset($_POST['register']))
    {
      $username = escape($_POST['username']);
      $user_email = escape($_POST['email']);
@@ -118,7 +118,7 @@
                             <p><?php echo isset($error['user_password']) ? $error['user_password'] : '' ?></p>
                         </div>
                 
-                        <input type="submit" name="submit" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>
