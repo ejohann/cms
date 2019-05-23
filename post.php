@@ -37,6 +37,15 @@
             }
           else      
             { 
+              
+              
+              $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
+              $update_post_views = mysqli_query($connection, $views_query);
+              if(!$update_post_views)
+               {
+                 die("QUERY FAILED: " . mysqli_error($connection));  
+               }
+              
             while($row = mysqli_fetch_assoc($select_post_by_id))
               {
                 $post_title = $row['post_title'];
