@@ -1,6 +1,5 @@
 <?php
   include("delete_modal.php");
-
 ?>
  
 
@@ -99,7 +98,10 @@
   </thead>
   <tbody>
     <?php 
-      $query = "SELECT * FROM posts ORDER BY id DESC";
+    //  $query = "SELECT * FROM posts ORDER BY id DESC";
+      
+      $query = "SELECT posts.id, post.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_categories = categories.id";
+      
       $select_all_posts = mysqli_query($connection, $query);
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
