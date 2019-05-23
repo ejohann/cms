@@ -12,6 +12,12 @@
      $username = escape($_POST['username']);
      $user_email = escape($_POST['email']);
      $user_password = escape($_POST['password']);
+     $error = [
+         'username' => '',
+         'user_email' => '',
+         'user_password' => ''
+     ];  
+       
       
      if(!username_exists($username))
        {
