@@ -227,6 +227,7 @@ function is_admin($username = '')
 
   function login_user($username, $user_password)
    {
+     global $connection;  
      $query = "SELECT * FROM users WHERE username = '{$username}' ";
      $select_user_by_name = mysqli_query($connection, $query);
      confirm_query($select_user_by_name);
