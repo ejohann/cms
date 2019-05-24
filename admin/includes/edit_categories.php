@@ -33,7 +33,7 @@
               } 
              else
               {
-                  header("Location: categories.php");
+                redirect("categories.php");
               }
           }
       ?>                                   
