@@ -16,7 +16,7 @@
            $edit_category_id = $category_id;
            $category_title = $category_title;
          }
-
+         mysqli_stmt_close($statement);
         if(isset($_POST['update_category']))
           {
             $the_category_title = escape($_POST['edit_category_title']);   
@@ -28,6 +28,8 @@
              }
             
             confirm_query($statement_update);
+            mysqli_stmt_close($statement_update);
+            
             redirect("categories.php");
             
             /*
