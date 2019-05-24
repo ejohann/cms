@@ -20,23 +20,37 @@
           if(isset($_GET['category_id']))
             {
               $the_category_id = escape($_GET['category_id']); 
+              
+              $statement_one = mysqli_prepare($connection, "SELECT id, post_title, post_author, post_date, post_image, post_content FROM posts WHERE post_category_id = ? AND post_status = ?");
+              $published = "published";
             
-          $query = "SELECT * FROM posts WHERE post_category_id = '{$the_category_id}' AND post_status = 'published' ";
-          $select_posts_by_id = mysqli_query($connection, $query);
-          if(mysqli_num_rows($select_posts_by_id) == 0)
+         // $query = "SELECT * FROM posts WHERE post_category_id = '{$the_category_id}' AND post_status = 'published' ";
+        //  $select_posts_by_id = mysqli_query($connection, $query);
+            
+              if(isset($statement_one))
+               {
+                 mysqli_stmt_bind_param($statement_one, "is", $the_category_id, $published);
+                 mysqli_stmt_execute($statement_one);
+                  mysqli_stmt_bind_result($statement_one, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content);
+                
+                  $statement = $statement_one;
+                  
+               }
+
+          if(mysqli_stmt_num_rows($statement) === 0)
             {
                echo "<h1 class='text-center'>No posts to display</h1>"; 
             }
-          else      
-            {  
-          while($row = mysqli_fetch_assoc($select_posts_by_id ))
+        //  else      
+        //    {  
+          while(mysqli_stmt_fetch($statement))
             {
-              $post_id = $row['id'];
+             /* $post_id = $row['id'];
               $post_title = $row['post_title'];
               $post_author = $row['post_author'];
               $post_date = $row['post_date'];
-              $post_image = $row['post_image'];
-              $post_content = "" . substr($row['post_content'], 0, 100) . "...";
+              $post_image = $row['post_image']; */
+              $post_content = "" . substr($post_content, 0, 100) . "...";
         ?>
         <h2>
           <a href="post.php?post_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
@@ -51,7 +65,7 @@
         <hr>
         <?php          
             }
-          }
+          //}
           }
           else
            {
