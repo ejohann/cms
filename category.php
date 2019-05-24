@@ -20,57 +20,41 @@
           if(isset($_GET['category_id']))
             {
               $the_category_id = escape($_GET['category_id']); 
-              
               $statement_one = mysqli_prepare($connection, "SELECT id, post_title, post_author, post_date, post_image, post_content FROM posts WHERE post_category_id = ? AND post_status = ?");
               $published = "published";
-            
-         // $query = "SELECT * FROM posts WHERE post_category_id = '{$the_category_id}' AND post_status = 'published' ";
-        //  $select_posts_by_id = mysqli_query($connection, $query);
-            
               if(isset($statement_one))
                {
                  mysqli_stmt_bind_param($statement_one, "is", $the_category_id, $published);
                  mysqli_stmt_execute($statement_one);
-                  mysqli_stmt_bind_result($statement_one, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content);
-                
-                  $statement = $statement_one;
-                  
+                 mysqli_stmt_bind_result($statement_one, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content);
+                 $statement = $statement_one; 
                }
 
-          if(mysqli_stmt_num_rows($statement) === 0)
-            {
-               echo "<h1 class='text-center'>No posts to display</h1>"; 
-            }
-        //  else      
-        //    {  
-          while(mysqli_stmt_fetch($statement))
-            {
-             /* $post_id = $row['id'];
-              $post_title = $row['post_title'];
-              $post_author = $row['post_author'];
-              $post_date = $row['post_date'];
-              $post_image = $row['post_image']; */
-              $post_content = "" . substr($post_content, 0, 100) . "...";
+              if(mysqli_stmt_num_rows($statement) === 0)
+                {
+                   echo "<h1 class='text-center'>No posts to display</h1>"; 
+                }
+      
+              while(mysqli_stmt_fetch($statement))
+               {
+                 $post_content = "" . substr($post_content, 0, 100) . "...";
         ?>
-        <h2>
-          <a href="post.php?post_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
-        </h2>
-        <p class="lead">by <a href="index.php"><?php echo $post_author; ?></a></p>
-        <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
-        <hr>
-        <a href="post.php?post_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt=""></img></a>
-        <hr>
-        <p><?php echo $post_content; ?></p>
-        <a class="btn btn-primary" href="post.php?post_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-        <hr>
+                 <h2><a href="post.php?post_id=<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
+                 <p class="lead">by <a href="index.php"><?php echo $post_author; ?></a></p>
+                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
+                 <hr>
+                  <a href="post.php?post_id=<?php echo $post_id; ?>"><img class="img-responsive" src="images/<?php echo $post_image; ?>" alt=""></img></a>
+                 <hr>
+                 <p><?php echo $post_content; ?></p>
+                 <a class="btn btn-primary" href="post.php?post_id=<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                 <hr>
         <?php          
+               }
             }
-          //}
-          }
           else
-           {
+            {
               header("Location: index.php");   
-           }
+            }
         ?>
              
         <!-- Pager -->
