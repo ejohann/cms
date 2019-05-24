@@ -1,6 +1,7 @@
 <?php
   include "./includes/db.php";
   include "./includes/header.php";
+  include "./admin/functions.php";
 ?>
   
   <!-- Navigation -->
@@ -18,7 +19,7 @@
         <?php
           if(isset($_GET['category_id']))
             {
-              $the_category_id = $_GET['category_id']; 
+              $the_category_id = escape($_GET['category_id']); 
             
           $query = "SELECT * FROM posts WHERE post_category_id = '{$the_category_id}' AND post_status = 'published' ";
           $select_posts_by_id = mysqli_query($connection, $query);
