@@ -61,11 +61,11 @@ session_start();
            {
               if($_SESSION['user_role'] == 'Admin')
                {
-                 echo " <li><a href='admin'>Admin</a></li>";
+                 echo " <li><a href='/cms/admin'>Admin</a></li>";
                  if(isset($_GET['post_id']))
                    {
                      $post_id = $_GET['post_id'];
-                     echo "<li><a href='admin/posts.php?source=edit_post&post_id={$post_id}'>Edit Post</a></li>";  
+                     echo "<li><a href='/cms/admin/posts.php?source=edit_post&post_id={$post_id}'>Edit Post</a></li>";  
                    }
               }
            }
