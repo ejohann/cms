@@ -52,7 +52,7 @@
                 $post_image = $row['post_image'];
                 $post_content = $row['post_content'];
       ?>
-      <h2><a href="#"><?php echo $post_title; ?></a></h2>
+      <h2><?php echo $post_title; ?></h2>
       <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
       <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
       <hr>
