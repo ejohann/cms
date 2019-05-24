@@ -23,22 +23,33 @@
     //    confirm_query($select_category_by_id); 
       //  $row = mysqli_fetch_array($select_category_by_id);
     //    $category_title = $row['category_title'];
-        if(isset($_POST['edit']))
+        if(isset($_POST['update_category']))
           {
-            $the_category_title = escape($_POST['edit_category_title']);    
-            $query = "UPDATE categories SET category_title = '{$the_category_title}' WHERE id = '{$edit_category_id}' ";
-            $edit_query = mysqli_query($connection, $query);
+            $the_category_title = escape($_POST['edit_category_title']); 
+            
+            $statement_update = mysqli_prepare($connection, "UPDATE categories SET category_title = ? WHERE id  = ? ");
+           if(isset($statement_update))
+             {
+               mysqli_stmt_bind_param($statement_update, 'si', $the_category_title, $edit_category_id);
+               mysqli_stmt_execute($statement_update);    
+            }
+            
+          //  $query = "UPDATE categories SET category_title = '{$the_category_title}' WHERE id = '{$edit_category_id}' ";
+            // $edit_query = mysqli_query($connection, $query);
            
-            if(!$edit_query)
+            if(!$statement_update)
               {
                 die("Category Query Failed " . mysqli_error($connection));  
               } 
+             else
+             {
              header("Location: categories.php");
-          }
+             }
+             }
       ?>                                   
     <input class="form-control"  type="text" value=<?php echo $category_title; ?> name="edit_category_title"></input>
   </div>
   <div class="form-group">
-    <input class="btn btn-primary" type="submit" name="edit" value="Update">
+    <input class="btn btn-primary" type="submit" name="update_category" value="Update">
   </div>
 </form> 
