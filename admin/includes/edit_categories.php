@@ -29,18 +29,7 @@
             
             confirm_query($statement_update);
             mysqli_stmt_close($statement_update);
-            
             redirect("categories.php");
-            
-            /*
-             if(!$statement_update)
-              {
-                die("Category Query Failed " . mysqli_error($connection));  
-              } 
-             else
-              {
-                redirect("categories.php");
-              } */
           }
       ?>                                   
     <input class="form-control"  type="text" value=<?php echo $category_title; ?> name="edit_category_title"></input>
