@@ -68,11 +68,26 @@ users_online();
    }
 
 
+function add_categories_form()
+  {
+     echo "  
+      <form action='' method='post'>
+        <div class='form-group'>
+          <label for='category_title'>Add Category</label>
+          <input class='form-control' type='text' name='category_title'></input>        
+        </div>
+        <div class='form-group'>
+          <input class='btn btn-primary' type='submit' name='add_category' value='Add Category'>
+        </div>
+      </form> 
+        ";
+   }
+  
 
 function insert_categories()
   {
      global $connection;
-     if(isset($_POST['submit']))
+     if(isset($_POST['add_category']))
        {
          $category_title = escape($_POST['category_title']);
          if($category_title == "" || empty($category_title))
@@ -81,10 +96,21 @@ function insert_categories()
            }
          else
            {
-             $query = "INSERT INTO categories(category_title) ";
-             $query .= "VALUE('{$category_title}')";                         
-             $create_category_query = mysqli_query($connection, $query);
-             if(!$create_category_query)
+            
+             $statement = mysqli_prepare($connection, "INSERT INTO categories (category_title) VALUES (?) ");
+            
+           
+             mysqli_stmt_bind_param($statement, 's', $category_title);
+           //  $category_title = $category_title;
+             
+             mysqli_stmt_execute($statement); 
+             
+           //  echo $category_title;
+             
+             // $query = "INSERT INTO categories(category_title) ";
+            // $query .= "VALUE('{$category_title}')";                         
+             // $create_category_query = mysqli_query($connection, $query);
+             if(!$statement)
                {
                  die("Category Query Failed " . mysqli_error($connection));   
                }
@@ -97,21 +123,6 @@ function insert_categories()
    }
 
 
-function add_categories_form()
-  {
-     echo "  
-      <form action='' method='post'>
-        <div class='form-group'>
-          <label for='category_title'>Add Category</label>
-          <input class='form-control' type='text' name='category_title'></input>        
-        </div>
-        <div class='form-group'>
-          <input class='btn btn-primary' type='submit' name='submit' value='Add Category'>
-        </div>
-      </form> 
-        ";
-   }
-  
 function delete_categories()
   {
     global $connection; 
