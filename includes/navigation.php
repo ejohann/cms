@@ -36,7 +36,7 @@ session_start();
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-           <li class='<?php echo $home_class; ?>'>  <a href="index.php">Home</a></li>
+           <li class='<?php echo $home_class; ?>'>  <a href="/cms">Home</a></li>
         <?php          
           $query = "SELECT * FROM categories";
           $select_all_categories = mysqli_query($connection, $query);
@@ -51,10 +51,10 @@ session_start();
                {
                  $category_class = 'active';   
                }
-              echo "<li class='{$category_class}'><a href='category.php?category_id={$category_id}'>{$category_title}</a></li>";
+              echo "<li class='{$category_class}'><a href='/cms/category/{$category_id}'>{$category_title}</a></li>";
             }
         ?>
-        <li  class='<?php echo $contact_class; ?>'><a href='contact.php'>Contact</a></li>  
+        <li  class='<?php echo $contact_class; ?>'><a href='/cms/contact'>Contact</a></li>  
         <?php  
             
           if(isset($_SESSION['user_role']))
@@ -71,7 +71,7 @@ session_start();
            }
           else
           {
-             echo " <li class='{$registration_class}'><a href='registration.php'>User Registration</a></li>";   
+             echo " <li class='{$registration_class}'><a href='/cms/registration'>User Registration</a></li>";   
           }
         ?>
              
