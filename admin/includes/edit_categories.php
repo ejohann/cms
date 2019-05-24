@@ -3,14 +3,12 @@
     <label for="category_title">Edit Category</label>
       <?php
       
-       $statement = mysqli_prepare($connection, "SELECT id, category_title FROM categories WHERE id = ? ");
-      
+       $statement = mysqli_prepare($connection, "SELECT id, category_title FROM categories WHERE id = ? ");  
        if(isset($statement))
         {
           mysqli_stmt_bind_param($statement, 'i', $edit_category_id);
           mysqli_stmt_execute($statement);
-          mysqli_stmt_bind_result($statement, $category_id, $category_title);
-         
+          mysqli_stmt_bind_result($statement, $category_id, $category_title);    
         }
       
         while(mysqli_stmt_fetch($statement))
@@ -18,34 +16,26 @@
            $edit_category_id = $category_id;
            $category_title = $category_title;
          }
-      //  $query_category = "SELECT * FROM categories WHERE id = $edit_category_id";
-       // $select_category_by_id = mysqli_query($connection, $query_category);
-    //    confirm_query($select_category_by_id); 
-      //  $row = mysqli_fetch_array($select_category_by_id);
-    //    $category_title = $row['category_title'];
+
         if(isset($_POST['update_category']))
           {
-            $the_category_title = escape($_POST['edit_category_title']); 
-            
+            $the_category_title = escape($_POST['edit_category_title']);   
             $statement_update = mysqli_prepare($connection, "UPDATE categories SET category_title = ? WHERE id  = ? ");
-           if(isset($statement_update))
+            if(isset($statement_update))
              {
                mysqli_stmt_bind_param($statement_update, 'si', $the_category_title, $edit_category_id);
                mysqli_stmt_execute($statement_update);    
-            }
-            
-          //  $query = "UPDATE categories SET category_title = '{$the_category_title}' WHERE id = '{$edit_category_id}' ";
-            // $edit_query = mysqli_query($connection, $query);
-           
+             }
+
             if(!$statement_update)
               {
                 die("Category Query Failed " . mysqli_error($connection));  
               } 
              else
-             {
-             header("Location: categories.php");
-             }
-             }
+              {
+                  header("Location: categories.php");
+              }
+          }
       ?>                                   
     <input class="form-control"  type="text" value=<?php echo $category_title; ?> name="edit_category_title"></input>
   </div>
