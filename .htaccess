@@ -8,3 +8,5 @@ RewriteRule ^category/(\d+)$ category.php?category_id=$1 [NC,L]
 
 RewriteRule ^authorpost/(\w+)/(\d+)$ author_post.php?author=$1&post_id=$2 [NC,L]
 
+RewriteRule ^page/(\d+)$ index.php?page=$1 [NC,L]
+
