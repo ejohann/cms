@@ -92,11 +92,11 @@
            {
               if($i == $page)
                {
-                  echo "<li class='active_link'><a href='index.php?page={$i}'>{$i}</a></li>"; 
+                  echo "<li class='active_link'><a href='/cms/page/{$i}'>{$i}</a></li>"; 
               }
               else
               {
-                 echo "<li><a href='index.php?page={$i}'>{$i}</a></li>";  
+                 echo "<li><a href='/cms/page/{$i}'>{$i}</a></li>";  
               }             
            }
         } // end show if have post
