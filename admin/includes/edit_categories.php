@@ -26,15 +26,19 @@
                mysqli_stmt_bind_param($statement_update, 'si', $the_category_title, $edit_category_id);
                mysqli_stmt_execute($statement_update);    
              }
-
-            if(!$statement_update)
+            
+            confirm_query($statement_update);
+            redirect("categories.php");
+            
+            /*
+             if(!$statement_update)
               {
                 die("Category Query Failed " . mysqli_error($connection));  
               } 
              else
               {
                 redirect("categories.php");
-              }
+              } */
           }
       ?>                                   
     <input class="form-control"  type="text" value=<?php echo $category_title; ?> name="edit_category_title"></input>
