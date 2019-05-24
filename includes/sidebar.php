@@ -50,7 +50,7 @@
                    $category_title = $row['category_title']; 
                    $category_id = $row['id']; 
             ?>
-            <li><a href="category.php?category_id=<?php echo $category_id ?>"><?php echo $category_title; ?></a></li>
+            <li><a href="/cms/category/<?php echo $category_id ?>"><?php echo $category_title; ?></a></li>
             <?php      
                  }
             ?>
