@@ -12,10 +12,17 @@
    {
      if(isset($_POST['username']) && isset($_POST['password'])) 
       {
+         if(($_POST['username'] != '' || $_POST['username'] != null) && ($_POST['password'] != '' || $_POST['password'] != null))
+          {
         $username = escape($_POST['username']);
         $password = escape($_POST['password']);
         login_user($username, $password);
         redirect("/cms/admin");
+         }
+         else
+         {
+             echo "Please enter a username and password";
+         }
       }
     else
      {
