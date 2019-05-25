@@ -3,7 +3,10 @@
 <?php include "admin/functions.php"; ?>
 
 <?php
-  
+  if(!if_it_is_method('get') || !$_GET['forgot'])
+   {
+      redirect('index');
+   }
 
 ?>
 
