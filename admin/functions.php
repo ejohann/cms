@@ -223,7 +223,16 @@ function is_admin($username = '')
      }
     return false;  
   }
- 
+
+ function is_logged_in()
+  {
+     if(isset($_SESSION['user_role']))
+      {
+        return true;   
+      }
+     return false;
+  }
+
 
   function register_user($username, $user_password, $user_email, $user_role)
    {
