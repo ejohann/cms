@@ -239,6 +239,7 @@ function is_admin($username = '')
        {
          redirect($redirectLocation);   
        }
+      return false;
     }
   
 
@@ -271,9 +272,7 @@ function is_admin($username = '')
         $the_user_lastname = $row['user_lastname'];
         $the_user_email = $row['user_email'];
         $the_user_role = $row['user_role'];
-      }
-    
-      if(password_verify($user_password, $the_user_password))
+        if(password_verify($user_password, $the_user_password))
          {
            // user login successful
            $_SESSION['username'] = $the_username;
@@ -283,7 +282,14 @@ function is_admin($username = '')
            $_SESSION['user_role'] = $the_user_role;
            $_SESSION['user_id'] = $the_user_id;
            
-          }      
+          }   
+        else
+         {
+            return false;
+        }
+      }
+    
+     
    }
 
 ?>
