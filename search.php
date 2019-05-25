@@ -2,6 +2,7 @@
      include "./includes/db.php";
 
    include "./includes/header.php";
+   include "./admin/functions.php";
 ?>
 
     <!-- Navigation -->
@@ -80,7 +81,7 @@
                    }
                   else
                    {
-                      
+                      redirect("/cms");
                    }
                 
                 
