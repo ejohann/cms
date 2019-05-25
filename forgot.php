@@ -3,9 +3,37 @@
 <?php include "admin/functions.php"; ?>
 
 <?php
-  if(!if_it_is_method('get') || !$_GET['forgot'])
+  // Check if request came from get request else redirect user
+ if(!if_it_is_method('get') && !isset($_GET['forgot']))
    {
       redirect('index');
+   }
+
+
+  if(if_it_is_method('post'))
+   {
+     if(isset($_POST['email']))
+      {
+        $email = escape($_POST['email']);   
+        $length = 50;
+        $token = bin2hex(openssl_random_pseudo_bytes($length));
+         
+        if(!email_exists($email))
+         {
+            // echo "Email exists";
+            $update_token = mysqli_prepare($connection, "UPDATE users SET token= ? WHERE user_email = ? ");
+            if($update_token)
+             {
+               mysqli_stmt_bind_param($update_token, 'ss', $token, $email);
+               mysqli_stmt_execute($update_token);
+               mysqli_stmt_close($update_token);
+             }
+            else
+            {
+              echo mysqli_error($connection);    
+            }
+        }
+      }
    }
 
 ?>
