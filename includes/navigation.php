@@ -6,6 +6,9 @@ session_start();
  $home = 'index.php';
  $contact = 'contact.php';
  $registration = 'registration.php';
+ $login = 'login.php';
+ $login_class = '';
+ 
  $page_name = basename($_SERVER['PHP_SELF']);
  
  if($page_name == $registration)
@@ -19,7 +22,11 @@ session_start();
   else if($page_name == $home)
     {
         $home_class = 'active';  
-    }              
+    }  
+ else if($page_name == $login)
+    {
+        $login_class = 'active';  
+    }
 ?>
  
  <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -70,8 +77,8 @@ session_start();
               }
            }
           else
-          {
-             echo " <li class='{$registration_class}'><a href='/cms/registration'>User Registration</a></li>";   
+          { 
+             echo " <li class='{$registration_class}'><a href='/cms/registration'>User Registration</a></li>"; echo " <li class='{$login_class}'><a href='/cms/login'>Login</a></li>";   
           }
         ?>
              
