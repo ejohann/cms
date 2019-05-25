@@ -233,6 +233,15 @@ function is_admin($username = '')
      return false;
   }
 
+   function check_if_user_logged_in_and_redirect($redirectLocation)
+    {
+      if(is_logged_in())
+       {
+         redirect($redirectLocation);   
+       }
+    }
+  
+
 
   function register_user($username, $user_password, $user_email, $user_role)
    {
