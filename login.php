@@ -1,12 +1,28 @@
 <?php include "./includes/db.php"; ?>
 <?php  include "./includes/header.php"; ?>
-<?php include "./admin/functions.php"; ?>
+<?php  include "./admin/functions.php"; ?>
 
 <!-- Navigation -->
 <?php  include "includes/navigation.php"; ?>
     
 <?php 
-
+   check_if_user_logged_in_and_redirect("/cms/admin/");
+   
+  if(if_it_is_method('post'))
+   {
+     if(isset($_POST['username']) && isset($_POST['password'])) 
+      {
+        $username = escape($_POST['username']);
+        $password = escape($_POST['password']);
+        login_user($username, $password);
+        redirect("/cms/admin");
+      }
+    else
+     {
+       redirect('/cms/login.php');   
+     }
+   }
+    
  /* if(isset($_POST['login']))
    {
      $username = escape($_POST['username']);
