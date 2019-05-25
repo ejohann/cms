@@ -226,10 +226,11 @@ function is_admin($username = '')
 
  function is_logged_in()
   {
-     if(isset($_SESSION['user_role']))
+     if(isset($_SESSION['user_role'])  && $_SESSION['user_role'] != null)
       {
         return true;   
       }
+     
      return false;
   }
 
@@ -239,6 +240,7 @@ function is_admin($username = '')
        {
          redirect($redirectLocation);   
        }
+       
       return false;
     }
   
@@ -281,10 +283,12 @@ function is_admin($username = '')
            $_SESSION['user_email'] = $the_user_email;
            $_SESSION['user_role'] = $the_user_role;
            $_SESSION['user_id'] = $the_user_id;
+            redirect("/cms/admin");
            
           }   
         else
          {
+            redirect("/cms/login");
             return false;
         }
       }

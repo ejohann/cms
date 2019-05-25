@@ -6,7 +6,7 @@
 <?php  include "includes/navigation.php"; ?>
     
 <?php 
-   check_if_user_logged_in_and_redirect("/cms/admin/");
+  check_if_user_logged_in_and_redirect("/cms/admin/");
    
   if(if_it_is_method('post'))
    {
@@ -17,7 +17,7 @@
         $username = escape($_POST['username']);
         $password = escape($_POST['password']);
         login_user($username, $password);
-        redirect("/cms/admin");
+       // redirect("/cms/admin");
          }
          else
          {
