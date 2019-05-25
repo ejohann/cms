@@ -215,6 +215,15 @@ function is_admin($username = '')
      exit;
   }
 
+ function if_it_is_method($method = mull)
+  { 
+    if($_SERVER['REQUEST_METHOD'] == strtoupper($method))
+     {
+       return true;    
+     }
+    return false;  
+  }
+ 
 
   function register_user($username, $user_password, $user_email, $user_role)
    {
