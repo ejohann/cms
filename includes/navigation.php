@@ -1,5 +1,7 @@
-<?php
-session_start(); 
+<?php session_start(); ?> 
+
+
+<?
  $registration_class = '';
  $contact_class = '';
  $home_class = '';
@@ -62,9 +64,25 @@ session_start();
             }
         ?>
         <li  class='<?php echo $contact_class; ?>'><a href='/cms/contact'>Contact</a></li>  
-        <?php  
-            
-          if(isset($_SESSION['user_role']))
+       
+        
+         <?php if(is_logged_in()): ?>
+            <li><a href='/cms/admin'>Admin</a></li>
+             <li><a href='/cms/includes/logout.php'>Logout</a></li>
+            <?php
+              if(is_admin($_SESSION['username']) && isset($_GET['post_id']))
+               {
+                 $post_id = escape($_GET['post_id']);
+                 echo "<li><a href='/cms/admin/posts.php?source=edit_post&post_id={$post_id}'>Edit Post</a></li>";  
+               }
+            ?>
+         <?php else : ?>
+            <li class="<?php echo $registration_class; ?>"><a href='/cms/registration'>User Registration</a></li>
+            <li class="<?php echo $registration_class; ?>"><a href='/cms/login'>Login</a></li>
+         <?php endif; ?>
+       
+         <?php       
+       /*   if(isset($_SESSION['user_role']))
            {
               if($_SESSION['user_role'] == 'Admin')
                {
@@ -79,7 +97,7 @@ session_start();
           else
           { 
              echo " <li class='{$registration_class}'><a href='/cms/registration'>User Registration</a></li>"; echo " <li class='{$login_class}'><a href='/cms/login'>Login</a></li>";   
-          }
+          } */
         ?>
              
       </ul>
