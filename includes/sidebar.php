@@ -1,3 +1,25 @@
+<?php 
+  if(if_it_is_method('post'))
+   {
+     if(isset($_POST['username']) && isset($_POST['password'])) 
+      {
+         if(($_POST['username'] != '' || $_POST['username'] != null) && ($_POST['password'] != '' || $_POST['password'] != null))
+          {
+        $username = escape($_POST['username']);
+        $password = escape($_POST['password']);
+        login_user($username, $password);
+       // redirect("/cms/admin");
+         }
+         else
+         {
+             echo "Please enter a username and password";
+         }
+      }  
+   }
+
+?>
+
+
 <div class="col-md-4">
     
    <!-- Blog Search Well -->
@@ -21,8 +43,9 @@
        <h4>Logged in as: <?php echo $_SESSION['username']; ?> </h4>
        <a href='includes/logout.php' class='btn btn-primary'>Logout</a>
      <?php else:?>
+      
        <h4>Login</h4>
-       <form action="login.php" method="post">   
+       <form method="post">   
        <div class="form-group">
         <input type="text" class="form-control" name="username" placeholder="Enter Username"></input>
        </div>
@@ -32,7 +55,9 @@
            <button class="btn btn-primary" type="submit" name="login">Login</button>
          </span>
        </div>
+       <div class="form-group"><a href="forgot.php?forgot=<?php echo uniqid(true); ?>">Forgot Password</div>
      </form><!-- LOGIN form -->
+     
     <?php endif; ?>
    </div>
                 
