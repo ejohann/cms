@@ -4,16 +4,17 @@
 
 
 <!-- Navigation -->
-<?php  include "includes/navigation.php"; ?>
+<?php // include "includes/navigation.php"; ?>
 
 <?php
-    if(!isset($_GET['email']) && !isset($_GET['token']))
+    if((!isset($_GET['email']) || $_GET['email'] == null ) && (!isset($_GET['token']) || $_GET['token'] == null))
      {
        redirect('index');
      }
 
     $token = escape($_GET['token']);
     $email = escape($_GET['email']);
+    $reset_confirm = null;
 
     $confirm_email_token = mysqli_prepare($connection, "SELECT username, user_email FROM users WHERE token = ? AND user_email = ?");
   
@@ -23,7 +24,11 @@
       mysqli_stmt_execute($confirm_email_token);
       mysqli_stmt_bind_result($confirm_email_token, $username, $user_email);
       mysqli_stmt_fetch($confirm_email_token);
-      mysqli_stmt_close($confirm_email_token);
+      mysqli_stmt_close($confirm_email_token); 
+      if($user_email == null)
+       {
+           $reset_confirm = true;
+       }  
     }
   else
     {  
@@ -62,6 +67,7 @@
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="text-center">
+             <?php if(!$reset_confirm) : ?>
               <h3><i class="fa fa-lock fa-4x"></i></h3>
                 <h2 class="text-center">Reset Password</h2>
                   <p>You can reset your password here.</p>
@@ -85,6 +91,9 @@
                       <input type="hidden" class="hide" name="token" id="token" value="">
                     </form>
                   </div><!-- Body-->
+                <?php else : ?>
+                <p>This page has expired</p>
+                <?php endif; ?>  
             </div>
           </div>
         </div>
