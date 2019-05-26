@@ -51,7 +51,7 @@
                $mail->setFrom('info@sunsetcity.gd', 'Johanne Lewis');
                $mail->addAddress($email);
                $mail->Subject = 'This is a test email';
-               $mail->Body = "<p>Pleae click on link to reset password
+               $mail->Body = "<p>Please click on link to reset password
                                 <a href='http://localhost/cms/reset.php?email={$email}&token={$token}'>http://localhost/cms/reset.php?email={$email}&token={$token}</a>
                               </p>";
                if($mail->send()) 
