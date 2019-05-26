@@ -25,8 +25,6 @@
       mysqli_stmt_bind_result($confirm_email_token, $username, $user_email);
       mysqli_stmt_fetch($confirm_email_token);
       mysqli_stmt_close($confirm_email_token);
-       
-       echo "confirm";
     }
   else
     {  
@@ -34,15 +32,28 @@
     }
 
   
-
-
-
-
-
-
-
-
-
+  if(isset($_POST['password']) && isset($_POST['confirmPassword']))
+    {
+      if($_POST['password'] === $_POST['confirmPassword'])
+        {
+          $password = escape($_POST['password']);
+          $hashed_password = password_hash($password, PASSWORD_DEFAULT, array('cost' => 10));
+          $token = '';
+            
+          $update_password = mysqli_prepare($connection, "UPDATE users SET token = ?, user_password = ? WHERE user_email = ? ");
+          if($update_password)
+            {
+              mysqli_stmt_bind_param($update_password, "sss", $token, $hashed_password, $email);
+              mysqli_stmt_execute($update_password);
+              if(mysqli_stmt_affected_rows($update_password) >= 1)
+                {
+                  mysqli_stmt_close($update_password);
+                  redirect('/cms/login.php');
+                }
+              mysqli_stmt_close($update_password);
+            }
+        }
+    }
 
 ?>
 
