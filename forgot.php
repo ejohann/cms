@@ -7,7 +7,7 @@
 ?>
  
 <?php require "./vendor/autoload.php"; ?>
-<?php require "./classes/config.php"; ?>
+<?php // require "./classes/config.php"; ?>
 <?php
 
   
