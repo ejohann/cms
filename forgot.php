@@ -55,12 +55,18 @@
                                 <a href='http://localhost/cms/reset.php?email={$email}&token={$token}'>http://localhost/cms/reset.php?email={$email}&token={$token}</a>
                               </p>";
                if($mail->send()) 
-               { echo "An email has been sent to the address you provided, please check your email and follow the directions.  Please check your junk email, if you don't see the email in your inbox! Thanks."; } else  { echo "EMAIL NOT SENT"; }               
+                 { 
+                   $email_sent = true;
+                 } 
+                else  
+                 { 
+                   echo "EMAIL NOT SENT"; 
+                 }               
              }
             else
-            {
+             {
               echo mysqli_error($connection);    
-            }
+             }
         }
       }
    }
@@ -78,8 +84,9 @@
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="text-center">
-
-
+                             
+                                <?php if(!isset($email_sent)) : ?>
+                                
                                 <h3><i class="fa fa-lock fa-4x"></i></h3>
                                 <h2 class="text-center">Forgot Password?</h2>
                                 <p>You can reset your password here.</p>
@@ -102,7 +109,13 @@
 
                                         <input type="hidden" class="hide" name="token" id="token" value="">
                                     </form>
-
+                                    
+                                     <?php else : ?>
+                                     
+                                    <p>An email has been sent to the address you provided, please check your email and follow the directions.  Please check your junk email, if you don't see the email in your inbox! Thanks</p>
+                                    
+                                    <?php endif; ?>
+                                    
                                 </div><!-- Body-->
 
                         </div>
