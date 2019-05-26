@@ -51,9 +51,11 @@
                $mail->setFrom('info@sunsetcity.gd', 'Johanne Lewis');
                $mail->addAddress($email);
                $mail->Subject = 'This is a test email';
-               $mail->Body = 'Email body';
+               $mail->Body = "<p>Pleae click on link to reset password
+                                <a href='http://localhost/cms/reset.php?email={$email}&token={$token}'>http://localhost/cms/reset.php?email={$email}&token={$token}</a>
+                              </p>";
                if($mail->send()) 
-               { echo "EMAIL SENT"; } else  { echo "EMAIL NOT SENT"; }               
+               { echo "An email has been sent to the address you provided, please check your email and follow the directions.  Please check your junk email, if you don't see the email in your inbox! Thanks."; } else  { echo "EMAIL NOT SENT"; }               
              }
             else
             {
