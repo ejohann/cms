@@ -1,7 +1,8 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
 <?php include "admin/functions.php"; ?>
-
+<?php require "./vendor/autoload.php"; ?>
+<?php require "./classes/config.php"; ?>
 <?php
   // Check if request came from get request else redirect user
  if(!if_it_is_method('get') && !isset($_GET['forgot']))
@@ -27,6 +28,10 @@
                mysqli_stmt_bind_param($update_token, 'ss', $token, $email);
                mysqli_stmt_execute($update_token);
                mysqli_stmt_close($update_token);
+                
+                /*********CONFIGURE PHPMAILER *************/
+                
+                
              }
             else
             {
