@@ -12,7 +12,7 @@
 
   
   // Check if request came from get request else redirect user
- if(!if_it_is_method('get') && !isset($_GET['forgot']))
+ if(!isset($_GET['forgot']))
    {
       redirect('index');
    }
