@@ -1,9 +1,16 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
 <?php include "admin/functions.php"; ?>
+<?php
+ use PHPMailer\PHPMailer\PHPMailer;
+ use PHPMailer\PHPMailer\Exception;
+?>
+ 
 <?php require "./vendor/autoload.php"; ?>
 <?php require "./classes/config.php"; ?>
 <?php
+
+  
   // Check if request came from get request else redirect user
  if(!if_it_is_method('get') && !isset($_GET['forgot']))
    {
@@ -30,8 +37,23 @@
                mysqli_stmt_close($update_token);
                 
                 /*********CONFIGURE PHPMAILER *************/
-                
-                
+        
+               $mail = new PHPMailer();
+               $mail->isSMTP();                                            
+               $mail->Host = Config::SMTP_HOST;  
+               $mail->Username = Config::SMTP_USER;                    
+               $mail->Password = Config::SMTP_password; 
+               $mail->Port = Config::SMTP_PORT; 
+               $mail->SMTPSecure = 'tls';   
+               $mail->SMTPAuth   = true;  
+               $mail->isHTML(true);  
+               $mail->Charset = 'UTF-8';
+               $mail->setFrom('info@sunsetcity.gd', 'Johanne Lewis');
+               $mail->addAddress($email);
+               $mail->Subject = 'This is a test email';
+               $mail->Body = 'Email body';
+               if($mail->send()) 
+               { echo "EMAIL SENT"; } else  { echo "EMAIL NOT SENT"; }               
              }
             else
             {
