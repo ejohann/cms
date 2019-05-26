@@ -3,12 +3,52 @@
 <?php  include "admin/functions.php"; ?>
 
 
-
-
-
 <!-- Navigation -->
-
 <?php  include "includes/navigation.php"; ?>
+
+
+<?php
+    if(!isset($_GET['email']) && !isset($_GET['token']))
+     {
+       redirect('index');
+     }
+
+    $token = escape($_GET['token']);
+    $email = escape($_GET['email']);
+
+    $confirm_email_token = mysqli_prepare($connection, "SELECT username, user_email FROM users WHERE token = ? AND user_email = ?");
+  
+   if($confirm_email_token)
+    {
+      mysqli_stmt_bind_param($confirm_email_token, "ss", $token, $email);
+      mysqli_stmt_execute($confirm_email_token);
+      mysqli_stmt_bind_result($confirm_email_token, $username, $user_email);
+      mysqli_stmt_fetch($confirm_email_token);
+      mysqli_stmt_close($confirm_email_token);
+       
+       echo "confirm";
+    }
+  else
+    {  
+     redirect('index');
+    }
+
+  
+
+
+
+
+
+
+
+
+
+
+?>
+
+
+
+
 
 <div class="container">
 
