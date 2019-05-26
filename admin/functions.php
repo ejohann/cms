@@ -1,6 +1,19 @@
 <?php
   
 
+function image_placeholder($image=null)
+ {
+   if(!$image)
+    {
+       return 'Tulips.jpg';
+   }
+  else
+   {
+      return $image;
+  }
+ }
+
+
 
 
 function escape($string)
