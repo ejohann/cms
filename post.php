@@ -17,7 +17,7 @@
       <?php
         if(isset($_GET['post_id']))
           {
-            $the_post_id = $_GET['post_id'];
+            $the_post_id = escape($_GET['post_id']);
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
               {
                 $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
