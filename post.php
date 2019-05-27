@@ -18,37 +18,58 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = escape($_GET['post_id']);
+            
+            // If logged in user is admin show post even it is draft
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
               {
-                $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
+               // $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
+                $select_post = mysqli_prepare($connection, "SELECT post_title, post_author, post_date, post_image, post_content FROM posts WHERE id = ? ");
+                mysqli_stmt_bind_param($select_post, 'i', $the_post_id);
               }
              else
-              {
-                $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' WHERE post_status = 'published'";
+              { // if user is not logged in only show post if published
+                //    $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' WHERE post_status = 'published'";
+                $select_post = mysqli_prepare($connection, "SELECT post_title, post_author, post_date, post_image, post_content FROM posts WHERE id = ? AND post_status = ? ");
+                $published = 'published'; 
+                mysqli_stmt_bind_param($select_post, 'is', $the_post_id, $published);
               }
-                
-            $select_post_by_id = mysqli_query($connection, $query);
             
-            if(!$select_post_by_id)
-              {
-                 echo "<h1 class='text-center'>No posts to display</h1>"; 
-              }
-             else      
-              {   
+             if(isset($select_post))
+               {
+                 mysqli_stmt_execute($select_post);
+                 mysqli_stmt_bind_result($select_post, $post_title, $post_author, $post_date, $post_image, $post_content);
+             //   
+             }
+            
+            // $select_post_by_id = mysqli_query($connection, $query);
+            
+            
+            
+         //   if(!$post_title)
+       //       {
+         //        echo "<h1 class='text-center'>No posts to display</h1>"; 
+      //        }
+           //  else      
+            //  {   
+            
+            
+            /*
                 $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
                 $update_post_views = mysqli_query($connection, $views_query);
                 if(!$update_post_views)
                   {
                     die("QUERY FAILED: " . mysqli_error($connection));  
                   }
-              
-                 while($row = mysqli_fetch_assoc($select_post_by_id))
+            
+            */
+            
+                 while(mysqli_stmt_fetch($select_post))
                   {
-                    $post_title = $row['post_title'];
-                    $post_author = $row['post_author'];
-                    $post_date = $row['post_date'];
-                    $post_image = $row['post_image'];
-                    $post_content = $row['post_content'];
+            //  //      $post_title = $row['post_title'];
+                //    $post_author = $row['post_author'];
+               //     $post_date = $row['post_date'];
+                 //   $post_image = $row['post_image'];
+                 //   $post_content = $row['post_content'];
       ?>
                     <h2><?php echo $post_title; ?></h2>
                     <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
@@ -60,6 +81,8 @@
                     <hr>
       <?php          
                    }
+            
+                 mysqli_stmt_close($select_post);
       ?>
 
     <!-- Blog Comments -->
@@ -142,7 +165,7 @@
       </div>     
     <?php
         }
-      } // else update post count and show post
+     // } // else update post count and show post
     }  // if post get request
    else
      {
