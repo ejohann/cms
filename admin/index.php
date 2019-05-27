@@ -172,3 +172,7 @@
 </div><!-- /#wrapper -->
 
 <?php include "includes/admin_footer.php"; ?>
+
+
+<script src="https://js.pusher.com/4.4/pusher.min.js"></script>
+
