@@ -5,9 +5,7 @@
 ?>
 
 <!-- Navigation -->
-<?php
-  include "./includes/navigation.php";
-?>
+<?php include "./includes/navigation.php"; ?>
     
 <!-- Page Content -->
 <div class="container">
@@ -20,49 +18,48 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = $_GET['post_id'];
-            
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
               {
-             $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
+                $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
               }
              else
               {
-                  $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' WHERE post_status = 'published'";
-             }
+                $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' WHERE post_status = 'published'";
+              }
                 
             $select_post_by_id = mysqli_query($connection, $query);
             
-        if(!$select_post_by_id)
-            {
-               echo "<h1 class='text-center'>No posts to display</h1>"; 
-            }
-          else      
-            {   
-              $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
-              $update_post_views = mysqli_query($connection, $views_query);
-              if(!$update_post_views)
-               {
-                 die("QUERY FAILED: " . mysqli_error($connection));  
-               }
-              
-            while($row = mysqli_fetch_assoc($select_post_by_id))
+            if(!$select_post_by_id)
               {
-                $post_title = $row['post_title'];
-                $post_author = $row['post_author'];
-                $post_date = $row['post_date'];
-                $post_image = $row['post_image'];
-                $post_content = $row['post_content'];
-      ?>
-      <h2><?php echo $post_title; ?></h2>
-      <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
-      <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
-      <hr>
-      <img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt="">
-      <hr>
-      <p><?php echo $post_content; ?></p>
-      <hr>
-      <?php          
+                 echo "<h1 class='text-center'>No posts to display</h1>"; 
               }
+             else      
+              {   
+                $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
+                $update_post_views = mysqli_query($connection, $views_query);
+                if(!$update_post_views)
+                  {
+                    die("QUERY FAILED: " . mysqli_error($connection));  
+                  }
+              
+                 while($row = mysqli_fetch_assoc($select_post_by_id))
+                  {
+                    $post_title = $row['post_title'];
+                    $post_author = $row['post_author'];
+                    $post_date = $row['post_date'];
+                    $post_image = $row['post_image'];
+                    $post_content = $row['post_content'];
+      ?>
+                    <h2><?php echo $post_title; ?></h2>
+                    <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
+                    <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
+                    <hr>
+                    <img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt="">
+                    <hr>
+                    <p><?php echo $post_content; ?></p>
+                    <hr>
+      <?php          
+                   }
       ?>
 
     <!-- Blog Comments -->
@@ -118,7 +115,6 @@
     <hr>
 
     <!-- Posted Comments -->
-    <!-- Comment -->
     <?php    
       $query = "SELECT * FROM comments WHERE comment_post_id = $the_post_id ";
       $query .= "AND comment_status = 'approved' ";
@@ -146,26 +142,13 @@
       </div>     
     <?php
         }
-    
-       }
-        }
-      else
-      {
-          header("Location: index.php");
-      }
-        
-    ?>                
-
-    <!-- Pager -->
-    <ul class="pager">
-      <li class="previous">
-        <a href="#">&larr; Older</a>
-      </li>
-      <li class="next">
-        <a href="#">Newer &rarr;</a>
-      </li>
-    </ul>
-  
+      } // else update post count and show post
+    }  // if post get request
+   else
+     {
+       header("Location: index.php");
+     }
+  ?>                
   </div> <!-- /Blog Entries  -->
 
 <!-- Blog Sidebar Widgets Column -->
