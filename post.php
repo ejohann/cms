@@ -58,20 +58,13 @@
              mysqli_stmt_close($select_post);
             
              //update post views
-           //  $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
-            
-            $update_views = mysqli_prepare($connection, "UPDATE posts SET post_views_count = post_views_count + ? WHERE id = ?");
-            $views = 1;
-            mysqli_stmt_bind_param($update_views, 'ii', $views, $the_post_id);
-            mysqli_stmt_execute($update_views);
-            confirm_query($update_views);
-            mysqli_stmt_close($update_views);
-            
-            //$update_post_views = mysqli_query($connection, $views_query);
-            // if(!$update_post_views)
-              // {
-                // die("QUERY FAILED: " . mysqli_error($connection));  
-        //       }
+             $update_views = mysqli_prepare($connection, "UPDATE posts SET post_views_count = post_views_count + ? WHERE id = ?");
+             $views = 1;
+             mysqli_stmt_bind_param($update_views, 'ii', $views, $the_post_id);
+             mysqli_stmt_execute($update_views);
+             confirm_query($update_views);
+             // close update views db connection
+             mysqli_stmt_close($update_views);  
       ?>
 
     <!-- Blog Comments -->
