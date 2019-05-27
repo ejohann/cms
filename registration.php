@@ -68,8 +68,8 @@
       if(empty($error))
         {
           register_user($username, $user_password, $user_email, $user_role); 
-          $message['username'] = $username;
-          $pusher_app->trigger('notifications', 'new_user', $message);
+          $data['message'] = $username. " has just registered on website!";
+          $pusher_app->trigger('notifications', 'new_user', $data);
           login_user($username, $user_password);
         }
    } 
