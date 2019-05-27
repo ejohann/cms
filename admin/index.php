@@ -173,19 +173,21 @@
 
 <?php include "includes/admin_footer.php"; ?>
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script>
   $(document).ready(function(){
+    //  Pusher.logToConsole = true;
       
-   var pusher = new Pusher('e7959654d2a9e49cd403', {cluster: 'eu', forceTLS: true});  
-  });
+    var pusher = new Pusher('e7959654d2a9e49cd403', {cluster: 'eu', forceTLS: true});
 
     var notification_channel = pusher.subscribe('notifications');
+      
     notification_channel.bind('new_user', function(notification){
    
     var notification_message = notification.message;
-        console.log(message);
+        console.log(notification_message);
     });
+  });
 </script>
 
