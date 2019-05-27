@@ -68,15 +68,14 @@
              mysqli_stmt_close($update_views);  
       ?>
 
-    <!-- Blog Comments -->
+    <!-- Process comments from form and enter into database -->
     <?php
       if(isset($_POST['create_comment']))
         {      
-          $comment_author = $_POST['comment_author'];
-          $comment_email = $_POST['comment_email'];
-          $comment_content = $_POST['comment_content'];
+          $comment_author = escape($_POST['comment_author']);
+          $comment_email = escape($_POST['comment_email']);
+          $comment_content = escape($_POST['comment_content']);
           $comment_date = date('y-m-d');
-          $the_post_id = $_GET['post_id'];
           $comment_status = "unapproved";
           
           if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content))
@@ -88,10 +87,11 @@
                {
                  die('QUERY FAILED' . mysqli_error($connection));
                }
-              $query_comment_count = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-              $query_comment_count .=  "WHERE id = $the_post_id ";
-              $update_comment_count_query = mysqli_query($connection, $query_comment_count);
+           //   $query_comment_count = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+            //  $query_comment_count .=  "WHERE id = $the_post_id ";
+            //  $update_comment_count_query = mysqli_query($connection, $query_comment_count);
               $confirmation = "Comment has been submitted and will appear on website shortly";
+             
            }
           else
            {
@@ -150,7 +150,6 @@
       </div>     
     <?php
         }
-     // } // else update post count and show post
     }  // if post get request
    else
      {
