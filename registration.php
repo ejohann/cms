@@ -68,6 +68,7 @@
       if(empty($error))
         {
           register_user($username, $user_password, $user_email, $user_role); 
+          $pusher=>trigger('notifications', 'new_user', $username);
           redirect("./admin");
         }
    } 
