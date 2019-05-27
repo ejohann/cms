@@ -18,6 +18,7 @@
         if(isset($_GET['post_id']))
           {
             $the_post_id = escape($_GET['post_id']);
+            $confirmation = '';
             
             // If logged in user is admin show post even it is draft
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
@@ -90,6 +91,7 @@
               $query_comment_count = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
               $query_comment_count .=  "WHERE id = $the_post_id ";
               $update_comment_count_query = mysqli_query($connection, $query_comment_count);
+              $confirmation = "Comment has been submitted and will appear on website shortly";
            }
           else
            {
@@ -100,6 +102,7 @@
                 
     <!-- Comments Form -->
     <div class="well">
+        <p><?php echo $confirmation; ?></p>
       <h4>Leave a Comment:</h4>
       <form action="" method="post" role="form">
         <div class="form-group">
