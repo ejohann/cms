@@ -80,25 +80,12 @@
           
           if(!empty($comment_author) && !empty($comment_email) && !empty($comment_content))
            {
-            //  $query = "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-            //  $query .= "VALUES ($the_post_id, '{$comment_author}', '{$comment_email}', '{$comment_content}', '{$comment_status}', now())";
-              
               $add_comment = mysqli_prepare($connection, "INSERT INTO comments (comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) VALUES (?, ?, ?, ?, ?, ?) ");
               mysqli_stmt_bind_param($add_comment, 'isssss', $the_post_id, $comment_author, $comment_email, $comment_content, $comment_status, $comment_date);
               mysqli_stmt_execute($add_comment);
               confirm_query($add_comment);
               mysqli_stmt_close($add_comment);
-              
-            //  $create_comment_query = mysqli_query($connection, $query);
-            //  if(!$create_comment_query)
-              // {
-            //     die('QUERY FAILED' . mysqli_error($connection));
-              // }
-           //   $query_comment_count = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-            //  $query_comment_count .=  "WHERE id = $the_post_id ";
-            //  $update_comment_count_query = mysqli_query($connection, $query_comment_count);
-              $confirmation = "Comment has been submitted and will appear on website shortly";
-             
+              $confirmation = "Comment has been submitted and will appear on website shortly"; 
            }
           else
            {
