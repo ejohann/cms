@@ -7,8 +7,9 @@
 <?php  include "includes/navigation.php"; ?>
     
 <?php
-
-  $pusher_app = new Pusher\Pusher(Push::APP_ID, Push::APP_SECRET, Push::APP_KEY, Push::APP_OPTIONS);
+  $dotenv = Dotenv\Dotenv::create(__DIR__);
+  $dotenv->load();
+  $pusher_app = new Pusher\Pusher(getenv('APP_ID'), getenv('APP_SECRET'), getenv('APP_KEY'), Push::APP_OPTIONS);
 
 
 
