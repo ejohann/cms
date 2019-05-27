@@ -1,6 +1,7 @@
 <?php  include "includes/db.php"; ?>
 <?php  include "includes/header.php"; ?>
 <?php  include "admin/functions.php"; ?>
+<?php require "vendor/autoload.php"; ?>
 
 <!-- Navigation -->
 <?php  include "includes/navigation.php"; ?>
