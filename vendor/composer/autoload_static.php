@@ -8,18 +8,31 @@ class ComposerStaticInit3628296327a7399f8e43bd5e042554a7
 {
     public static $files = array (
         '3109cb1a231dcd04bee1f9f620d46975' => __DIR__ . '/..' . '/paragonie/sodium_compat/autoload.php',
+        '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
     );
 
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Polyfill\\Ctype\\' => 23,
+        ),
         'P' => 
         array (
             'Pusher\\' => 7,
             'Psr\\Log\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
+        'D' => 
+        array (
+            'Dotenv\\' => 7,
+        ),
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Polyfill\\Ctype\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
+        ),
         'Pusher\\' => 
         array (
             0 => __DIR__ . '/..' . '/pusher/pusher-php-server/src',
@@ -31,6 +44,20 @@ class ComposerStaticInit3628296327a7399f8e43bd5e042554a7
         'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
+        ),
+        'Dotenv\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/vlucas/phpdotenv/src',
+        ),
+    );
+
+    public static $prefixesPsr0 = array (
+        'P' => 
+        array (
+            'PhpOption\\' => 
+            array (
+                0 => __DIR__ . '/..' . '/phpoption/phpoption/src',
+            ),
         ),
     );
 
@@ -44,6 +71,7 @@ class ComposerStaticInit3628296327a7399f8e43bd5e042554a7
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit3628296327a7399f8e43bd5e042554a7::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit3628296327a7399f8e43bd5e042554a7::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit3628296327a7399f8e43bd5e042554a7::$prefixesPsr0;
             $loader->classMap = ComposerStaticInit3628296327a7399f8e43bd5e042554a7::$classMap;
 
         }, null, ClassLoader::class);
