@@ -10,4 +10,12 @@ class Config
     
  }
 
+class Push
+ {
+   const APP_ID = "e7959654d2a9e49cd403";
+   const APP_SECRET = '03b3e52fc889e118db88';
+   const APP_KEY = "790960";
+   const APP_OPTIONS = ['cluster' => 'eu', 'useTLS' => 'true'];
+ }
+
 ?>
