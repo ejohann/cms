@@ -174,6 +174,7 @@
 <?php include "includes/admin_footer.php"; ?>
 
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
 <script src="https://js.pusher.com/4.4/pusher.min.js"></script>
 <script>
   $(document).ready(function(){
@@ -186,6 +187,8 @@
     notification_channel.bind('new_user', function(notification){
    
     var notification_message = notification.message;
+    
+    toastr.success('Great news: ' + notification_message);
         console.log(notification_message);
     });
   });
