@@ -70,7 +70,7 @@
           register_user($username, $user_password, $user_email, $user_role); 
           $message['username'] = $username;
           $pusher->trigger('notifications', 'new_user', $message);
-          redirect("./admin");
+          login_user($username, $user_password);
         }
    } 
 
