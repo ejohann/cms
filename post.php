@@ -22,13 +22,11 @@
             // If logged in user is admin show post even it is draft
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
               {
-               // $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' ";
                 $select_post = mysqli_prepare($connection, "SELECT post_title, post_author, post_date, post_image, post_content FROM posts WHERE id = ? ");
                 mysqli_stmt_bind_param($select_post, 'i', $the_post_id);
               }
              else
               { // if user is not logged in only show post if published
-                //    $query = "SELECT * FROM posts WHERE id = '{$the_post_id}' WHERE post_status = 'published'";
                 $select_post = mysqli_prepare($connection, "SELECT post_title, post_author, post_date, post_image, post_content FROM posts WHERE id = ? AND post_status = ? ");
                 $published = 'published'; 
                 mysqli_stmt_bind_param($select_post, 'is', $the_post_id, $published);
@@ -37,52 +35,43 @@
              if(isset($select_post))
                {
                  mysqli_stmt_execute($select_post);
-                 mysqli_stmt_bind_result($select_post, $post_title, $post_author, $post_date, $post_image, $post_content);
-             //   
-             }
+                 mysqli_stmt_bind_result($select_post, $post_title, $post_author, $post_date, $post_image, $post_content);   
+              }    
+             confirm_query($select_post); 
             
-            // $select_post_by_id = mysqli_query($connection, $query);
-            
-            
-            
-         //   if(!$post_title)
-       //       {
-         //        echo "<h1 class='text-center'>No posts to display</h1>"; 
-      //        }
-           //  else      
-            //  {   
-            
-            
-            /*
-                $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
-                $update_post_views = mysqli_query($connection, $views_query);
-                if(!$update_post_views)
-                  {
-                    die("QUERY FAILED: " . mysqli_error($connection));  
-                  }
-            
-            */
-            
-                 while(mysqli_stmt_fetch($select_post))
-                  {
-            //  //      $post_title = $row['post_title'];
-                //    $post_author = $row['post_author'];
-               //     $post_date = $row['post_date'];
-                 //   $post_image = $row['post_image'];
-                 //   $post_content = $row['post_content'];
+             // Display post
+             while(mysqli_stmt_fetch($select_post))
+               {
       ?>
-                    <h2><?php echo $post_title; ?></h2>
-                    <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
-                    <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
-                    <hr>
-                    <img class="img-responsive" src="/cms/images/<?php echo image_placeholder($post_image); ?>" alt="">
-                    <hr>
-                    <p><?php echo $post_content; ?></p>
-                    <hr>
+                 <h2><?php echo $post_title; ?></h2>
+                 <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
+                 <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
+                 <hr>
+                 <img class="img-responsive" src="/cms/images/<?php echo image_placeholder($post_image); ?>" alt="">
+                 <hr>
+                 <p><?php echo $post_content; ?></p>
+                 <hr>
       <?php          
-                   }
+               }
             
-                 mysqli_stmt_close($select_post);
+             // close select post db connection 
+             mysqli_stmt_close($select_post);
+            
+             //update post views
+           //  $views_query = "UPDATE posts SET post_views_count = post_views_count + 1 WHERE id = $the_post_id ";
+            
+            $update_views = mysqli_prepare($connection, "UPDATE posts SET post_views_count = post_views_count + ? WHERE id = ?");
+            $views = 1;
+            mysqli_stmt_bind_param($update_views, 'ii', $views, $the_post_id);
+            mysqli_stmt_execute($update_views);
+            confirm_query($update_views);
+            mysqli_stmt_close($update_views);
+            
+            //$update_post_views = mysqli_query($connection, $views_query);
+            // if(!$update_post_views)
+              // {
+                // die("QUERY FAILED: " . mysqli_error($connection));  
+        //       }
       ?>
 
     <!-- Blog Comments -->
