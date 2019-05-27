@@ -8,6 +8,10 @@
     
 <?php
 
+  $pusher_app = new Pusher\Pusher(Push::APP_ID, Push::APP_SECRET, Push::APP_KEY, Push::APP_OPTIONS);
+
+
+
   if(isset($_POST['register']))
    {
      $username = escape($_POST['username']);
