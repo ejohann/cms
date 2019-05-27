@@ -118,32 +118,38 @@
 
     <!-- Posted Comments -->
     <?php    
-      $query = "SELECT * FROM comments WHERE comment_post_id = $the_post_id ";
-      $query .= "AND comment_status = 'approved' ";
-      $query .=  "ORDER BY id DESC";
-      $select_comments_by_post_id = mysqli_query($connection, $query);
-      while($row = mysqli_fetch_assoc($select_comments_by_post_id))
+    //  $query = "SELECT * FROM comments WHERE comment_post_id = $the_post_id ";
+//      $query .= "AND comment_status = 'approved' ";
+   //   $query .=  "ORDER BY id DESC";
+     
+        $select_comments = mysqli_prepare($connection, "SELECT comment_author, comment_date, comment_content FROM comments WHERE comment_post_id = ? AND comment_status = ? ORDER BY id DESC");
+        $approved = 'approved';
+        mysqli_stmt_bind_param($select_comments, 'is', $the_post_id, $approved);
+        mysqli_stmt_execute($select_comments);
+        mysqli_stmt_bind_result($select_comments, $comment_author, $comment_date, $comment_content);
+        confirm_query($select_comments);
+            
+      //$select_comments_by_post_id = mysqli_query($connection, $query);
+      while(mysqli_stmt_fetch($select_comments))
         {
-          $comment_id = $row['id'];
+        /*  $comment_id = $row['id'];
           $comment_author = $row['comment_author'];
           $comment_email = $row['comment_email'];
           $comment_post_id = $row['comment_post_id'];
           $comment_status = $row['comment_status'];
           $comment_content = $row['comment_content'];
-          $comment_date = $row['comment_date'];   
+          $comment_date = $row['comment_date'];   */
     ?>
-      <div class="media">
-        <a class="pull-left" href="#"><img class="media-object" src="http://placehold.it/64x64" alt=""></a>
-        <div class="media-body">
-          <h4 class="media-heading">
-            <?php echo $comment_author; ?>
-            <small><?php echo $comment_date; ?></small>
-          </h4>
-          <?php echo $comment_content; ?>
-        </div>
-      </div>     
+          <div class="media">
+            <a class="pull-left" href="#"><img class="media-object" src="http://placehold.it/64x64" alt=""></a>
+            <div class="media-body">
+              <h4 class="media-heading"> <?php echo $comment_author; ?> <small> <?php echo $comment_date; ?></small></h4>
+              <?php echo $comment_content; ?>
+            </div>
+          </div>     
     <?php
         }
+       mysqli_stmt_close($select_comments);        
     }  // if post get request
    else
      {
