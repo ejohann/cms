@@ -266,9 +266,7 @@ function is_admin($username = '')
      $query = "INSERT INTO users (username, user_password, user_email, user_role) ";
      $query .= "VALUES ('{$username}', '{$user_hash_password}', '{$user_email}', '{$user_role}' )";    
      $register_user_query = mysqli_query($connection, $query);  
-     confirm_query($register_user_query);
-     login_user($username, $user_password);
-      
+     confirm_query($register_user_query);   
    }
 
   function login_user($username, $user_password)
