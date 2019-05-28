@@ -265,6 +265,7 @@ function is_admin($username = '')
 
 function user_liked_post($post_id = '')
   {
+    global $connection;
     $user_like = mysqli_prepare($connection, "SELECT likes FROM likes WHERE user_id = ? AND post_id = ?");
     $user_id = logged_in_user_id();
     mysqli_stmt_bind_param($user_like, 'ii', $user_id, $post_id);
