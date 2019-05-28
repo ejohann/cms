@@ -109,32 +109,31 @@
       ?>
                  <!-- LIKE BUTTON -->
                  <?php 
+                     // show like button if user is logged in
                     if(is_logged_in())
                      {
-                    ?> 
-                    
-                         <?php if(user_liked_post($the_post_id)): ?>
-                 <div class="row">
-                     <p class="pull-right"><a class="unlike" href=""><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
-                 </div>
-                  <?php  else: ?>
-                   <div class="row">
-                     <p class="pull-right"><a class="like" href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
-                 </div>
-                 <?php  endif; ?>
+                 ?> 
+                        <?php if(user_liked_post($the_post_id)): ?>
+                          <div class="row">
+                            <p class="pull-right"><a class="unlike" href=""><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
+                          </div>
+                        <?php  else: ?>
+                          <div class="row">
+                            <p class="pull-right"><a class="like" href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                          </div>
+                        <?php endif; ?>
                             
-                    <?php                
-                    }
-                  else
-                   {
-                    ?>
-                      <div class="row">
-                     <p class="pull-right"> <span class="glyphicon glyphicon-thumbs-up"></span> Like</p>
-                 </div>
-                      
-                  <?php      
-                   }
-                   ?>
+                <?php                
+                     } // end if logged in
+                    else
+                     { // else show message if user not logged in
+                ?>
+                        <div class="row">
+                            <p class="pull-right"> You need to <a href="/cms/login.php">login</a> to like post.</p>
+                        </div>   
+                <?php      
+                     } // end if user not logged in
+                ?>
                  
                  
                 
