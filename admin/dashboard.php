@@ -8,11 +8,12 @@
   <div id="page-wrapper">
     <div class="container-fluid">
       
-      <?php if(is_admin(get_username())){ echo "Hello " . get_username();}else{redirect("/cms/admin/");} ?> 
+      <?php if(is_admin(get_username())){ }else{redirect("/cms/admin/");} ?> 
       <!-- Page Heading -->
       <div class="row">
         <div class="col-lg-12">
-          <h1 class="page-header">Welcome to Dashboard <?php echo strtoupper(get_username()); ?></h1>
+            
+          <h1 class="page-header"><small>Role: Admin </small>Welcome to Dashboard <?php echo strtoupper(get_username()); ?></h1>
         </div>
       </div> <!-- /.row -->
                        
