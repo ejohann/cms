@@ -227,7 +227,7 @@
 <script>
    $(document).ready(function(){
     var post_id = <?php echo $the_post_id; ?>;
-    var user_id = 22;
+    var user_id = <?php echo logged_in_user_id(); ?>;
     $('.like').click(function(){
         
       //  console.log("Like button clicked");
