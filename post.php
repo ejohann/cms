@@ -55,7 +55,7 @@
                  
                  <!-- LIKE BUTTON -->
                  <div class="row">
-                     <p class="pull-right"><a href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                     <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                  </div>
                   <div class="row">
                      <p class="pull-right">Likes : 6</p>
@@ -166,3 +166,15 @@
 <?php
   include "./includes/footer.php";
 ?>
+
+
+<script>
+   $(document).ready(function(){
+    $('.like').click(function(){
+        
+        console.log("Like button clicked");
+    });   
+       
+   });
+    
+</script>
