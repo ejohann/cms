@@ -176,6 +176,19 @@ function check_status($table, $column, $status)
  }
 
 
+function get_username()
+ {
+   if(isset($_SESSION['username']))
+    {
+      return $_SESSION['username'];  
+    }
+   else
+    {
+      return null;   
+    }
+ }
+
+
 // check if user is admin and logged in
 function is_admin($username = '')
  {
