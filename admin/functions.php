@@ -155,16 +155,30 @@ function delete_categories()
   }
 
 
+
+
 function record_count($table) 
  {
    global $connection;
-   $query = "SELECT * FROM " . $table ;
-   $select_all_records = mysqli_query($connection, $query);
-   confirm_query($select_all_records);
-   $record_count = mysqli_num_rows($select_all_records);
+//   $query = "SELECT * FROM " . $table ;
+    
+   $select_record = mysqli_prepare($connection, "SELECT id FROM ".$table."");
+ //  mysqli_stmt_bind_param($connection, 's', $table);
+   mysqli_stmt_execute($select_record);
+   confirm_query($select_record);
+   
+    mysqli_stmt_store_result($select_record);
+    $record_count = mysqli_stmt_num_rows($select_record); 
+    mysqli_stmt_close($select_record);
+  // $select_all_records = mysqli_query($connection, $query);
+ //   confirm_query($select_all_records); 
+ //   $record_count = mysqli_num_rows($select_all_records);
    return $record_count; 
  }
   
+
+
+
 function check_status($table, $column, $status)
  {
     global $connection;
