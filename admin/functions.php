@@ -286,7 +286,7 @@ function user_liked_post($post_id = null)
 
  
  // get number of post likes
- function get_post_likes($post_id)
+ function get_post_likes($post_id = null)
   {
      global $connection;
      $post_likes = mysqli_prepare($connection, "SELECT id FROM likes WHERE post_id = ?");
