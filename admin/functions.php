@@ -241,7 +241,7 @@ function is_admin($username = '')
   }
 
 
-
+ //check if a user is logged in
  function logged_in_user_id()
   {
     global $connection;  
@@ -262,7 +262,7 @@ function is_admin($username = '')
      return false;
   }
 
-
+// check if a user liked a post
 function user_liked_post($post_id = null)
   {
     global $connection;
@@ -284,6 +284,22 @@ function user_liked_post($post_id = null)
    return false;  
   } 
 
+ 
+ // get number of post likes
+ function get_post_likes($post_id = null)
+  {
+     global $connection;
+     $post_likes = mysqli_prepare($connection, "SELECT likes FROM likes WHERE post_id = ?");
+     mysqli_stmt_bind_param($post_likes, 'i', $post_id);
+     mysqli_stmt_execute($post_likes);
+     mysqli_stmt_bind_results($post_likes, $likes);
+     mysqli_stmt_fetch($post_likes);
+     $total_post_likes = mysqli_stmt_num_rows($post_likes);
+     mysqli_stmt_close($post_likes);
+     return $total_post_likes;
+  }
+
+ // check if a user is logged in
  function is_logged_in()
   {
      if(isset($_SESSION['user_role'])  && $_SESSION['user_role'] != null)
