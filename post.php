@@ -108,7 +108,12 @@
              mysqli_stmt_close($select_post);
       ?>
                  <!-- LIKE BUTTON -->
-                 <?php if(user_liked_post($the_post_id)): ?>
+                 <?php 
+                    if(is_logged_in())
+                     {
+                    ?> 
+                    
+                         <?php if(user_liked_post($the_post_id)): ?>
                  <div class="row">
                      <p class="pull-right"><a class="unlike" href=""><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
                  </div>
@@ -117,8 +122,24 @@
                      <p class="pull-right"><a class="like" href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                  </div>
                  <?php  endif; ?>
+                            
+                    <?php                
+                    }
+                  else
+                   {
+                    ?>
+                      <div class="row">
+                     <p class="pull-right"> <span class="glyphicon glyphicon-thumbs-up"></span> Like</p>
+                 </div>
+                      
+                  <?php      
+                   }
+                   ?>
+                 
+                 
+                
                   <div class="row">
-                     <p class="pull-right">Likes : 6</p>
+                     <p class="pull-right">Likes: <?php echo get_post_likes($the_post_id); ?></p>
                  </div>
                  <div class="clearfix"></div>
      
