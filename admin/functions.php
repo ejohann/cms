@@ -1,5 +1,8 @@
 <?php
-  
+
+
+
+
 
 function image_placeholder($image=null)
  {
@@ -235,6 +238,28 @@ function is_admin($username = '')
        return true;    
      }
     return false;  
+  }
+
+
+
+ function logged_in_user()
+  {
+    global $connection;  
+    if(is_logged_in())
+     {
+       $username = $_SESSION['username'];
+       $select_user = mysqli_prepare($connection, "SELECT id FROM users WHERE username = ?");
+       mysqli_stmt_bind_param($select_user, 's', $username);
+       mysqli_stmt_execute($select_user);
+       mysqli_stmt_bind_result($select_user, $user_id);
+       mysqli_stmt_fetch($select_user);
+       mysqli_stmt_close($select_user);
+       if($user_id != null)
+        {
+          return $user_id;  
+        }
+     }
+     return false;
   }
 
  function is_logged_in()
