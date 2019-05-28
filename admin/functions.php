@@ -242,7 +242,7 @@ function is_admin($username = '')
 
 
 
- function logged_in_user()
+ function logged_in_user_id()
   {
     global $connection;  
     if(is_logged_in())
@@ -261,6 +261,20 @@ function is_admin($username = '')
      }
      return false;
   }
+
+
+function user_liked_post($post_id = '')
+  {
+    $user_like = mysqli_prepare($connection, "SELECT likes FROM likes WHERE user_id = ? AND post_id = ?");
+    $user_id = logged_in_user_id();
+    mysqli_stmt_bind_param($user_like, 'ii', $user_id, $post_id);
+    mysqli_stmt_execute($user_like);
+    mysqli_stmt_bind_result($user_like, $likes);
+    mysqli_stmt_fetch($user_like);
+    mysqli_stmt_close($user_like);
+    $likes >= 1 ? true : false;
+    
+  } 
 
  function is_logged_in()
   {
