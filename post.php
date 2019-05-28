@@ -8,6 +8,8 @@
 <?php include "./includes/navigation.php"; ?>
    
 <?php 
+
+  // like button clicked db  
   if(isset($_POST['liked']))
    {
      $post_id = escape($_POST['post_id']);
@@ -24,6 +26,28 @@
      //update post likes column in posts
      $update_likes = mysqli_prepare($connection, "UPDATE posts SET post_likes = post_likes + ? WHERE id = ? ");
      mysqli_stmt_bind_param($update_likes, 'ii', $liked, $post_id);
+     mysqli_stmt_execute($update_likes);
+     confirm_query($update_likes);
+     mysqli_stmt_close($update_likes);    
+   }
+
+  //unlike button clicked
+  if(isset($_POST['unliked']))
+   {
+     $post_id = escape($_POST['post_id']);
+     $user_id = escape($_POST['user_id']);
+     $unliked = escape($_POST['unliked']);
+    
+     //remove like from db
+     $delete_like = mysqli_prepare($connection, "DELETE FROM likes WHERE user_id = ? AND post_id = ? ");
+     mysqli_stmt_bind_param($delete_like, 'ii', $user_id, $post_id);
+     mysqli_stmt_execute($delete_like);
+     confirm_query($delete_like);
+     mysqli_stmt_close($delete_like);
+    
+     //update post likes column in posts
+     $update_likes = mysqli_prepare($connection, "UPDATE posts SET post_likes = post_likes - ? WHERE id = ? ");
+     mysqli_stmt_bind_param($update_likes, 'ii', $unliked, $post_id);
      mysqli_stmt_execute($update_likes);
      confirm_query($update_likes);
      mysqli_stmt_close($update_likes);    
