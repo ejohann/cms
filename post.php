@@ -55,7 +55,7 @@
                  
                  <!-- LIKE BUTTON -->
                  <div class="row">
-                     <p class="pull-right"><a href="">Like</a></p>
+                     <p class="pull-right"><a href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                  </div>
                   <div class="row">
                      <p class="pull-right">Likes : 6</p>
