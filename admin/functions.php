@@ -155,24 +155,31 @@ function delete_categories()
   }
 
 
+function record_count_by_user($table, $column) 
+ {
+   global $connection;
+   $select_record_by_user = mysqli_prepare($connection, "SELECT id FROM ".$table." WHERE ".$column." = ? ");
+   $post_author = get_username();    
+   mysqli_stmt_bind_param($select_record_by_user, 's', $post_author);
+   mysqli_stmt_execute($select_record_by_user);
+   confirm_query($select_record_by_user);
+   mysqli_stmt_store_result($select_record_by_user);
+   $record_count = mysqli_stmt_num_rows($select_record_by_user); 
+   mysqli_stmt_close($select_record_by_user);
+   return $record_count; 
+ }
+  
 
 
 function record_count($table) 
  {
    global $connection;
-//   $query = "SELECT * FROM " . $table ;
-    
    $select_record = mysqli_prepare($connection, "SELECT id FROM ".$table."");
- //  mysqli_stmt_bind_param($connection, 's', $table);
    mysqli_stmt_execute($select_record);
    confirm_query($select_record);
-   
-    mysqli_stmt_store_result($select_record);
-    $record_count = mysqli_stmt_num_rows($select_record); 
-    mysqli_stmt_close($select_record);
-  // $select_all_records = mysqli_query($connection, $query);
- //   confirm_query($select_all_records); 
- //   $record_count = mysqli_num_rows($select_all_records);
+   mysqli_stmt_store_result($select_record);
+   $record_count = mysqli_stmt_num_rows($select_record); 
+   mysqli_stmt_close($select_record);
    return $record_count; 
  }
   
