@@ -52,6 +52,15 @@
                  <hr>
                  <p><?php echo $post_content; ?></p>
                  <hr>
+                 
+                 <!-- LIKE BUTTON -->
+                 <div class="row">
+                     <p class="pull-right"><a href="">Like</a></p>
+                 </div>
+                  <div class="row">
+                     <p class="pull-right">Likes : 6</p>
+                 </div>
+                 <div class="clearfix"></div>
       <?php          
                }
             
