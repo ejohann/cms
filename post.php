@@ -115,11 +115,11 @@
                  ?> 
                         <?php if(user_liked_post($the_post_id)): ?>
                           <div class="row">
-                            <p class="pull-right"><a class="unlike" href=""><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
+                            <p class="pull-right"><a class="unlike" href=""><span class="glyphicon glyphicon-thumbs-down" data-toggle="tooltip" data-placement="top" title="I liked this post before"></span> Unlike</a></p>
                           </div>
                         <?php  else: ?>
                           <div class="row">
-                            <p class="pull-right"><a class="like" href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                            <p class="pull-right"><a class="like" href=""><span class="glyphicon glyphicon-thumbs-up" data-toggle="tooltip" data-placement="top" title="Want to like it?"></span> Like</a></p>
                           </div>
                         <?php endif; ?>
                             
@@ -246,6 +246,10 @@
 
 <script>
    $(document).ready(function(){
+       
+    $("[data-toggle='tooltip']").tooltip();
+       
+       
     var post_id = <?php echo $the_post_id; ?>;
     var user_id = <?php echo logged_in_user_id(); ?>;
     $('.like').click(function(){
