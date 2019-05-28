@@ -263,7 +263,7 @@ function is_admin($username = '')
   }
 
 
-function user_liked_post($post_id = '')
+function user_liked_post($post_id = null)
   {
     global $connection;
     $user_like = mysqli_prepare($connection, "SELECT likes FROM likes WHERE user_id = ? AND post_id = ?");
@@ -273,8 +273,15 @@ function user_liked_post($post_id = '')
     mysqli_stmt_bind_result($user_like, $likes);
     mysqli_stmt_fetch($user_like);
     mysqli_stmt_close($user_like);
-    $likes >= 1 ? true : false;
-    
+    if($likes != null)
+     {
+        return true;
+    }
+    else
+    {
+        return false;
+    }
+   return false;  
   } 
 
  function is_logged_in()
