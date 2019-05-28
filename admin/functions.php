@@ -176,23 +176,37 @@ function check_status($table, $column, $status)
  }
 
 
+// check if user is admin and logged in
 function is_admin($username = '')
  {
     global $connection;
-    $query = "SELECT user_role FROM users WHERE username = '$username'";
-    $results = mysqli_query($connection, $query);
-    confirm_query($results);
-    $row = mysqli_fetch_array($results);
-    if($row['user_role'] == "Admin")
+    if(is_logged_in())
      {
-       return true;  
+        $select_role = mysqli_prepare($connection, "SELECT user_role FROM users WHERE username = ? ");
+        mysqli_stmt_bind_param($select_role, 's', $username);
+        mysqli_stmt_execute($select_role);
+        confirm_query($select_role);
+        mysqli_stmt_bind_result($select_role, $user_role);
+        mysqli_stmt_fetch($select_role);
+        mysqli_stmt_close($select_role);
+       if($user_role == "Admin")
+         {
+           return true;  
+         }
+        else
+         {
+            return false;
+         } 
      }
     else
      {
-       return false;
-     } 
+         redirect("/cms/");
+     }
+   return false;
  }
  
+
+
  function username_exists($username)
   {
      global $connection;
