@@ -286,14 +286,13 @@ function user_liked_post($post_id = null)
 
  
  // get number of post likes
- function get_post_likes($post_id = null)
+ function get_post_likes($post_id)
   {
      global $connection;
-     $post_likes = mysqli_prepare($connection, "SELECT likes FROM likes WHERE post_id = ?");
+     $post_likes = mysqli_prepare($connection, "SELECT id FROM likes WHERE post_id = ?");
      mysqli_stmt_bind_param($post_likes, 'i', $post_id);
      mysqli_stmt_execute($post_likes);
-     mysqli_stmt_bind_results($post_likes, $likes);
-     mysqli_stmt_fetch($post_likes);
+     mysqli_stmt_store_result($post_likes);
      $total_post_likes = mysqli_stmt_num_rows($post_likes);
      mysqli_stmt_close($post_likes);
      return $total_post_likes;
