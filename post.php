@@ -82,6 +82,9 @@
                      <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                  </div>
                   <div class="row">
+                     <p class="pull-right"><a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
+                 </div>
+                  <div class="row">
                      <p class="pull-right">Likes : 6</p>
                  </div>
                  <div class="clearfix"></div>
@@ -210,6 +213,21 @@
          }
       }); // ajax
     });   //like click function
+       
+    
+    //unlike function   
+    $('.unlike').click(function(){ 
+      $.ajax({
+          
+         url: "/cms/post.php?post_id=<?php echo $the_post_id; ?>/",
+         type: 'post',
+         data: {
+             'unliked': 1,
+             'post_id': post_id,
+             'user_id': user_id
+         }
+      }); // ajax
+    });   //unlike click function
        
    }); // jquery on load
     
