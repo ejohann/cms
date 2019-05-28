@@ -28,7 +28,7 @@
      mysqli_stmt_bind_param($update_likes, 'ii', $liked, $post_id);
      mysqli_stmt_execute($update_likes);
      confirm_query($update_likes);
-     mysqli_stmt_close($update_likes);    
+     mysqli_stmt_close($update_likes);  
    }
 
   //unlike button clicked
@@ -50,7 +50,7 @@
      mysqli_stmt_bind_param($update_likes, 'ii', $unliked, $post_id);
      mysqli_stmt_execute($update_likes);
      confirm_query($update_likes);
-     mysqli_stmt_close($update_likes);    
+     mysqli_stmt_close($update_likes);  
    }
 
 ?>
@@ -59,7 +59,6 @@
 <div class="container">
   <h1 class="page-header">Page Heading <small>Secondary Text</small></h1>
   <div class="row">
-  
     <!-- Blog Entries Column -->
     <div class="col-md-8">
       <?php
@@ -68,6 +67,7 @@
             $the_post_id = escape($_GET['post_id']);
             $confirmation = '';
             
+           
             // If logged in user is admin show post even it is draft
             if(isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'Admin')
               {
@@ -101,23 +101,28 @@
                  <p><?php echo $post_content; ?></p>
                  <hr>
                  
+             
+      <?php          
+               }
+             // close select post db connection
+             mysqli_stmt_close($select_post);
+      ?>
                  <!-- LIKE BUTTON -->
+                 <?php if(user_liked_post($the_post_id)): ?>
                  <div class="row">
-                     <p class="pull-right"><a class="like" href="#"><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
+                     <p class="pull-right"><a class="unlike" href=""><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
                  </div>
-                  <div class="row">
-                     <p class="pull-right"><a class="unlike" href="#"><span class="glyphicon glyphicon-thumbs-down"></span> Unlike</a></p>
+                  <?php  else: ?>
+                   <div class="row">
+                     <p class="pull-right"><a class="like" href=""><span class="glyphicon glyphicon-thumbs-up"></span> Like</a></p>
                  </div>
+                 <?php  endif; ?>
                   <div class="row">
                      <p class="pull-right">Likes : 6</p>
                  </div>
                  <div class="clearfix"></div>
-      <?php          
-               }
-            
-             // close select post db connection 
-             mysqli_stmt_close($select_post);
-            
+     
+            <?php
              //update post views
              $update_views = mysqli_prepare($connection, "UPDATE posts SET post_views_count = post_views_count + ? WHERE id = ?");
              $views = 1;
