@@ -8,11 +8,26 @@
 <?php include "./includes/navigation.php"; ?>
    
 <?php 
-if(isset($_POST['liked']))
- {
+  if(isset($_POST['liked']))
+   {
+     $post_id = escape($_POST['post_id']);
+     $user_id = escape($_POST['user_id']);
+     $liked = escape($_POST['liked']);
     
-  echo "<h1>Post like clicked</h1>";    
- }
+     //insert like into db
+     $insert_like = mysqli_prepare($connection, "INSERT INTO likes (user_id, post_id, likes) VALUES (?, ?, ?)");
+     mysqli_stmt_bind_param($insert_like, 'iii', $user_id, $post_id, $liked);
+     mysqli_stmt_execute($insert_like);
+     confirm_query($insert_like);
+     mysqli_stmt_close($insert_like);
+    
+     //update post likes column in posts
+     $update_likes = mysqli_prepare($connection, "UPDATE posts SET post_likes = post_likes + ? WHERE id = ? ");
+     mysqli_stmt_bind_param($update_likes, 'ii', $liked, $post_id);
+     mysqli_stmt_execute($update_likes);
+     confirm_query($update_likes);
+     mysqli_stmt_close($update_likes);    
+   }
 
 ?>
     
