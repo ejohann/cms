@@ -14,16 +14,16 @@
       $post_tags = escape($_POST['post_tags']);
       $post_content = escape($_POST['post_content']);
       $post_date = date('d-m-y');
-     // $post_comment_count = 0;
-             
+
       move_uploaded_file($post_image_temp, "../images/$post_image");
-    
-      $query = "INSERT INTO posts(post_category_id, user_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) ";
-      $query .= "VALUES('{$post_category_id}', '{$post_author_id}', '{$post_title}', '{$post_author}', '{$post_date}', '{$post_image}', '{$post_content}', '{$post_tags}',  '{$post_status}')";
-      $create_post_query = mysqli_query($connection, $query);  
-      confirm_query($create_post_query);
       
-      $post_id = mysqli_insert_id($connection);
+      $insert_post = mysqli_prepare($connection, "INSERT INTO posts (post_category_id, user_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+      
+      mysqli_stmt_bind_param($insert_post, 'iisssssss', $post_category_id, $post_author_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_tags, $post_status);    
+      mysqli_stmt_execute($insert_post);
+      confirm_query($insert_post);
+      $post_id = mysqli_stmt_insert_id($insert_post);
+      mysqli_stmt_close($insert_post);
       
       echo "<p class='bg-success'>Post Created: <a href='../post.php?post_id={$post_id}'>View Post </a> or <a href='./posts.php'>Modify Other Posts</a></p>";
     }
