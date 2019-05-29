@@ -27,16 +27,18 @@
       $post_tags = escape($_POST['post_tags']);
       $post_content = escape($_POST['post_content']);
       move_uploaded_file($post_image_temp, "../images/$post_image");       
+     
       if(empty($post_image))
         {
-          $query = "SELECT * FROM posts WHERE id = $the_post_id ";
-          $select_image_query = mysqli_query($connection, $query);
-          confirm_query($select_image_query);
-          while($row = mysqli_fetch_array($select_image_query))
-            { 
-              $post_image = $row['post_image'];    
-            }
+          $select_image = mysqli_prepare($connection, "SELECT post_image FROM posts WHERE id = ? ");
+          mysqli_stmt_bind_param($select_image, 'i', $the_post_id);
+          mysqli_stmt_execute($select_image);
+          confirm_query($select_image);
+          mysqli_stmt_bind_result($select_image, $post_image);
+          mysqli_stmt_fetch($select_image);
+          mysqli_stmt_close($select_image);
         }
+      
       $query = "UPDATE posts SET ";
       $query .= "post_title = '{$post_title}', ";
       $query .= "post_category_id = '{$post_category_id}', ";
