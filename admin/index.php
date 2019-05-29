@@ -79,7 +79,7 @@
               </div>
               <div class="col-xs-9 text-right">
                 <?php
-                   $category_count = record_count('categories');
+                  $category_count = record_count('categories');
                    echo "<div class='huge'>{$category_count}</div>";
                 ?>
                 <div>Categories</div>
@@ -101,7 +101,7 @@
       $published_post_count = check_status('posts', 'post_status', 'published');   
       $draft_post_count = check_status('posts', 'post_status', 'draft');  
       $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
-      $approve_comment_count = check_status('comments', 'comment_status', 'approved');
+    //  $approve_comment_count = check_status('comments', 'comment_status', 'approved');
       $subscriber_count = check_status('users', 'user_role', 'subscriber');
     ?>
     <div class="row">
@@ -115,9 +115,9 @@
               ([
                 ['Data', 'Count'],
                 <?php
-                  $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Active Comments', 'Comments Pending', 'Categories'];
-                  $element_count = [$post_count, $published_post_count, $draft_post_count, $comment_count, $approve_comment_count, $unapprove_comment_count, $category_count];
-                  for($i=0; $i < 7; $i++)
+                  $element_text = ['All Posts', 'Active Posts', 'Draft Posts', 'Comments', 'Comments Pending', 'Categories'];
+                  $element_count = [$post_count, $published_post_count, $draft_post_count, $comment_count, $unapprove_comment_count, $category_count];
+                  for($i=0; $i < 6; $i++)
                     {
                       echo "['{$element_text[$i]}'" . "," . "{$element_count[$i]}],";
                     }
