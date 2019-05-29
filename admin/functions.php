@@ -120,23 +120,16 @@ function delete_categories()
     global $connection; 
     if(isset($_GET['delete']))
       {
-        if(isset($_SESSION['user_role']))
+        if(is_admin(get_username()))
           {
-            if($_SESSION['user_role'] == "Admin")
-              {
-                $delete_category_id = escape($_GET['delete']);
-                $query = "DELETE FROM categories WHERE id = {$delete_category_id}";
-                $delete_query = mysqli_query($connection, $query);
-                header("Location: categories.php");      
-              }
-             else
-              {    
-                header("Location: index.php");
-              }
+             $delete_category_id = escape($_GET['delete']);
+             $query = "DELETE FROM categories WHERE id = {$delete_category_id}";
+             $delete_query = mysqli_query($connection, $query);
+             redirect("categories.php");      
            }
           else
            {
-             header("Location: ../index.php");
+             redirect("../index.php");
            }
       }
   }
