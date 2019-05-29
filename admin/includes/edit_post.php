@@ -39,19 +39,13 @@
           mysqli_stmt_close($select_image);
         }
       
-      $query = "UPDATE posts SET ";
-      $query .= "post_title = '{$post_title}', ";
-      $query .= "post_category_id = '{$post_category_id}', ";
-        $query .= "user_id = '{$post_author_id}', ";
-    //  $query .= "post_date = now(), ";
-      $query .= "post_author = '{$post_author}', ";
-      $query .= "post_status = '{$post_status}', ";
-      $query .= "post_tags = '{$post_tags}', ";
-      $query .= "post_content = '{$post_content}', ";
-      $query .= "post_image = '{$post_image}' ";
-      $query .= "WHERE id= {$the_post_id} ";
-      $update_post_query = mysqli_query($connection, $query);
-      confirm_query($update_post_query); 
+      $update_post = mysqli_prepare($connection, "UPDATE posts SET post_category_id = ?, user_id = ?, post_title = ?, post_author = ?, post_image = ?, post_content = ?, post_tags = ?, post_status = ? WHERE id = ? ");
+      
+      mysqli_stmt_bind_param($update_post, 'iissssssi', $post_category_id, $post_author_id, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_status, $the_post_id);
+      
+      mysqli_stmt_execute($update_post);
+      confirm_query($update_post);
+      mysqli_stmt_close($update_post);
       
       echo "<p class='bg-success'>Post Edited: <a href='../post.php?post_id={$the_post_id}'>View Post </a> or <a href='./posts.php'>Edit Other Posts</a></p>";
     }
