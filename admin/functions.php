@@ -88,29 +88,26 @@ function add_categories_form()
         ";
    } 
 
+
+// add a category
 function insert_categories()
   {
      global $connection;
      if(isset($_POST['add_category']))
        {
          $category_title = escape($_POST['category_title']);
+         $user_id = logged_in_user_id();
          if($category_title == "" || empty($category_title))
            {
              echo "Category field cannot be empty";   
            }
          else
            {
-             $statement = mysqli_prepare($connection, "INSERT INTO categories (category_title) VALUES (?) ");
-             mysqli_stmt_bind_param($statement, 's', $category_title);
+             $statement = mysqli_prepare($connection, "INSERT INTO categories (user_id, category_title) VALUES (?, ?) ");
+             mysqli_stmt_bind_param($statement, 'is', $user_id, $category_title);
              mysqli_stmt_execute($statement); 
-             if(!$statement)
-               {
-                 die("Category Query Failed " . mysqli_error($connection));   
-               }
-             else
-               {
-                 echo "<p class='bg-success'>Category added successfully</p>";
-               }
+             confirm_query($statement);
+             mysqli_stmt_close($statement);
            }
        }                      
    }
@@ -320,7 +317,7 @@ function is_admin($username = '')
    return false;
  }
 
- //check if a user is logged in
+ //return id of logged in user
  function logged_in_user_id()
   {
     global $connection;  
