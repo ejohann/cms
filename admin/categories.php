@@ -56,33 +56,31 @@
                    </tr>           
                  </thead>
                  <tbody>
-                   <?php          
-                     //$query = "SELECT * FROM categories";
+                   <?php 
+                     // get all categories and show them
                      $select_category = mysqli_prepare($connection, "SELECT id, category_title FROM categories");
                      mysqli_stmt_execute($select_category);
                      confirm_query($select_category);
                      mysqli_stmt_bind_result($select_category, $category_id, $category_title);
-                     
-                    // $select_all_categories = mysqli_query($connection, $query);
                      while(mysqli_stmt_fetch($select_category))
                        {
-                      //   $category_title = $row['category_title'];
-                        // $category_id = $row['id'];
                    ?>
-                   <tr>
-                     <td><?php echo $category_id; ?></td>
-                     <td><?php echo $category_title; ?></td>
-                     <?php if($is_admin) : ?>
-                  <?php echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this category?'); \" href='categories.php?delete={$category_id}'>Delete</a></td>"; ?>
-                     <td><a href='categories.php?edit=<?php echo $category_id; ?>'>Edit</a></td>
-                  <?php endif;?>
-                    </tr>  
+                          <tr>
+                              <td><?php echo $category_id; ?></td>
+                              <td><?php echo $category_title; ?></td>
+                               <?php if($is_admin) : ?>
+                                 <!-- ONLY SHOW DELETE AND EDIT BUTTONS TO ADMIN-->
+                                 <?php echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this category?'); \" href='categories.php?delete={$category_id}'>Delete</a></td>"; ?>
+                                 <td><a href='categories.php?edit=<?php echo $category_id; ?>'>Edit</a></td>
+                                <?php endif;?>
+                          </tr>  
                    <?php      
                        }
-                      mysqli_stmt_close($select_category);
+                     // close db connection  
+                     mysqli_stmt_close($select_category);
                    ?>
                    <?php
-                     delete_categories();
+                      delete_categories();
                    ?>
                  </tbody>
                </table>
