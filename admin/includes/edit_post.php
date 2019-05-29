@@ -1,3 +1,5 @@
+<?php if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'Admin'){header("Location: ../../index.php"); exit;}?>
+
 <?php
   if(isset($_GET['post_id']))
     {
