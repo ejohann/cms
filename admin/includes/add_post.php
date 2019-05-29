@@ -59,19 +59,19 @@
         if(!is_admin(get_username()))
          {
             $username = get_username();
-             echo "<option value='{$username}'>{$username}</option>";
+            echo "<option value='{$username}'>{$username}</option>";
          }
        else   
         {
-          $query = "SELECT * FROM users";
-          $select_author = mysqli_query($connection, $query);
-          confirm_query($select_author);
-          while($row = mysqli_fetch_assoc($select_author))
+          $select_users = mysqli_prepare($connection, "SELECT username FROM users");
+          mysqli_stmt_execute($select_users);
+          confirm_query($select_users);
+          mysqli_stmt_bind_result($select_users, $username);
+          while(mysqli_stmt_fetch($select_users))
            {
-             $username = $row['username'];
-             $user_id = $row['id'];
              echo "<option value='{$username}'>{$username}</option>";
            }
+          mysqli_stmt_close($select_users);
         }
       ?>     
     </select>
