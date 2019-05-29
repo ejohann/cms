@@ -189,8 +189,7 @@ function record_count($table)
 function check_status($table, $column, $status)
  {
     global $connection;
-    $query =  "SELECT id FROM " .$table. " WHERE " .$column. " = ? ";
-    $select_status = mysqli_prepare($connection, $query);
+    $select_status = mysqli_prepare($connection, "SELECT id FROM " .$table. " WHERE " .$column. " = ? ");
     mysqli_stmt_bind_param($select_status, 's', $status);
     mysqli_stmt_execute($select_status);
     confirm_query($select_status);
