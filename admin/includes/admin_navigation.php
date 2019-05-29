@@ -36,7 +36,7 @@
   <div class="collapse navbar-collapse navbar-ex1-collapse">
     <ul class="nav navbar-nav side-nav">
       <li><a href="./index.php"><i class="fa fa-fw fa-dashboard"></i> My Data</a></li>
-       <?php if(is_admin($_SESSION['username'])) : ?>
+       <?php if(is_admin(get_username())) : ?>
           <li><a href="./dashboard.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a></li>
        <?php endif; ?>
       <li><a href="javascript:;" data-toggle="collapse" data-target="#posts_dropdown"><i class="fa fa-fw fa-arrows-v"></i> Posts <i class="fa fa-fw fa-caret-down"></i></a>
@@ -47,12 +47,14 @@
       </li>
       <li><a href="./categories.php"><i class="fa fa-fw fa-wrench"></i> Categories</a></li>
       <li class=""><a href="./comments.php"><i class="fa fa-fw fa-file"></i> Comments</a></li>
+     <?php if(is_admin(get_username())) : ?>
       <li><a href="javascript:;" data-toggle="collapse" data-target="#demo"><i class="fa fa-fw fa-arrows-v"></i> Users <i class="fa fa-fw fa-caret-down"></i></a>
          <ul id="demo" class="collapse">
            <li><a href="./users.php">View All Users</a></li>
            <li><a href="./users.php?source=add_user">Add User</a></li>
          </ul>
       </li>
+     <?php endif; ?>
       <li class=""><a href="profile.php"><i class="fa fa-fw fa-file"></i> Profile</a></li>
     </ul>
   </div>
