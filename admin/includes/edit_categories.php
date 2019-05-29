@@ -1,4 +1,7 @@
-<form action="" method="post">
+<?php if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'Admin'){header("Location: ../../index.php"); exit;}?>
+ 
+
+ <form action="" method="post">
   <div class="form-group">
     <label for="category_title">Edit Category</label>
       <?php
