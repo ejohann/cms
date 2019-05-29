@@ -63,15 +63,13 @@
     <label for="post_category">Post Category</label>
     <select name="post_category" id="post_category">
       <?php
-        $query = "SELECT * FROM categories";
-        $select_category = mysqli_query($connection, $query);
-        confirm_query($select_category);
-        while($row = mysqli_fetch_assoc($select_category))
-          { 
-            $category_title = $row['category_title'];
-            $category_id = $row['id'];
-            
-            if($category_id == $post_category_id)
+        $select_categories = mysqli_prepare($connection, "SELECT id, category_title FROM categories");
+        mysqli_stmt_execute($select_categories);
+        confirm_query($select_categories);
+        mysqli_stmt_bind_result($select_categories, $category_id, $category_title);
+        while(mysqli_stmt_fetch($select_categories))
+          {
+             if($category_id == $post_category_id)
              {
                  echo "<option selected value='{$category_id}'>{$category_title}</option>";
              }
@@ -80,6 +78,7 @@
                  echo "<option value='{$category_id}'>{$category_title}</option>";
              }  
           }
+        mysqli_stmt_close($select_categories);
       ?>     
     </select>
   </div> 
