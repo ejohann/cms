@@ -189,10 +189,13 @@ function record_count($table)
 function check_status($table, $column, $status)
  {
     global $connection;
-    $query = "SELECT * FROM " .$table. " WHERE " .$column. " = '" .$status. "' ";
-    $select_records_by_status = mysqli_query($connection, $query);     
-    confirm_query($select_records_by_status);
-    $records_by_status_count = mysqli_num_rows($select_records_by_status);
+    $query =  "SELECT id FROM " .$table. " WHERE " .$column. " = ? ";
+    $select_status = mysqli_prepare($connection, $query);
+    mysqli_stmt_bind_param($select_status, 's', $status);
+    mysqli_stmt_execute($select_status);
+    confirm_query($select_status);
+    mysqli_stmt_store_result($select_status);
+    $records_by_status_count = mysqli_stmt_num_rows($select_status);
     return $records_by_status_count;
  }
 
