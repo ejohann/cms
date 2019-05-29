@@ -154,7 +154,11 @@ function delete_categories()
       }
   }
 
+/**************************************************/
+          /* GET DATA FOR DISPLAYING CHARTS */
+/**************************************************/
 
+// return number of records assigned to a user
 function record_count_by_user($table, $column) 
  {
    global $connection;
@@ -168,9 +172,23 @@ function record_count_by_user($table, $column)
    mysqli_stmt_close($select_record_by_user);
    return $record_count; 
  }
-  
 
+// return number of records assigned to a user_id
+function record_count_by_user_id($table, $column) 
+ {
+   global $connection;
+   $select_record_by_user_id = mysqli_prepare($connection, "SELECT id FROM ".$table." WHERE ".$column." = ? ");
+   $author_id = logged_in_user_id();    
+   mysqli_stmt_bind_param($select_record_by_user_id, 'i', $author_id);
+   mysqli_stmt_execute($select_record_by_user_id);
+   confirm_query($select_record_by_user_id);
+   mysqli_stmt_store_result($select_record_by_user_id);
+   $record_count = mysqli_stmt_num_rows($select_record_by_user_id); 
+   mysqli_stmt_close($select_record_by_user_id);
+   return $record_count; 
+ }
 
+// return number of records in a tabls
 function record_count($table) 
  {
    global $connection;
@@ -184,8 +202,7 @@ function record_count($table)
  }
   
 
-
-
+// returns number of records by status 
 function check_status($table, $column, $status)
  {
     global $connection;
@@ -198,6 +215,22 @@ function check_status($table, $column, $status)
     return $records_by_status_count;
  }
 
+// returns number of records by status assigned to a user
+function check_status_by_user($table, $column, $status)
+ {
+    global $connection;
+    $select_status = mysqli_prepare($connection, "SELECT id FROM " .$table. " WHERE " .$column. " = ? ");
+    mysqli_stmt_bind_param($select_status, 's', $status);
+    mysqli_stmt_execute($select_status);
+    confirm_query($select_status);
+    mysqli_stmt_store_result($select_status);
+    $records_by_status_count = mysqli_stmt_num_rows($select_status);
+    return $records_by_status_count;
+ }
+
+/**************************************************/
+          /* END GET DATA FOR DISPLAYING CHARTS */
+/**************************************************/
 
 function get_username()
  {
