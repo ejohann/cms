@@ -38,15 +38,15 @@
     <label for="post_category">Post Category</label>
     <select name="post_category_id" id="post_category_id">
       <?php
-        $query = "SELECT * FROM categories";
-        $select_category = mysqli_query($connection, $query);
-        confirm_query($select_category);
-        while($row = mysqli_fetch_assoc($select_category))
+        $select_categories = mysqli_prepare($connection, "SELECT id, category_title FROM categories");
+        mysqli_stmt_execute($select_categories);
+        confirm_query($select_categories);
+        mysqli_stmt_bind_result($select_categories, $category_id, $category_title);
+        while(mysqli_stmt_fetch($select_categories))
           {
-            $category_title = $row['category_title'];
-            $category_id = $row['id'];
             echo "<option value='{$category_id}'>{$category_title}</option>";
           }
+        mysqli_stmt_close($select_categories);
       ?>     
     </select>
   </div>
