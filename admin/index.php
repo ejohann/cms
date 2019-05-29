@@ -79,7 +79,7 @@
               </div>
               <div class="col-xs-9 text-right">
                 <?php
-                  $category_count = record_count('categories');
+                  $category_count = record_count_by_user_id('categories', 'user_id');
                    echo "<div class='huge'>{$category_count}</div>";
                 ?>
                 <div>Categories</div>
