@@ -1,3 +1,5 @@
+<?php if(!isset($_SESSION['user_role'])){header("Location: ../../index.php"); exit;}?>
+
 <?php
   if(isset($_POST['create_post']))
     {      
