@@ -1,6 +1,7 @@
 <?php include "includes/admin_header.php"; ?>
+ <!-- GO TO HOMEPAGE IF USER NOT LOGGED IN --> 
+<?php if(is_logged_in()){}else{redirect("/cms/");}?>
   <div id="wrapper">
-  
     <!-- Navigation -->
     <?php include "includes/admin_navigation.php"; ?>           
     
