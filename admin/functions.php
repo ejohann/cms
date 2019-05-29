@@ -274,6 +274,21 @@ function check_status_by_user($table, $column, $status)
           /* USER LOGIN FUNCTIONS */
 /**************************************************/
 
+//returns the user id of a username
+function get_user_id($username = '')
+ {
+     global $connection;
+      $select_user = mysqli_prepare($connection, "SELECT id FROM users WHERE username = ?");
+       mysqli_stmt_bind_param($select_user, 's', $username);
+       mysqli_stmt_execute($select_user);
+       mysqli_stmt_bind_result($select_user, $user_id);
+       mysqli_stmt_fetch($select_user);
+       mysqli_stmt_close($select_user);
+       if($user_id != null)
+        {
+          return $user_id;  
+        }
+ }
 
  // returns the username of the logged in user
 function get_username()
