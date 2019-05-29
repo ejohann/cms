@@ -116,23 +116,26 @@ function insert_categories()
    }
 
 function delete_categories()
-  {
-    global $connection; 
-    if(isset($_GET['delete']))
-      {
-        if(is_admin(get_username()))
-          {
-             $delete_category_id = escape($_GET['delete']);
-             $query = "DELETE FROM categories WHERE id = {$delete_category_id}";
-             $delete_query = mysqli_query($connection, $query);
-             redirect("categories.php");      
-           }
-          else
-           {
-             redirect("../index.php");
-           }
-      }
-  }
+ {
+   global $connection; 
+   if(isset($_GET['delete']))
+     {
+       if(is_admin(get_username()))
+         {
+           $delete_category_id = escape($_GET['delete']);
+           $delete_category = mysqli_prepare($connection, "DELETE FROM categories WHERE id = ?");
+           mysqli_stmt_bind_param($delete_category, 'i', $delete_category_id);
+           mysqli_stmt_execute($delete_category);
+           confirm_query($delete_category);
+           mysqli_stmt_close($delete_category);
+           redirect("categories.php");      
+         }
+       else
+         {
+           redirect("../index.php");
+         }
+     }
+ }
 
 /************************************************/
           /* END ADMIN FUNCTIONS */
