@@ -41,6 +41,10 @@
                    <tr>
                      <th>ID</th>
                      <th>Category Title</th>
+                     <?php if(is_admin(get_username())) : ?>
+                     <th>Delete</th>
+                     <th>Edit</th>
+                     <?php endif;?>
                    </tr>           
                  </thead>
                  <tbody>
@@ -55,9 +59,11 @@
                    <tr>
                      <td><?php echo $category_id; ?></td>
                      <td><?php echo $category_title; ?></td>
+                     <?php if(is_admin(get_username())) : ?>
                   <?php echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this category?'); \" href='categories.php?delete={$category_id}'>Delete</a></td>"; ?>
                      <td><a href='categories.php?edit=<?php echo $category_id; ?>'>Edit</a></td>
-                   </tr>  
+                  <?php endif;?>
+                    </tr>  
                    <?php      
                        }
                    ?>
