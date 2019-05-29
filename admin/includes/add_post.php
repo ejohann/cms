@@ -54,17 +54,25 @@
   <div class="form-group">
     <label for="post_author">Post Author</label>
     <select name="post_author" id="post_author">
-      <option value="<?php echo $_SESSION['username']; ?>">Select Author</option>
+      <option value="<?php echo get_username(); ?>">Select Author</option>
       <?php
-        $query = "SELECT * FROM users";
-        $select_author = mysqli_query($connection, $query);
-        confirm_query($select_author);
-        while($row = mysqli_fetch_assoc($select_author))
-          {
-            $username = $row['username'];
-            $user_id = $row['id'];
-            echo "<option value='{$username}'>{$username}</option>";
-          }
+        if(!is_admin(get_username()))
+         {
+            $username = get_username();
+             echo "<option value='{$username}'>{$username}</option>";
+         }
+       else   
+        {
+          $query = "SELECT * FROM users";
+          $select_author = mysqli_query($connection, $query);
+          confirm_query($select_author);
+          while($row = mysqli_fetch_assoc($select_author))
+           {
+             $username = $row['username'];
+             $user_id = $row['id'];
+             echo "<option value='{$username}'>{$username}</option>";
+           }
+        }
       ?>     
     </select>
   </div>
