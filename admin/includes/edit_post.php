@@ -1,5 +1,6 @@
 <?php if(!isset($_SESSION['user_role']) || $_SESSION['user_role'] != 'Admin'){header("Location: ../../index.php"); exit;}?>
 
+
 <?php
   if(isset($_GET['post_id']))
     {
@@ -87,13 +88,12 @@
     <label for="post_author">Post Author</label>
     <select name="post_author" id="post_author">
       <?php
-        $query = "SELECT * FROM users";
-        $select_author = mysqli_query($connection, $query);
-        confirm_query($select_author);
-        while($row = mysqli_fetch_assoc($select_author))
+         $select_users = mysqli_prepare($connection, "SELECT username FROM users");
+         mysqli_stmt_execute($select_users);
+         confirm_query($select_users);
+         mysqli_stmt_bind_result($select_users, $username);
+         while(mysqli_stmt_fetch($select_users))
           {
-            $username = $row['username'];
-            $user_id = $row['id'];
             if($post_author == $username)
              {
                 echo "<option selected value='{$username}'>{$username}</option>";
@@ -102,8 +102,8 @@
              {
                 echo "<option value='{$username}'>{$username}</option>";
              }
-            
           }
+         mysqli_stmt_close($select_users);
       ?>     
     </select>
   </div>
