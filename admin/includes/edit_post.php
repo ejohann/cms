@@ -6,28 +6,20 @@
       $the_post_id = escape($_GET['post_id']);
     }
 
-  $query = "SELECT * FROM posts WHERE id = '{$the_post_id}'";
-  $select_post_by_id = mysqli_query($connection, $query); 
-  confirm_query($select_post_by_id);
-  while($row = mysqli_fetch_assoc($select_post_by_id))
-    {
-      $post_id = $row['id'];
-      $post_author = $row['post_author'];
-      $post_title = $row['post_title'];
-      $post_category_id = $row['post_category_id'];
-      $post_status = $row['post_status'];
-      $post_image = $row['post_image'];
-      $post_content = $row['post_content'];
-      $post_tags = $row['post_tags'];
-      $post_comment_count = $row['post_comment_count'];
-      $post_date = $row['post_date'];
-    }
+  $select_post = mysqli_prepare($connection, "SELECT id, post_category_id, user_id, post_title, post_author, post_image, post_content, post_tags, post_status FROM posts WHERE id = ?");
+  mysqli_stmt_bind_param($select_post, 'i', $the_post_id);
+  mysqli_stmt_execute($select_post);
+  confirm_query($select_post);
+  mysqli_stmt_bind_result($select_post, $post_id, $post_category_id, $post_user_id, $post_title, $post_author, $post_image, $post_content, $post_tags, $post_status);
+  mysqli_stmt_fetch($select_post);
+  mysqli_stmt_close($select_post);
 
   if(isset($_POST['update_post']))
     {
       $post_title = escape($_POST['post_title']);
       $post_category_id = escape($_POST['post_category']);
       $post_author = escape($_POST['post_author']);
+      $post_author_id = get_user_id($post_author);
       $post_status = escape($_POST['post_status']);
       $post_image = escape($_FILES['post_image']['name']);
       $post_image_temp = $_FILES['post_image']['tmp_name'];
@@ -47,7 +39,8 @@
       $query = "UPDATE posts SET ";
       $query .= "post_title = '{$post_title}', ";
       $query .= "post_category_id = '{$post_category_id}', ";
-      $query .= "post_date = now(), ";
+        $query .= "user_id = '{$post_author_id}', ";
+    //  $query .= "post_date = now(), ";
       $query .= "post_author = '{$post_author}', ";
       $query .= "post_status = '{$post_status}', ";
       $query .= "post_tags = '{$post_tags}', ";
