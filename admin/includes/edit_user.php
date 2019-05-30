@@ -27,11 +27,6 @@
       //  move_uploaded_file($post_image_temp, "../images/$post_image");
       if(!empty($user_password))
         {
-          $query_password = "SELECT user_password FROM users WHERE id = $the_user_id ";
-          $get_user_password_query = mysqli_query($connection, $query_password);
-          confirm_query($get_user_password_query);
-          $row = mysqli_fetch_array($get_user_password_query);
-          $the_user_password = $row['user_password'];
           if($the_user_password != $user_password)
             {
               $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
