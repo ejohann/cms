@@ -39,9 +39,11 @@
              break;
                  
              case 'delete':
-               $query = "DELETE FROM posts WHERE id = $postIdValue";
-               $delete_post = mysqli_query($connection, $query);
+               $delete_post = mysqli_prepare($connection, "DELETE FROM posts WHERE id = ? ");
+               mysqli_stmt_bind_param($delete_post, 'i', $postIdValue);
+               mysqli_stmt_execute($delete_post);  
                confirm_query($delete_post);
+               mysqli_stmt_close($delete_post);
              break;
                  
             case 'clone':
