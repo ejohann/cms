@@ -1,14 +1,4 @@
-<?php
- if(!isset($_SESSION['user_role']))
-  {
-    header("Location: ../../index.php");   
-  }
- else if(isset($_SESSION['user_role']) && $_SESSION['user_role'] != "Admin")
-  {
-     header("Location: ../index.php"); 
-  }
-
-?>
+<?php if(!isset($_SESSION['user_role'])){header("Location: ../../index.php"); exit;}?>
 
 <table class="table table-bordered table-hover">
   <thead>
