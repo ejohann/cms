@@ -70,6 +70,7 @@
 <form action="" method="post">
 
  <table class="table table-bordered table-hover">
+  <?php if($is_admin) : ?>
   <div id="bulkOptionContainer" class="col-xs-4" style="padding: 0px;">
    <select class="form-control" name="bulk_options" id="">
        <option value="">Select Options</option>
@@ -83,7 +84,9 @@
      <input type="submit" name="submit" class="btn btn-success" value="Apply"></input>
      <a class="btn btn-primary" href="posts.php?source=add_post">Add New</a>
   </div>  
-   <thead>
+  <?php else : ?>
+  <?php endif; ?>
+  <thead>
     <tr>
       <th><input id="selectAllBoxes" type="checkbox"></th>
       <th>ID</th>
