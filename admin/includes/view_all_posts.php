@@ -23,15 +23,19 @@
          switch($bulk_options)
            {
              case 'published':
-               $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE id = {$postIdValue}";
-               $update_to_published = mysqli_query($connection, $query);
-               confirm_query($update_to_published);
+               $update_status = mysqli_prepare($connection, "UPDATE posts SET post_status = ? WHERE id = ? ");
+               mysqli_stmt_bind_param($update_status, 'si', $bulk_options, $postIdValue);
+               mysqli_stmt_execute($update_status);
+               confirm_query($update_status);
+               mysqli_stmt_close($update_status);
              break;
                  
              case 'draft':
-               $query = "UPDATE posts SET post_status = '{$bulk_options}' WHERE id = {$postIdValue}";
-               $update_to_draft = mysqli_query($connection, $query);
-               confirm_query($update_to_draft);
+               $update_status = mysqli_prepare($connection, "UPDATE posts SET post_status = ? WHERE id = ? ");
+               mysqli_stmt_bind_param($update_status, 'si', $bulk_options, $postIdValue);
+               mysqli_stmt_execute($update_status);
+               confirm_query($update_status);
+               mysqli_stmt_close($update_status);
              break;
                  
              case 'delete':
