@@ -175,28 +175,24 @@
       }
     }
 
+  //reset post views
    if(isset($_GET['reset']))
     { 
-      if(isset($_SESSION['user_role']))
+      if(is_admin(get_username()))
         {
-          if($_SESSION['user_role'] == "Admin")
-            {
-              $the_post_id = escape($_GET['reset']);
-              $reset_value = 0;
-              $query = "UPDATE posts SET post_views_count = $reset_value WHERE id = {$the_post_id} ";
-              $reset_post_query = mysqli_query($connection, $query);
-              confirm_query($reset_post_query);
-              header("Location: posts.php");
-            }
-          else
-           {    
-             header("Location: index.php");
-           }
+          $the_post_id = escape($_GET['reset']);
+          $reset_value = 0;
+          $reset_views = mysqli_prepare($connection, "UPDATE posts SET post_views_count = ? WHERE id = ?");
+          mysqli_stmt_bind_param($reset_views, 'ii', $reset_value, $the_post_id);
+          mysqli_stmt_execute($reset_views);
+          confirm_query($reset_views);
+          mysqli_stmt_close($reset_views);
+          redirect("posts.php");
         }
       else
         {
           header("Location: ../index.php");
-      }
+        }
     }
 ?>    
 
