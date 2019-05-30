@@ -1,4 +1,5 @@
 <?php
+  ob_start();
   include "./includes/db.php";
   include "./includes/header.php";
   include "./admin/functions.php";
@@ -184,15 +185,26 @@
         <p><?php echo $confirmation; ?></p>
       <h4>Leave a Comment:</h4>
       <form action="" method="post" role="form">
-        <div class="form-group">
-          <label for="comment_author">Name</label>
-          <input class="form-control" type="text" name="comment_author"></input>
-        </div>
-        <div class="form-group">
-          <label for="comment_email">Email</label>
-          <input class="form-control" type="email" name="comment_email"></input>
-        </div>
-        <div class="form-group">
+         <?php if(is_logged_in()) : ?>
+            <div class="form-group">
+              <label for="comment_author">Name</label>
+              <input readonly="readonly" class="form-control" type="text" value="<?php echo get_username(); ?>" name="comment_author"></input>
+            </div>
+            <div class="form-group">
+              <input type="hidden" readonly="readonly" class="form-control" type="email" value="<?php echo get_email(); ?>" name="comment_email"></input>
+            </div>
+         <?php else : ?>
+             <div class="form-group">
+               <label for="comment_author">Name</label>
+               <input class="form-control" type="text" name="comment_author"></input>
+             </div>
+             <div class="form-group">
+               <label for="comment_email">Email</label>
+               <input class="form-control" type="email" name="comment_email"></input>
+             </div>
+        <?php endif; ?>
+         
+           <div class="form-group">
           <label for="comment_content">Your Comment</label>
           <textarea class="form-control" rows="3" name="comment_content"></textarea>
         </div>
