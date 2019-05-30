@@ -29,8 +29,23 @@
         echo "<td>{$user_lastname}</td>";
         echo "<td>{$user_email}</td>";
         echo "<td>{$user_role}</td>";
-        echo "<td><a href='users.php?upgrade={$user_id}'>Upgrade</a></td>";
-        echo "<td><a href='users.php?downgrade={$user_id}'>Downgrade</a></td>";
+        if($user_role == 'Admin')
+         {
+             echo "<td>Upgrade</td>";
+         }
+        else
+         {
+             echo "<td><a href='users.php?upgrade={$user_id}'>Upgrade</a></td>";
+         }
+        if($user_role == 'Subscriber')
+         {
+               echo "<td>Downgrade</td>";
+         }
+        else
+         {
+            echo "<td><a href='users.php?downgrade={$user_id}'>Downgrade</a></td>";
+         }
+     
         echo "<td><a href='users.php?source=edit_user&edit={$user_id}'>Edit</a></td>";
         echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this user?'); \" href='users.php?delete={$user_id}'>Delete</a></td>";
         echo "</tr>";
