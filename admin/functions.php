@@ -256,8 +256,9 @@ function check_status($table, $column, $status)
 function check_status_by_user($table, $column, $status)
  {
     global $connection;
-    $select_status = mysqli_prepare($connection, "SELECT id FROM " .$table. " WHERE " .$column. " = ? ");
-    mysqli_stmt_bind_param($select_status, 's', $status);
+    $select_status = mysqli_prepare($connection, "SELECT id FROM " .$table. " WHERE " .$column. " = ? AND user_id = ?");
+    $user_id = logged_in_user_id();
+    mysqli_stmt_bind_param($select_status, 'si', $status, $user_id);
     mysqli_stmt_execute($select_status);
     confirm_query($select_status);
     mysqli_stmt_store_result($select_status);
@@ -302,6 +303,20 @@ function get_username()
       return null;   
     }
  }
+
+ // returns the email of the logged in user
+function get_email()
+ {
+   if(isset($_SESSION['user_email']))
+    {
+      return $_SESSION['user_email'];  
+    }
+   else
+    {
+      return null;   
+    }
+ }
+
 
 // check if user is admin and logged in
 function is_admin($username = '')
