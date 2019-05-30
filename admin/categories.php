@@ -43,6 +43,7 @@
              </div> <!-- Category forms -->
                         
              <div class="col-xs-6">
+               <h5>All Categories </h5>
                <table class="table table-bordered table-hover">
                  <thead>
                    <tr>
