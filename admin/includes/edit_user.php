@@ -4,20 +4,16 @@
   if(isset($_GET['edit']))
     {       
       $the_user_id = escape($_GET['edit']);
-      $query = "SELECT * FROM users WHERE id = $the_user_id ";
-      $select_user_by_id = mysqli_query($connection, $query);
-      confirm_query($select_user_by_id);
-      while($row = mysqli_fetch_assoc($select_user_by_id))
-       {
-         $the_username = $row['username'];
-         $the_user_password = $row['user_password'];
-         $the_user_firstname = $row['user_firstname'];
-         $the_user_lastname = $row['user_lastname'];
-         $the_user_email = $row['user_email'];
-         $the_user_image = $row['user_image'];
-         $the_user_role = $row['user_role'];
-       }
-        
+      // get the user details from db
+      $select_user = mysqli_prepare($connection, "SELECT username, user_password, user_firstname, user_lastname, user_email, user_role FROM users WHERE id = ? ");
+      mysqli_stmt_bind_param($select_user, 'i', $the_user_id);
+      mysqli_stmt_execute($select_user);
+      confirm_query($select_user);
+      mysqli_stmt_store_result($select_user);
+      mysqli_stmt_bind_result($select_user, $the_username, $the_user_password, $the_user_firstname, $the_user_lastname, $the_user_email, $the_user_role);
+      mysqli_stmt_fetch($select_user);
+      mysqli_stmt_close($select_user);
+      
    if(isset($_POST['edit_user']))
     {      
       $user_firstname = escape($_POST['user_firstname']);
