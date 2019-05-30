@@ -152,27 +152,23 @@
 </form>
 
 <?php
+ // delete single post
   if(isset($_POST['delete_item']))
     { 
-      if(isset($_SESSION['user_role']))
+      if(is_admin(get_username()))
        {
-        if($_SESSION['user_role'] == "Admin")
-          {
-            $the_post_id = escape($_POST['delete_item']);
-            $query = "DELETE FROM posts WHERE id = {$the_post_id} ";
-            $delete_post_query = mysqli_query($connection, $query);
-            confirm_query($delete_post_query);
-            header("Location: posts.php");
-          }
-        else
-          {    
-           header("Location: index.php");
-          }
+          $the_post_id = escape($_POST['delete_item']);
+          $delete_post = mysqli_prepare($connection, "DELETE FROM posts WHERE id = ? ");
+          mysqli_stmt_bind_param($delete_post, 'i', $the_post_id);
+          mysqli_stmt_execute($delete_post);
+          confirm_query($delete_post);
+          mysqli_stmt_close($delete_post);
+          redirect("posts.php");
         }
       else
         {
-          header("Location: ../index.php");
-      }
+          redirect("../index.php");
+        }
     }
 
   //reset post views
@@ -191,7 +187,7 @@
         }
       else
         {
-          header("Location: ../index.php");
+          redirect("../index.php");
         }
     }
 ?>    
