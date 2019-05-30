@@ -97,6 +97,9 @@
   <tbody>
     <?php 
       $query = "SELECT posts.id as p_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id as c_id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id ORDER BY p_id DESC";
+    
+      
+      
       $select_all_posts = mysqli_query($connection, $query);
       while($row = mysqli_fetch_assoc($select_all_posts))
         {
@@ -125,11 +128,16 @@
           echo "<td>{$post_status}</td>";
           echo "<td><img width='100' src='../images/{$post_image}' alt='image'></img></td>";
           echo "<td>{$post_tags}</td>";
-          $query_comment = "SELECT * FROM comments WHERE comment_post_id = $post_id ";
-          $select_comment_by_post_id = mysqli_query($connection, $query_comment);
-          confirm_query($select_comment_by_post_id);
-          $row = mysqli_fetch_array($select_comment_by_post_id);
-          $post_comment_count = mysqli_num_rows($select_comment_by_post_id);   
+          
+          // post comment count
+          $select_comment = mysqli_prepare($connection, "SELECT id FROM comments WHERE comment_post_id = ? ");
+          mysqli_stmt_bind_param($select_comment, 'i', $post_id);
+          mysqli_stmt_execute($select_comment);
+          confirm_query($select_comment);
+          mysqli_stmt_store_result($select_comment);
+          $post_comment_count = mysqli_stmt_num_rows($select_comment); 
+          mysqli_stmt_close($select_comment);
+            
           echo "<td><a href='post_comments.php?comment_post_id={$post_id}'>{$post_comment_count}</a></td>";
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
