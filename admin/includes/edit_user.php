@@ -30,10 +30,12 @@
           if($the_user_password != $user_password)
             {
               $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
-              $query = "UPDATE users SET username = '{$username}', user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
-              $update_user_query = mysqli_query($connection, $query);  
-              confirm_query($update_user_query);  
-              echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
+              $update_password = mysqli_prepare($connection, "UPDATE users SET username = ?, user_password = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_role = ? WHERE id = ? ");
+              mysqli_stmt_bind_param($update_password, 'ssssssi', $username, $user_password, $user_firstname, $user_lastname, $user_email, $user_role, $the_user_id);
+              mysqli_stmt_execute($update_password);
+              confirm_query($update_password);
+              mysqli_stmt_close($update_password);
+              echo "{$username} details has been updated: " . "<a href='users.php'>View Users</a>";
             }
         }
        else
@@ -41,7 +43,7 @@
           $query = "UPDATE users SET username = '{$username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
           $update_user_query = mysqli_query($connection, $query);  
           confirm_query($update_user_query);
-          echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
+          echo "{$username} details has been updated: " . "<a href='users.php'>View Users</a>";
        }
     }
   }
