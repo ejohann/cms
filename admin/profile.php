@@ -48,10 +48,12 @@
               }
             else
              {
-                $query = "UPDATE users SET username = '{$this_username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' WHERE username = '{$username}' ";
-                $update_profile_query = mysqli_query($connection, $query);  
-                confirm_query($update_profile_query);
-                echo "User {$username} Profile Updated: " . "<a href='users.php'>View Users</a>";
+                $update_user = mysqli_prepare($connection, "UPDATE users SET username = ?, user_firstname = ?, user_lastname = ?, user_email = ? WHERE id = ? ");
+                mysqli_stmt_bind_param($update_user, 'ssssi', $username, $user_firstname, $user_lastname, $user_email, $the_user_id);
+                mysqli_stmt_execute($update_user);
+                confirm_query($update_user);
+                mysqli_stmt_close($update_user);
+                echo "{$username} profile updated! " . "Please <a href='../includes/logout.php'>logout</a> and log back in to see changes!";
              }
            }
        ?>
