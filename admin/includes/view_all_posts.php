@@ -46,27 +46,22 @@
                mysqli_stmt_close($delete_post);
              break;
                  
-            case 'clone':
-               $query = "SELECT * FROM posts WHERE id = $postIdValue";
-               $select_post_by_id = mysqli_query($connection, $query);
-               confirm_query($select_post_by_id);
-               while($row_post = mysqli_fetch_array($select_post_by_id))
-                 {
-                   $post_title = escape($row_post['post_title']);
-                   $post_category_id = escape($row_post['post_category_id']);
-                   $post_date = escape($row_post['post_date']);
-                   $post_author = escape($row_post['post_author']);
-                   $post_status = escape($row_post['post_status']);
-                   $post_image = escape($row_post['post_image']);
-                   $post_tags = escape($row_post['post_tags']);
-                   $post_content = escape($row_post['post_content']);
-                   $post_comment_count = 0;
-                 }
-                $query = "INSERT INTO posts (post_category_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) ";
-                $query .= "VALUES('{$post_category_id}', '{$post_title}', '{$post_author}', '{$post_date}', '{$post_image}', '{$post_content}', '{$post_tags}', $post_comment_count, '{$post_status}' )";
-                $copy_query = mysqli_query($connection, $query);
-                confirm_query($copy_query);             
-                break;    
+             case 'clone':
+               //   get post information from db
+               $select_post = mysqli_prepare($connection, "SELECT post_category_id, user_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status FROM posts WHERE id = ? ");
+               mysqli_stmt_bind_param($select_post, 'i', $postIdValue);
+               mysqli_stmt_execute($select_post);
+               mysqli_stmt_store_result($select_post);
+               confirm_query($select_post);
+               mysqli_stmt_bind_result($select_post, $post_category_id, $post_author_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_tags, $post_status);
+               mysqli_stmt_fetch($select_post);
+               mysqli_stmt_close($select_post);
+               // clone post - insert post values back into db 
+               $clone_post = mysqli_prepare($connection, "INSERT INTO posts (post_category_id, user_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_status) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+               mysqli_stmt_bind_param($clone_post, 'iisssssss', $post_category_id, $post_author_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_tags, $post_status);
+               mysqli_stmt_execute($clone_post);
+               mysqli_stmt_close($clone_post);           
+             break;    
           }
         }
    }
