@@ -122,8 +122,10 @@
       while(mysqli_stmt_fetch($select_posts))
        {
     ?>
-          
-          <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></input></td>
+          <?php if($is_admin) : ?>
+            <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></input></td>
+          <?php else : ?>
+          <?php endif; ?>
           
           <?php
           echo "<td>{$post_id}</td>";
@@ -144,6 +146,7 @@
           mysqli_stmt_close($select_comment);
             
           echo "<td><a href='post_comments.php?comment_post_id={$post_id}'>{$post_comment_count}</a></td>";
+          
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to reset this value?'); \" href='posts.php?reset={$post_id}'>{$post_views_count}</a></td>";
           echo "<td>{$post_date}</td>";
           echo "<td><a class='btn btn-primary' href='../post.php?post_id={$post_id}'>View</a></td>";
