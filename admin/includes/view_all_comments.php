@@ -34,14 +34,19 @@
           echo "<td>{$comment_content}</td>";
           echo "<td>{$comment_email}</td>";
           echo "<td>{$comment_status}</td>";
-          $query = "SELECT * FROM posts WHERE id = $comment_post_id";
-          $select_post_by_id = mysqli_query($connection, $query);
-          confirm_query($select_post_by_id);
-          while($row = mysqli_fetch_assoc($select_post_by_id))
-            {
-              $post_title = $row['post_title'];   
-              echo "<td><a href='../post.php?post_id={$comment_post_id}'>{$post_title}</a></td>";
-            }       
+          
+          //get post title
+          $select_title = mysqli_prepare($connection, "SELECT post_title FROM posts WHERE id = ? ");
+          mysqli_stmt_bind_param($select_title, 'i', $comment_post_id);
+          mysqli_stmt_execute($select_title);
+          confirm_query($select_title);
+          mysqli_stmt_store_result($select_title);
+          mysqli_stmt_bind_result($select_title, $post_title);
+          mysqli_stmt_fetch($select_title);
+          mysqli_stmt_close($select_title);  
+          
+          // display post title
+          echo "<td><a href='../post.php?post_id={$comment_post_id}'>{$post_title}</a></td>"; 
           echo "<td>{$comment_date}</td>";
           echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
           echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
