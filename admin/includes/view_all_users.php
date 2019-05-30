@@ -81,9 +81,12 @@
      if(is_admin(get_username()))
         {
           $the_user_id = escape($_GET['upgrade']);
-          $query = "UPDATE users SET user_role = 'Admin' WHERE id = $the_user_id ";
-          $upgrade_user_query = mysqli_query($connection, $query);
-          confirm_query($upgrade_user_query);
+          $upgrade_query = mysqli_prepare($connection, "UPDATE users SET user_role = ? WHERE id = ? ");
+          $admin = "Admin";
+          mysqli_stmt_bind_param($upgrade_query, 'si', $admin, $the_user_id);
+          mysqli_stmt_execute($upgrade_query);
+          confirm_query($upgrade_query);
+          mysqli_stmt_close($upgrade_query);
           redirect("users.php"); 
         }
       else
