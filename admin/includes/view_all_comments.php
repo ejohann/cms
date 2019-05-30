@@ -58,9 +58,11 @@
      if(is_admin(get_username()))
        {
          $the_comment_id = escape($_GET['delete']);
-         $query = "DELETE FROM comments WHERE id = {$the_comment_id} ";
-         $delete_comment_query = mysqli_query($connection, $query);
-         confirm_query($delete_comment_query);
+         $delete_comment = mysqli_prepare($connection, "DELETE FROM comments WHERE id = ? ");
+         mysqli_stmt_bind_param($delete_comment, 'i', $the_comment_id);
+         mysqli_stmt_execute($delete_comment);
+         confirm_query($delete_comment);
+         mysqli_stmt_close($delete_comment);
          redirect("comments.php");
        }
       else
@@ -74,9 +76,12 @@
       if(is_admin(get_username()))
         {
           $the_comment_id = escape($_GET['unapprove']);
-          $query = "UPDATE comments SET comment_status = 'unapproved' WHERE id = $the_comment_id ";
-          $unapprove_comment_query = mysqli_query($connection, $query);
-          confirm_query($unapprove_comment_query);
+          $unapprove_comment = mysqli_prepare($connection, "UPDATE comments SET comment_status = ? WHERE id = ?");
+          $unapproved = 'unapproved';
+          mysqli_stmt_bind_param($unapprove_comment, 'si', $unapproved, $the_comment_id);
+          mysqli_stmt_execute($unapprove_comment);
+          confirm_query($unapprove_comment);
+          mysqli_stmt_close($unapprove_comment);
           redirect("comments.php");
         }
       else
@@ -90,9 +95,12 @@
       if(is_admin(get_username()))
         {
           $the_comment_id = escape($_GET['approve']);
-          $query = "UPDATE comments SET comment_status = 'approved' WHERE id = $the_comment_id ";
-          $approve_comment_query = mysqli_query($connection, $query);
-          confirm_query($approve_comment_query);
+          $approve_comment = mysqli_prepare($connection, "UPDATE comments SET comment_status = ? WHERE id = ?");
+          $approved = 'approved';
+          mysqli_stmt_bind_param($approve_comment, 'si', $approved, $the_comment_id);
+          mysqli_stmt_execute($approve_comment);
+          confirm_query($approve_comment);
+          mysqli_stmt_close($approve_comment);
           redirect("comments.php");
         }
       else
