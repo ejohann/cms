@@ -1,4 +1,6 @@
-<?php
+ <?php if(!isset($_SESSION['user_role'])){header("Location: ../../index.php"); exit;}?>
+
+ <?php
   if(isset($_GET['edit']))
     {       
       $the_user_id = escape($_GET['edit']);
