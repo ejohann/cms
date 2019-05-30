@@ -103,8 +103,11 @@
       <th>Views</th>
       <th>Date</th>
       <th>View</th>
-      <th>Edit</th>
-      <th>Delete</th>
+      <?php if($is_admin) : ?>
+        <th>Edit</th>
+        <th>Delete</th>
+      <?php else : ?>
+      <?php endif; ?>
     </tr>
   </thead>
   <tbody>
