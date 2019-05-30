@@ -18,17 +18,7 @@
       confirm_query($create_user_query);
       echo "User {$username} Created: " . "<a href='users.php'>View Users</a>";
     }
-   else
-    {
-      if(isset($_SESSION['user_role']))
-        {
-          header("Location: ../index.php");
-        }
-      else
-        {
-          header("Location: ../../index.php");
-        }  
-      }
+  
     ?>
 
 <form action="" method="post" enctype="multipart/form-data">
