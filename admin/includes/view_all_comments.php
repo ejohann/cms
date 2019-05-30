@@ -18,10 +18,12 @@
       <th>Email</th>
       <th>Status</th>
       <th>In Response to</th> 
-      <th>Date</th>                            
-      <th>Approve</th>
-      <th>Unapprove</th>
-      <th>Delete</th>
+      <th>Date</th>   
+      <?php if($is_admin) : ?>                         
+        <th>Approve</th>
+        <th>Unapprove</th>
+        <th>Delete</th>
+      <?php endif; ?>  
     </tr>
   </thead>
   <tbody>
