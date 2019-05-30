@@ -14,7 +14,6 @@
          $the_user_email = $row['user_email'];
          $the_user_image = $row['user_image'];
          $the_user_role = $row['user_role'];
-         $the_random_salt = $row['random_salt'];
        }
         
    if(isset($_POST['edit_user']))
