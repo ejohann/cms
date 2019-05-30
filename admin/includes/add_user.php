@@ -12,13 +12,13 @@
       // $post_image_temp = $_FILES['post_image']['tmp_name'];
       $user_password = escape($_POST['user_password']);
       $user_email = escape($_POST['user_email']);
-      // $post_date = date('d-m-y');
       $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));       
       //  move_uploaded_file($post_image_temp, "../images/$post_image");
-      $query = "INSERT INTO users(username, user_password, user_firstname, user_lastname, user_email, user_role) ";
-      $query .= "VALUES('{$username}', '{$user_password}', '{$user_firstname}', '{$user_lastname}', '{$user_email}', '{$user_role}')";
-      $create_user_query = mysqli_query($connection, $query);  
-      confirm_query($create_user_query);
+      $add_user = mysqli_prepare($connection, "INSERT INTO users (username, user_password, user_firstname, user_lastname, user_email, user_role) VALUES (?, ?, ?, ?, ?, ?) ");
+      mysqli_stmt_bind_param($add_user, 'ssssss', $username, $user_password, $user_firstname, $user_lastname, $user_email, $user_role);
+      mysqli_stmt_execute($add_user);
+      confirm_query($add_user);
+      mysqli_stmt_close($add_user);
       echo "User {$username} Created: " . "<a href='users.php'>View Users</a>";
     }
   
