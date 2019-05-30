@@ -1,3 +1,5 @@
+<?php if(!isset($_SESSION['user_role'])){header("Location: ../index.php"); exit;}?>
+
 <?php include "includes/admin_header.php"; ?>
 <div id="wrapper">
   <!-- Navigation -->
