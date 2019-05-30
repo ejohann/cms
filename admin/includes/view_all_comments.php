@@ -1,5 +1,14 @@
 <?php if(!isset($_SESSION['user_role'])){header("Location: ../../index.php"); exit;}?>
 
+<?php
+ // set a user is admin variable
+  $is_admin = null;
+  if(is_admin(get_username()))
+   {
+     $is_admin = true;
+   }
+?>  
+
 <table class="table table-bordered table-hover">
   <thead>
     <tr>
