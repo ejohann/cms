@@ -17,17 +17,13 @@
   </thead>
   <tbody>
     <?php 
-      $query = "SELECT * FROM comments";
-      $select_all_comments = mysqli_query($connection, $query);
-      while($row = mysqli_fetch_assoc($select_all_comments))
+      $select_comment = mysqli_prepare($connection, "SELECT id, comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date FROM comments ");
+      mysqli_stmt_execute($select_comment);
+      confirm_query($select_comment);
+      mysqli_stmt_store_result($select_comment);
+      mysqli_stmt_bind_result($select_comment, $comment_id, $comment_post_id, $comment_author, $comment_email, $comment_content, $comment_status, $comment_date);
+      while(mysqli_stmt_fetch($select_comment))
         {
-          $comment_id = $row['id'];
-          $comment_author = $row['comment_author'];
-          $comment_email = $row['comment_email'];
-          $comment_post_id = escape($row['comment_post_id']);
-          $comment_status = $row['comment_status'];
-          $comment_content = $row['comment_content'];
-          $comment_date = $row['comment_date'];
           echo "<tr>";
           echo "<td>{$comment_id}</td>";
           echo "<td>{$comment_author}</td>";
@@ -53,6 +49,7 @@
           echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this comment?'); \" href='comments.php?delete={$comment_id}'>Delete</a></td>";
           echo "</tr>";
         }
+      mysqli_stmt_close($select_comment);
     ?>                  
   </tbody>
 </table>
