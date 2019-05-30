@@ -55,9 +55,16 @@
           // display post title
           echo "<td><a href='../post.php?post_id={$comment_post_id}'>{$post_title}</a></td>"; 
           echo "<td>{$comment_date}</td>";
-          echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
-          echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
-          echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this comment?'); \" href='comments.php?delete={$comment_id}'>Delete</a></td>";
+          if($is_admin)
+            {      
+               echo "<td><a href='comments.php?approve={$comment_id}'>Approve</a></td>";
+               echo "<td><a href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
+               echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this comment?'); \" href='comments.php?delete={$comment_id}'>Delete</a></td>";
+            }
+           else
+            {
+              // do not show link to non admin users  
+            }
           echo "</tr>";
         }
       mysqli_stmt_close($select_comment);
