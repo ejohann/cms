@@ -266,6 +266,21 @@ function check_status_by_user($table, $column, $status)
     return $records_by_status_count;
  }
 
+// returns number of comments by status assigned to a user
+function check_comments_status_by_user($table, $column, $status)
+ {
+    global $connection;
+    $select_status = mysqli_prepare($connection, "SELECT id FROM " .$table. " WHERE " .$column. " = ? AND comment_author = ?");
+    $username = get_username();
+    mysqli_stmt_bind_param($select_status, 'ss', $status, $username);
+    mysqli_stmt_execute($select_status);
+    confirm_query($select_status);
+    mysqli_stmt_store_result($select_status);
+    $records_by_status_count = mysqli_stmt_num_rows($select_status);
+    return $records_by_status_count;
+ }
+
+
 /**************************************************/
           /* END GET DATA FOR DISPLAYING CHARTS */
 /**************************************************/
