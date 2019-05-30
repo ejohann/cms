@@ -40,9 +40,11 @@
         }
        else
         {
-          $query = "UPDATE users SET username = '{$username}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' , user_role = '{$user_role}' WHERE id = $the_user_id ";
-          $update_user_query = mysqli_query($connection, $query);  
-          confirm_query($update_user_query);
+          $update_user = mysqli_prepare($connection, "UPDATE users SET username = ?, user_firstname = ?, user_lastname = ?, user_email = ?, user_role = ? WHERE id = ? ");
+          mysqli_stmt_bind_param($update_user, 'sssssi', $username, $user_firstname, $user_lastname, $user_email, $user_role, $the_user_id);
+          mysqli_stmt_execute($update_user);
+          confirm_query($update_user);
+          mysqli_stmt_close($update_user);
           echo "{$username} details has been updated: " . "<a href='users.php'>View Users</a>";
        }
     }
