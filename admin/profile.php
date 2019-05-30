@@ -31,7 +31,6 @@
              // $post_image_temp = $_FILES['post_image']['tmp_name'];
              $user_password = escape($_POST['user_password']);
              $user_email = escape($_POST['user_email']);
-             // $post_date = date('d-m-y');   
              // move_uploaded_file($post_image_temp, "../images/$post_image");
       
              if(!empty($user_password))
@@ -39,10 +38,12 @@
                 if($the_user_password != $user_password)
                   {
                     $user_password = password_hash($user_password, PASSWORD_DEFAULT, array('cost' => 10));
-                    $query = "UPDATE users SET username = '{$username}', user_password = '{$user_password}', user_firstname = '{$user_firstname}', user_lastname = '{$user_lastname}', user_email = '{$user_email}' WHERE id = $the_user_id ";
-                    $update_user_query = mysqli_query($connection, $query);  
-                    confirm_query($update_user_query);  
-                    echo "User {$username} Updated: " . "<a href='users.php'>View Users</a>";
+                    $update_password = mysqli_prepare($connection, "UPDATE users SET username = ?, user_password = ?, user_firstname = ?, user_lastname = ?, user_email = ? WHERE id = ? ");
+                    mysqli_stmt_bind_param($update_password, 'sssssi', $username, $user_password, $user_firstname, $user_lastname, $user_email, $the_user_id);
+                    mysqli_stmt_execute($update_password);
+                    confirm_query($update_password);
+                    mysqli_stmt_close($update_password);
+                    echo "{$username} profile updated! " . "Please <a href='../includes/logout.php'>logout</a> and log back in to see changes!";
                   }
               }
             else
@@ -70,8 +71,8 @@
                  <input type="text" class="form-control" value="<?php echo  $the_user_lastname; ?>" name="user_lastname"></input>
                </div>
                <div class="form-group">
-                 <label for="username">Username</label>
-                 <input type="text" value="<?php echo  $the_username; ?>" class="form-control" name="username"></input>
+                   <label for="username">Username <small><i>(cannot change username)</i></small></label>
+                 <input readonly="readonly" type="text" value="<?php echo  $the_username; ?>" class="form-control" name="username"></input>
                </div>
                <div class="form-group">
                  <label for="user_email">Email</label>
