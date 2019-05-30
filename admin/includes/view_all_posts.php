@@ -158,8 +158,16 @@
           
           echo "<td>{$post_date}</td>";
           echo "<td><a class='btn btn-primary' href='../post.php?post_id={$post_id}'>View</a></td>";
-          echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
-        ?>
+         
+          if($is_admin)
+            {
+              echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
+            }
+           else
+            {
+                // show nothing if user not admin   
+            }
+       ?>
           <form method="post">
             <input type="hidden" name="post_id" value="<?php echo $post_id; ?>"></input>
             <td><input rel="<?php echo $post_id; ?>" class="btn btn-danger del_link" type="submit" name="delete" value="Delete"> </input></td>             
