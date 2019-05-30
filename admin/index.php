@@ -98,11 +98,10 @@
     </div><!-- /.row -->
     
     <?php       
-      $published_post_count = check_status('posts', 'post_status', 'published');   
-      $draft_post_count = check_status('posts', 'post_status', 'draft');  
-      $unapprove_comment_count = check_status('comments', 'comment_status', 'unapproved');
-    //  $approve_comment_count = check_status('comments', 'comment_status', 'approved');
-      $subscriber_count = check_status('users', 'user_role', 'subscriber');
+      $published_post_count = check_status_by_user('posts', 'post_status', 'published');   
+      $draft_post_count = check_status_by_user('posts', 'post_status', 'draft');  
+      $unapprove_comment_count = check_comments_status_by_user('comments', 'comment_status', 'unapproved');
+     // $subscriber_count = check_status('users', 'user_role', 'subscriber');
     ?>
     <div class="row">
       <script type="text/javascript">
