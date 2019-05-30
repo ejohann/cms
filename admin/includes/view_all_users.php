@@ -14,18 +14,14 @@
   </thead>
   <tbody>
   <?php 
-    $query = "SELECT * FROM users";
-    $select_all_users = mysqli_query($connection, $query);
-    while($row = mysqli_fetch_assoc($select_all_users))
+    $select_users = mysqli_prepare($connection, "SELECT id, username, user_firstname, user_lastname, user_email, user_role FROM users ");
+      
+    mysqli_stmt_execute($select_users);
+    confirm_query($select_users);
+    mysqli_stmt_store_result($select_users);
+    mysqli_stmt_bind_result($select_users, $user_id, $username, $user_firstname, $user_lastname, $user_email, $user_role);
+    while(mysqli_stmt_fetch($select_users))
       {
-        $user_id = $row['id'];
-        $username = $row['username'];
-        $user_password = $row['user_password'];
-        $user_firstname = $row['user_firstname'];
-        $user_lastname = $row['user_lastname'];
-        $user_email = $row['user_email'];
-        $user_image = $row['user_image'];
-        $user_role = $row['user_role'];
         echo "<tr>";
         echo "<td>{$user_id}</td>";
         echo "<td>{$username}</td>";
@@ -39,6 +35,7 @@
         echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this user?'); \" href='users.php?delete={$user_id}'>Delete</a></td>";
         echo "</tr>";
       }
+      mysqli_stmt_close($select_users);
   ?>                  
   </tbody>
 </table>
