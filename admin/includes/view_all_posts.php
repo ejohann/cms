@@ -96,27 +96,16 @@
   </thead>
   <tbody>
     <?php 
-      $query = "SELECT posts.id as p_id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id as c_id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id ORDER BY p_id DESC";
-    
+      // get all posts
+      $select_posts = mysqli_prepare($connection, "SELECT posts.id, posts.post_category_id, posts.post_title, posts.post_author, posts.post_date, posts.post_image, posts.post_content, posts.post_tags, posts.post_status, posts.post_views_count, categories.id, categories.category_title FROM posts LEFT JOIN categories ON posts.post_category_id = categories.id ORDER BY posts.id DESC" );
+      mysqli_stmt_execute($select_posts);
+      mysqli_stmt_store_result($select_posts);
+      confirm_query($select_posts);
+      mysqli_stmt_bind_result($select_posts, $post_id, $post_category_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_tags, $post_status, $post_views_count, $category_id, $category_title);
       
-      
-      $select_all_posts = mysqli_query($connection, $query);
-      while($row = mysqli_fetch_assoc($select_all_posts))
-        {
-          $post_id = escape($row['p_id']);
-          $post_author = $row['post_author'];
-          $post_title = $row['post_title'];
-          $post_cateogry_id = escape($row['post_category_id']);
-          $post_status = $row['post_status'];
-          $post_image = $row['post_image'];
-          $post_content = $row['post_content'];
-          $post_tags = $row['post_tags'];
-          $post_date = $row['post_date'];
-          $post_views_count = $row['post_views_count'];
-          $category_title = $row['category_title'];
-          $category_id = $row['c_id'];
-          echo "<tr>"; 
-          ?>
+      while(mysqli_stmt_fetch($select_posts))
+       {
+    ?>
           
           <td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='<?php echo $post_id; ?>'></input></td>
           
@@ -144,15 +133,16 @@
           echo "<td><a class='btn btn-primary' href='../post.php?post_id={$post_id}'>View</a></td>";
           echo "<td><a class='btn btn-info' href='posts.php?source=edit_post&post_id={$post_id}'>Edit</a></td>";
         ?>
-      <form method="post">
+          <form method="post">
             <input type="hidden" name="post_id" value="<?php echo $post_id; ?>"></input>
             <td><input rel="<?php echo $post_id; ?>" class="btn btn-danger del_link" type="submit" name="delete" value="Delete"> </input></td>             
          </form>
         
         <?php  
-        //  echo "<td><a rel='$post_id' href='javascript:void(0)' class='delete_link'>Delete</a></td>";
           echo "</tr>";
-        }
+        } // end while there is post
+       // close the connection
+      mysqli_stmt_close($select_posts);
     ?>                  
   </tbody>
 </table>
