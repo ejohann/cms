@@ -36,7 +36,7 @@
         echo "<td><a href='users.php?upgrade={$user_id}'>Upgrade</a></td>";
         echo "<td><a href='users.php?downgrade={$user_id}'>Downgrade</a></td>";
         echo "<td><a href='users.php?source=edit_user&edit={$user_id}'>Edit</a></td>";
-        echo "<td><a href='users.php?delete={$user_id}'>Delete</a></td>";
+        echo "<td><a onClick= \"javascript: return confirm('Are you sure you want to delete this user?'); \" href='users.php?delete={$user_id}'>Delete</a></td>";
         echo "</tr>";
       }
   ?>                  
@@ -49,9 +49,11 @@
       if(is_admin(get_username()))
         {
           $the_user_id = escape($_GET['delete']);
-          $query = "DELETE FROM users WHERE id = {$the_user_id} ";
-          $delete_user_query = mysqli_query($connection, $query);
-          confirm_query($delete_user_query);
+          $delete_query = mysqli_prepare($connection, "DELETE FROM users WHERE id = ? ");
+          mysqli_stmt_bind_param($delete_query, 'i', $the_user_id);
+          mysqli_stmt_execute($delete_query);
+          confirm_query($delete_query);
+          mysqli_stmt_close($delete_query);
           redirect("users.php");
         }
       else
@@ -65,9 +67,12 @@
       if(is_admin(get_username()))
         {
           $the_user_id = escape($_GET['downgrade']);
-          $query = "UPDATE users SET user_role = 'Subscriber' WHERE id = $the_user_id ";
-          $downgrade_user_query = mysqli_query($connection, $query);
-          confirm_query($downgrade_user_query);
+          $downgrade_query = mysqli_prepare($connection, "UPDATE users SET user_role = ? WHERE id = ? ");
+          $subscriber = "Subscriber";
+          mysqli_stmt_bind_param($downgrade_query, 'si', $subscriber, $the_user_id);
+          mysqli_stmt_execute($downgrade_query);
+          confirm_query($downgrade_query);
+          mysqli_stmt_close($downgrade_query);
           redirect("users.php");
         }
        else
