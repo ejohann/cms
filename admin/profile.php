@@ -11,18 +11,14 @@
          else    
           {      
             $username = escape($_SESSION['username']);   
-            $query = "SELECT * FROM users WHERE username = '{$username}' ";   
-            $select_user_profile = mysqli_query($connection, $query);    
-            while($row = mysqli_fetch_array($select_user_profile))
-             {
-               $the_username = $row['username'];
-               $the_user_id = $row['id'];
-               $the_user_password = $row['user_password'];
-               $the_user_firstname = $row['user_firstname'];
-               $the_user_lastname = $row['user_lastname'];
-               $the_user_email = $row['user_email'];
-               $the_user_role = $row['user_role'];                   
-             }
+            $select_user = mysqli_prepare($connection, "SELECT id, username, user_password, user_firstname, user_lastname, user_email, user_role FROM users WHERE username = ? ");
+            mysqli_stmt_bind_param($select_user, 's', $username);
+            mysqli_stmt_execute($select_user);
+            confirm_query($select_user);
+            mysqli_stmt_store_result($select_user);
+            mysqli_stmt_bind_result($select_user, $the_user_id, $the_username, $the_user_password, $the_user_firstname, $the_user_lastname, $the_user_email, $the_user_role);
+            mysqli_stmt_fetch($select_user);
+            mysqli_stmt_close($select_user);
           }
        ?>
        <?php
@@ -63,7 +59,7 @@
          <!-- Page Heading -->
          <div class="row">
            <div class="col-lg-12">
-             <h1 class="page-header">User Profile<small><?php echo $username; ?></small></h1>               
+             <h1 class="page-header">User Profile <small><?php echo $username; ?></small></h1>               
              <form action="" method="post" enctype="multipart/form-data">
                <div class="form-group">
                  <label for="user_firstname">First Name</label>
