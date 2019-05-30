@@ -26,22 +26,14 @@
             <?php 
               if(isset($_GET['comment_post_id']))
                 {
-                  if(isset($_SESSION['user_role']))
-                    {
-                      if($_SESSION['user_role'] == "Admin")
-                        {
-                          $the_post_id = escape($_GET['comment_post_id']);
-                        }
-                      else
-                        {    
-                          header("Location: index.php");
-                        }
-                    }
-                  else
-                    {
-                         header("Location: ../index.php");
-                    }
+                  $the_post_id = escape($_GET['comment_post_id']);
                 }
+              else
+                {
+                  redirect("../index.php");
+                }               
+                
+                
               $query = "SELECT * FROM comments WHERE comment_post_id = $the_post_id";
               $select_all_comments = mysqli_query($connection, $query);
               while($row = mysqli_fetch_assoc($select_all_comments))
