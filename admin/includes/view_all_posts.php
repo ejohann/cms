@@ -1,10 +1,17 @@
 <?php if(!isset($_SESSION['user_role'])){header("Location: ../../index.php"); exit;}?>
  
-
- <?php
+<?php
   include("delete_modal.php");
 ?>
 
+<?php
+ // set a user is admin variable
+  $is_admin = null;
+  if(is_admin(get_username()))
+   {
+     $is_admin = true;
+   }
+?>                   
 <?php
   if(isset($_POST['checkBoxArray']))
    {
