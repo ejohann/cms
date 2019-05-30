@@ -55,70 +55,49 @@
 <?php
   if(isset($_GET['delete']))
    {
-     if(isset($_SESSION['user_role']))
+     if(is_admin(get_username()))
        {
-         if($_SESSION['user_role'] == "Admin")
-           {
-             $the_comment_id = escape($_GET['delete']);
-             $query = "DELETE FROM comments WHERE id = {$the_comment_id} ";
-             $delete_comment_query = mysqli_query($connection, $query);
-             confirm_query($delete_comment_query);
-             header("Location: comments.php");
-           }
-          else
-           {    
-             header("Location: index.php");
-           }
+         $the_comment_id = escape($_GET['delete']);
+         $query = "DELETE FROM comments WHERE id = {$the_comment_id} ";
+         $delete_comment_query = mysqli_query($connection, $query);
+         confirm_query($delete_comment_query);
+         redirect("comments.php");
        }
       else
         {
-          header("Location: ../index.php");
+          redirect("../index.php");
         }
    }
 
   if(isset($_GET['unapprove']))
     {
-      if(isset($_SESSION['user_role']))
+      if(is_admin(get_username()))
         {
-          if($_SESSION['user_role'] == "Admin")
-            {
-               $the_comment_id = escape($_GET['unapprove']);
-               $query = "UPDATE comments SET comment_status = 'unapproved' WHERE id = $the_comment_id ";
-               $unapprove_comment_query = mysqli_query($connection, $query);
-               confirm_query($unapprove_comment_query);
-               header("Location: comments.php");
-            }
-          else
-            {    
-               header("Location: index.php");
-            }
+          $the_comment_id = escape($_GET['unapprove']);
+          $query = "UPDATE comments SET comment_status = 'unapproved' WHERE id = $the_comment_id ";
+          $unapprove_comment_query = mysqli_query($connection, $query);
+          confirm_query($unapprove_comment_query);
+          redirect("comments.php");
         }
       else
         {
-          header("Location: ../index.php");
+          redirect("../index.php");
         }
     }
 
   if(isset($_GET['approve']))
     {
-      if(isset($_SESSION['user_role']))
+      if(is_admin(get_username()))
         {
-          if($_SESSION['user_role'] == "Admin")
-            {
-              $the_comment_id = escape($_GET['approve']);
-              $query = "UPDATE comments SET comment_status = 'approved' WHERE id = $the_comment_id ";
-              $approve_comment_query = mysqli_query($connection, $query);
-              confirm_query($approve_comment_query);
-              header("Location: comments.php");
-            }
-          else
-            {    
-              header("Location: index.php");
-            }
+          $the_comment_id = escape($_GET['approve']);
+          $query = "UPDATE comments SET comment_status = 'approved' WHERE id = $the_comment_id ";
+          $approve_comment_query = mysqli_query($connection, $query);
+          confirm_query($approve_comment_query);
+          redirect("comments.php");
         }
       else
         {
-          header("Location: ../index.php");
+          redirect("../index.php");
         }
     }
 ?>
