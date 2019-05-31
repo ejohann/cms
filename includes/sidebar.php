@@ -5,15 +5,14 @@
       {
          if(($_POST['username'] != '' || $_POST['username'] != null) && ($_POST['password'] != '' || $_POST['password'] != null))
           {
-        $username = escape($_POST['username']);
-        $password = escape($_POST['password']);
-        login_user($username, $password);
-       // redirect("/cms/admin");
-         }
+            $username = escape($_POST['username']);
+            $password = escape($_POST['password']);
+            login_user($username, $password);
+          }
          else
-         {
+          {
              echo "Please enter a username and password";
-         }
+          }
       }  
    }
 
@@ -68,16 +67,17 @@
         <div class="col-lg-12">
           <ul class="list-unstyled">
             <?php          
-               $query = "SELECT * FROM categories";
-               $select_all_categories = mysqli_query($connection, $query);
-               while($row = mysqli_fetch_assoc($select_all_categories))
+               $select_categories = mysqli_prepare($connection, "SELECT id, category_title FROM categories");
+               mysqli_stmt_execute($select_categories);
+               confirm_query($select_categories);
+               mysqli_stmt_bind_result($select_categories, $category_id, $category_title);
+               while(mysqli_stmt_fetch($select_categories))
                  {
-                   $category_title = $row['category_title']; 
-                   $category_id = $row['id']; 
             ?>
-            <li><a href="/cms/category/<?php echo $category_id ?>"><?php echo $category_title; ?></a></li>
+                    <li><a href="/cms/category/<?php echo $category_id ?>"><?php echo $category_title; ?></a></li>
             <?php      
                  }
+              mysqli_stmt_close($select_categories);
             ?>
           </ul>
         </div>
