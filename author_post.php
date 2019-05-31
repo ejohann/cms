@@ -21,18 +21,17 @@
         if(isset($_GET['author']))
           {
             $the_post_author = $_GET['author'];
-        
-        
-        $query = "SELECT * FROM posts WHERE post_author = '{$the_post_author}' AND post_status = 'published' ";
-        $select_post_by_author = mysqli_query($connection, $query);
-        while($row = mysqli_fetch_assoc($select_post_by_author))
+       
+        $author_post = mysqli_prepare($connection, "SELECT id, post_title, post_author, post_date, post_image, post_content, post_status FROM posts WHERE post_author = ? AND post_status = ? ORDER BY id DESC ");
+             $published = 'published';
+             mysqli_stmt_bind_param($author_post, 'ss', $the_post_author, $published);
+             mysqli_stmt_execute($author_post);
+             confirm_query($author_post);
+             mysqli_stmt_store_result($author_post);
+             mysqli_stmt_bind_result($author_post, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_status);  
+
+        while(mysqli_stmt_fetch($author_post))
           {
-            $post_title = $row['post_title'];
-            $post_author = $row['post_author'];
-            $post_date = $row['post_date'];
-            $post_image = $row['post_image'];
-            $post_content = $row['post_content'];
-            $post_id = $row['id'];
             $post_content = "" . substr(strip_tags($post_content), 0, 300) . "...";
       ?>
       <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
@@ -44,8 +43,9 @@
       <p><?php echo $post_content; ?>  <a class="btn btn-secondary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a></p>
       <hr>
       <?php          
-          }
-         }
+          } // end while there is post
+         mysqli_stmt_close($author_post);
+         } // close if there is author  get request
         else
          {
             redirect("index.php");
