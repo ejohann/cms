@@ -8,11 +8,11 @@
     
 <?php
   
-  if(isset($_GET['lang']))
+  if(isset($_GET['lang'])  && !empty($_GET['lang']))
    {
      $_SESSION['language'] = $_GET['lang'];
    
-     if(isset($_SESSION['language']) && $_SESSION['language'] == $_GET['lang'])
+     if(isset($_SESSION['language']) && $_SESSION['language'] != $_GET['lang'])
       {
          echo "<script type='text/javascript'>location.reload();</script>";
       }
