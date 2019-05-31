@@ -6,6 +6,7 @@
 <!-- Navigation -->
 <?php  include "includes/navigation.php"; ?>
     
+
 <?php
   $dotenv = Dotenv\Dotenv::create(__DIR__);
   $dotenv->load();
@@ -80,6 +81,16 @@
                         
 <!-- Page Content -->
 <div class="container">
+ 
+  <form method="get" class="navbar-form navbar-right" action="" id="language_form">
+    <div class="form-group">
+       <select class="form-control" onchange="changeLanguage()" name="lang">
+           <option value="en">English</option>
+           <option value="es">Spanish</option>
+       </select>
+    </div>
+ </form>    
+    
   <section id="login">
     <div class="container">
         <div class="row">
@@ -114,10 +125,15 @@
         </div> <!-- /.row -->
     </div> <!-- /.container -->
 </section>
+<hr>
 
-
-        <hr>
-
-
+<script>
+  function changeLanguage(){
+      
+      console.log("it changed");
+      document.getElementById('language_form').submit();
+  }    
+    
+</script>
 
 <?php include "includes/footer.php";?>
