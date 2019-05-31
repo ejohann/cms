@@ -23,43 +23,58 @@
                $search = escape($_POST['search']); 
               
               
-               $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' AND post_status = 'published' ";
-               $search_query = mysqli_query($connection, $query);
-               if(!$search_query)
-                 {
-                   die("Search query failed" . mysqli_error($connection));  
-                 }
-                else
-                 {
-                   $count = mysqli_num_rows($search_query);
+              // $query = "SELECT * FROM posts WHERE post_tags LIKE '%$search%' AND post_status = 'published' ";
+              
+              
+              $search_query = mysqli_prepare($connection, "SELECT id, post_title, post_author, post_date, post_image, post_content, post_status FROM posts WHERE post_tags LIKE ? AND post_status = ? ORDER BY id DESC ");
+             $published = 'published';
+             $search_param = "%{$search}%";
+             mysqli_stmt_bind_param($search_query, 'ss', $search_param, $published);
+             mysqli_stmt_execute($search_query);
+             confirm_query($search_query);
+             mysqli_stmt_store_result($search_query);
+             mysqli_stmt_bind_result($search_query, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_status);
+              
+             //  $search_query = mysqli_query($connection, $query);
+               //if(!$search_query)
+                // {
+                  // die("Search query failed" . mysqli_error($connection));  
+                // }
+               
+                   $count = mysqli_stmt_num_rows($search_query);
+              
+               
                    if($count === 0)
                      {
                        echo "<h1>No Results found for " . $search . "</h1>";    
                      }
                    else
                      {
-                       while($row = mysqli_fetch_assoc($search_query))
+                       while(mysqli_stmt_fetch($search_query))
                          {
-                           $post_title = $row['post_title'];
+                           $post_content = "" . substr(strip_tags($post_content), 0, 300) . "...";
+                           /*$post_title = $row['post_title'];
                            $post_author = $row['post_author'];
                            $post_date = $row['post_date'];
                            $post_image = $row['post_image'];
                            $post_content = "" . substr($row['post_content'], 0, 100) . "...";
-                           $post_id = $row['id'];
+                           $post_id = $row['id']; */
         ?>
-                           <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
-                           <p class="lead"> by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
-                           <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
-                           <hr>
-                           <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt=""></a>
-                           <hr>
-                           <p><?php echo $post_content; ?></p>
-                           <a class="btn btn-primary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
-                           <hr>
+                          <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                     <span class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></span>
+                    <small>
+                    <span class="glyphicon glyphicon-time"></span><?php echo " " .$post_date; ?></small>
+                 </h2>
+                 <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo image_placeholder($post_image); ?>" alt=""></img></a>
+                 <p><?php echo $post_content; ?>
+                   <a class="btn btn-secondary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                 </p>
+                 <hr>
         <?php
-                         }
+                         } // close while there is posts
+                       mysqli_stmt_close($search_query);
                      }
-                 }
+                 
             }
           else
             {
