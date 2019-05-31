@@ -107,8 +107,8 @@
   <form method="get" class="navbar-form navbar-right" action="" id="language_form">
     <div class="form-group">
        <select class="form-control" onchange="changeLanguage()" name="lang">
-           <option value="en">English</option>
-           <option value="es">Spanish</option>
+           <option value="en" <?php if(isset($_SESSION['language']) && $_SESSION['language'] == 'en'){echo "selected";} ?> >English</option>
+           <option value="es" <?php if(isset($_SESSION['language']) && $_SESSION['language'] == 'es'){echo "selected";} ?>>Spanish</option>
        </select>
     </div>
  </form>    
