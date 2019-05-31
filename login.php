@@ -13,36 +13,23 @@
      if(isset($_POST['username']) && isset($_POST['password'])) 
       {
          if(($_POST['username'] != '' || $_POST['username'] != null) && ($_POST['password'] != '' || $_POST['password'] != null))
-          {
-        $username = escape($_POST['username']);
-        $password = escape($_POST['password']);
-        login_user($username, $password);
-       // redirect("/cms/admin");
-         }
+           {
+             $username = escape($_POST['username']);
+             $password = escape($_POST['password']);
+             login_user($username, $password);
+           }
          else
-         {
-             echo "Please enter a username and password";
-         }
+           {
+              echo "Please enter a username and password";
+           }
       }
     else
      {
        redirect('/cms/login.php');   
      }
    }
-    
- /* if(isset($_POST['login']))
-   {
-     $username = escape($_POST['username']);
-     $password = escape($_POST['password']);
-     login_user($username, $password);
-      redirect("../admin");
-   }
-  */
 
 ?>
-
-
-
 
 <!-- Page Content -->
 <div class="container">
@@ -55,11 +42,9 @@
 					<div class="panel-body">
 						<div class="text-center">
 
-
 							<h3><i class="fa fa-user fa-4x"></i></h3>
 							<h2 class="text-center">Login</h2>
 							<div class="panel-body">
-
 
 								<form id="login-form" role="form" autocomplete="off" class="form" method="post">
 
@@ -82,7 +67,6 @@
 
 										<input name="login" class="btn btn-lg btn-primary btn-block" value="Login" type="submit">
 									</div>
-
 
 								</form>
 
