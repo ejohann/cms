@@ -1,5 +1,5 @@
 <?php 
-   include "../includes/db.php";
+   include "db.php";
    include "functions.php";   
 ?>
 
@@ -8,7 +8,7 @@
    session_start(); 
 ?>
 
-<?php
+<?phpS
 ?>
 
 <!DOCTYPE html>
