@@ -26,16 +26,19 @@
                {
                  mysqli_stmt_bind_param($statement_one, "is", $the_category_id, $published);
                  mysqli_stmt_execute($statement_one);
+                 mysqli_stmt_store_result($statement_one);
                  mysqli_stmt_bind_result($statement_one, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content);
-                 $statement = $statement_one; 
                }
+               
 
-              if(mysqli_stmt_num_rows($statement) === 0)
+
+              if(mysqli_stmt_num_rows($statement_one) === 0)
                 {
                    echo "<h1 class='text-center'>No posts to display</h1>"; 
                 }
-      
-              while(mysqli_stmt_fetch($statement))
+               else
+                {
+                   while(mysqli_stmt_fetch($statement_one))
                {
                  $post_content = "" . substr($post_content, 0, 100) . "...";
         ?>
@@ -50,6 +53,8 @@
                  <hr>
         <?php          
                }
+               }
+              mysqli_stmt_close($statement_one);
             }
           else
             {
