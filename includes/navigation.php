@@ -47,11 +47,28 @@
       <ul class="nav navbar-nav">
            <li class='<?php echo $home_class; ?>'>  <a href="/cms">Home</a></li>
         <?php          
-          $query = "SELECT * FROM categories";
-          $select_all_categories = mysqli_query($connection, $query);
-          while($row = mysqli_fetch_assoc($select_all_categories))
-            {
-              $category_title = $row['category_title'];
+        //  $query = "SELECT * FROM categories";
+          
+           $select_categories = mysqli_prepare($connection, "SELECT id, category_title FROM categories");
+        mysqli_stmt_execute($select_categories);
+        confirm_query($select_categories);
+        mysqli_stmt_bind_result($select_categories, $category_id, $category_title);
+        while(mysqli_stmt_fetch($select_categories))
+          {
+                 $category_class = '';
+             
+              if(isset($_GET['category_id']) && $_GET['category_id'] == $category_id)
+               {
+                 $category_class = 'active';   
+               }
+              echo "<li class='{$category_class}'><a href='/cms/category/{$category_id}'>{$category_title}</a></li>";
+          }
+        mysqli_stmt_close($select_categories);
+          
+        //  $select_all_categories = mysqli_query($connection, $query);
+        //  while($row = mysqli_fetch_assoc($select_all_categories))
+           /*   {
+            $category_title = $row['category_title'];
               $category_id = $row['id']; 
               
                $category_class = '';
@@ -61,7 +78,7 @@
                  $category_class = 'active';   
                }
               echo "<li class='{$category_class}'><a href='/cms/category/{$category_id}'>{$category_title}</a></li>";
-            }
+            } */
         ?>
         <li  class='<?php echo $contact_class; ?>'><a href='/cms/contact'>Contact</a></li>  
        
