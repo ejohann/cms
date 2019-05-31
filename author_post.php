@@ -41,7 +41,7 @@
       <hr>
         <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt=""> </a>
       <hr>
-      <p><?php echo $post_content; ?></p>
+      <p><?php echo $post_content; ?>  <a class="btn btn-secondary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a></p>
       <hr>
       <?php          
           }
