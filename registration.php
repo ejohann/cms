@@ -122,24 +122,24 @@
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
-                            <input autocomplete="on" type="text" name="username" id="username" class="form-control" placeholder="Enter Desired Username" value="<?php echo isset($username) ? $username : '' ?>">
+                            <input autocomplete="on" type="text" name="username" id="username" class="form-control" placeholder="<?php echo _USERNAME; ?>" value="<?php echo isset($username) ? $username : '' ?>">
                             <!-- Display username validation error -->
                             <p><?php echo isset($error['username']) ? $error['username'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input autocomplete="on" type="email" name="email" id="email" class="form-control" placeholder="somebody@example.com" value="<?php echo isset($user_email) ? $user_email : '' ?>">
+                            <input autocomplete="on" type="email" name="email" id="email" class="form-control" placeholder="<?php echo _EMAIL; ?>" value="<?php echo isset($user_email) ? $user_email : '' ?>">
                             <!-- Display user email validation error -->
                             <p><?php echo isset($error['user_email']) ? $error['user_email'] : '' ?></p>
                         </div>
                          <div class="form-group">
                             <label for="password" class="sr-only">Password</label>
-                            <input type="password" name="password" id="key" class="form-control" placeholder="Password">
+                            <input type="password" name="password" id="key" class="form-control" placeholder="<?php echo _PASSWORD; ?>">
                                <!-- Display user email validation error -->
                             <p><?php echo isset($error['user_password']) ? $error['user_password'] : '' ?></p>
                         </div>
                 
-                        <input type="submit" name="register" id="btn-login" class="btn btn-primary btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-primary btn-lg btn-block" value="<?php echo _REGISTER; ?>">
                     </form>
                  
                 </div>
