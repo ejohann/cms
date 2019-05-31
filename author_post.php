@@ -20,7 +20,7 @@
       <?php
         if(isset($_GET['author']))
           {
-            $the_post_author = $_GET['author'];
+            $the_post_author = escape($_GET['author']);
        
         $author_post = mysqli_prepare($connection, "SELECT id, post_title, post_author, post_date, post_image, post_content, post_status FROM posts WHERE post_author = ? AND post_status = ? ORDER BY id DESC ");
              $published = 'published';
