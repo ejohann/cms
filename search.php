@@ -36,11 +36,13 @@
               }
             else
               {
+                echo "<h1>Results found for '" . $search . "'</h1>"; 
                 while(mysqli_stmt_fetch($search_query))
                   {
                     $post_content = "" . substr(strip_tags($post_content), 0, 300) . "...";
         ?>
-                    <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                    
+                     <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
                         <span class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></span>
                         <small><span class="glyphicon glyphicon-time"></span><?php echo " " .$post_date; ?></small>
                     </h2>
