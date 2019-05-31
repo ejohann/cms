@@ -25,7 +25,7 @@
    <!-- Blog Search Well -->
    <div class="well">
      <h4>Blog Search</h4>
-     <form action="search.php" method="post">   
+     <form action="http://localhost/cms/search.php" method="post">   
        <div class="input-group">
          <input type="text" class="form-control" name="search">
          <span class="input-group-btn">
@@ -41,7 +41,7 @@
    <div class="well">
     <?php if(isset($_SESSION['user_role'])):?>
        <h4>Logged in as: <?php echo $_SESSION['username']; ?> </h4>
-       <a href='includes/logout.php' class='btn btn-primary'>Logout</a>
+       <a href='http://localhost/cms/includes/logout.php' class='btn btn-primary'>Logout</a>
      <?php else:?>
       
        <h4>Login</h4>
