@@ -34,14 +34,16 @@
           {
             $post_content = "" . substr(strip_tags($post_content), 0, 300) . "...";
       ?>
-      <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
-      <p class="lead">All Post by: <?php echo $post_author; ?></p>
-      <p><span class="glyphicon glyphicon-time"></span><?php echo " " . $post_date; ?></p>
-      <hr>
-        <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt=""> </a>
-      <hr>
-      <p><?php echo $post_content; ?>  <a class="btn btn-secondary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a></p>
-      <hr>
+      <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                     <span class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></span>
+                    <small>
+                    <span class="glyphicon glyphicon-time"></span><?php echo " " .$post_date; ?></small>
+                 </h2>
+                 <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo image_placeholder($post_image); ?>" alt=""></img></a>
+                 <p><?php echo $post_content; ?>
+                   <a class="btn btn-secondary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                 </p>
+                 <hr>
       <?php          
           } // end while there is post
          mysqli_stmt_close($author_post);
