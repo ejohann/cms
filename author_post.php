@@ -33,6 +33,7 @@
             $post_image = $row['post_image'];
             $post_content = $row['post_content'];
             $post_id = $row['id'];
+            $post_content = "" . substr(strip_tags($post_content), 0, 300) . "...";
       ?>
       <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
       <p class="lead">All Post by: <?php echo $post_author; ?></p>
