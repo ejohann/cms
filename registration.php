@@ -6,6 +6,24 @@
 <!-- Navigation -->
 <?php  include "includes/navigation.php"; ?>
     
+<?php
+  $_SESSION['language'] = $_GET['lang'];
+  
+  if(isset($_SESSION['language']) && $_SESSION['language'] == $_GET['lang'])
+   {
+       echo "<script type='text/javascript'>location.reload();</script>"
+   }
+  
+  if(isset($_SESSION['language']))
+   {
+     include "includes/languages/" .$_SESSION['language']. ".php";
+   }
+  else
+   {
+      include "includes/languages/en.php";
+   }
+
+?>
 
 <?php
   $dotenv = Dotenv\Dotenv::create(__DIR__);
