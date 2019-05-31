@@ -66,7 +66,7 @@
             
              while(mysqli_stmt_fetch($post_by_page))
               {   
-                $post_content = "" . substr($post_content, 0, 100) . "...";
+                $post_content = "" . substr($post_content, 0, 300) . "...";
         ?>
                 <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
                 <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
