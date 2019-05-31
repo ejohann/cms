@@ -18,14 +18,8 @@
     <!-- Blog Entries Column -->
     <div class="col-md-8">
       <?php    
-        $post_count_query = "SELECT * FROM posts WHERE post_status = 'published' ";
-        $find_count_query = mysqli_query($connection, $post_count_query);
-        if(!$find_count_query)
-         {
-           die("QUERY FAILED: " . mysqli_error($connection));
-         }
         
-        $post_count = mysqli_num_rows($find_count_query);
+         $post_count = check_status('posts', 'post_status', 'published');
         
         if($post_count == 0 )
          {
