@@ -36,7 +36,7 @@
       ?>
       <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
       <p class="lead">All Post by: <?php echo $post_author; ?></p>
-      <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
+      <p><span class="glyphicon glyphicon-time"></span><?php echo " " . $post_date; ?></p>
       <hr>
         <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo $post_image; ?>" alt=""> </a>
       <hr>
