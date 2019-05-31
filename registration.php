@@ -10,23 +10,22 @@
   
   if(isset($_GET['lang']))
    {
-    $_SESSION['language'] = $_GET['lang'];
-   }
-
-  if(isset($_SESSION['language']) && $_SESSION['language'] == $_GET['lang'])
-   {
-       echo "<script type='text/javascript'>location.reload();</script>";
-   }
+     $_SESSION['language'] = $_GET['lang'];
+   
+     if(isset($_SESSION['language']) && $_SESSION['language'] == $_GET['lang'])
+      {
+         echo "<script type='text/javascript'>location.reload();</script>";
+      }
   
-  if(isset($_SESSION['language']))
-   {
-     include "includes/languages/" .$_SESSION['language']. ".php";
+     if(isset($_SESSION['language']))
+      {
+        include "includes/languages/" .$_SESSION['language']. ".php";
+      }
+     else
+      {
+        include "includes/languages/en.php";
+      }
    }
-  else
-   {
-      include "includes/languages/en.php";
-   }
-      
 
 ?>
 
