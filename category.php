@@ -30,16 +30,56 @@
                  mysqli_stmt_bind_result($statement_one, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content);
                }
                
-
-
-              if(mysqli_stmt_num_rows($statement_one) === 0)
+               $post_count = mysqli_stmt_num_rows($statement_one);
+               mysqli_stmt_close($statement_one);
+              
+              
+              if($post_count === 0)
                 {
                    echo "<h1 class='text-center'>No posts to display</h1>"; 
                 }
                else
                 {
-                   while(mysqli_stmt_fetch($statement_one))
-               {
+                   if($post_count < 5)
+             {
+                $post_per_page = $post_count;
+             }
+            else
+             {
+               $post_per_page = 5;
+             }
+            
+            $post_pages = ceil($post_count / $post_per_page);
+        
+            if(isset($_GET['page']))
+             {
+               $page = $_GET['page'];   
+             }
+            else
+             {
+                $page = "";   
+             }
+        
+            if($page == "" || $page == 1)
+              {
+                 $page_1 = 0;   
+              }
+             else
+              {
+                 $page_1 = ($page * $post_per_page) - $post_per_page;     
+              }
+            
+             $post_by_page = mysqli_prepare($connection, "SELECT id, post_title, post_author, post_date, post_image, post_content, post_status FROM posts WHERE post_category_id = ? AND post_status = ? ORDER BY id DESC LIMIT ".$page_1. " , " .$post_per_page. " ");
+             $published = 'published';
+             mysqli_stmt_bind_param($post_by_page, 'is', $the_category_id, $published);
+             mysqli_stmt_execute($post_by_page);
+             confirm_query($post_by_page);
+             mysqli_stmt_store_result($post_by_page);
+             mysqli_stmt_bind_result($post_by_page, $post_id, $post_title, $post_author, $post_date, $post_image, $post_content, $post_status);
+            
+                   
+               while(mysqli_stmt_fetch($post_by_page))
+                 {
                  $post_content = "" . substr(strip_tags($post_content), 0, 100) . "...";
         ?>
                  <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
@@ -53,8 +93,28 @@
                  <hr>
         <?php          
                }
+            ?>       
+                 <!-- Pager -->
+        <ul class="pager">
+         <?php 
+                for($i=1; $i<=$post_pages; $i++)
+           {
+              if($i == $page)
+               {
+                  echo "<li class='active_link'><a href='/cms/category/{$the_category_id}/{$i}'>{$i}</a></li>"; 
+              }
+              else
+              {
+                 echo "<li><a href='/cms/category/{$the_category_id}/{$i}'>{$i}</a></li>";  
+              }             
+           }
+            
+            ?>
+        </ul>
+              
+            <?php            
                }
-              mysqli_stmt_close($statement_one);
+             
             }
           else
             {
@@ -62,11 +122,7 @@
             }
         ?>
              
-        <!-- Pager -->
-        <ul class="pager">
-          <li class="previous"><a href="#">&larr; Older</a></li>
-          <li class="next"><a href="#">Newer &rarr;</a></li>
-        </ul>
+     
 
       </div>
 
