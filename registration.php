@@ -106,7 +106,7 @@
                             <p><?php echo isset($error['user_password']) ? $error['user_password'] : '' ?></p>
                         </div>
                 
-                        <input type="submit" name="register" id="btn-login" class="btn btn-custom btn-lg btn-block" value="Register">
+                        <input type="submit" name="register" id="btn-login" class="btn btn-primary btn-lg btn-block" value="Register">
                     </form>
                  
                 </div>
