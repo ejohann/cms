@@ -16,16 +16,16 @@
       {
          echo "<script type='text/javascript'>location.reload();</script>";
       }
-  
-     if(isset($_SESSION['language']))
-      {
-        include "includes/languages/" .$_SESSION['language']. ".php";
-      }
-     else
-      {
-        include "includes/languages/en.php";
-      }
    }
+ 
+  if(isset($_SESSION['language']))
+    {
+      include "includes/languages/" .$_SESSION['language']. ".php";
+    }
+  else
+    {
+      include "includes/languages/en.php";
+    }
 
 ?>
 
@@ -118,7 +118,7 @@
         <div class="row">
             <div class="col-xs-6 col-xs-offset-3">
                 <div class="form-wrap">
-                <h1>Register</h1>
+                <h1><?php echo _REGISTER; ?></h1>
                     <form role="form" action="registration.php" method="post" id="login-form" autocomplete="off">
                         <div class="form-group">
                             <label for="username" class="sr-only">username</label>
