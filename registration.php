@@ -7,11 +7,15 @@
 <?php  include "includes/navigation.php"; ?>
     
 <?php
-  $_SESSION['language'] = $_GET['lang'];
   
+  if(isset($_GET['lang']))
+   {
+    $_SESSION['language'] = $_GET['lang'];
+   }
+
   if(isset($_SESSION['language']) && $_SESSION['language'] == $_GET['lang'])
    {
-       echo "<script type='text/javascript'>location.reload();</script>"
+       echo "<script type='text/javascript'>location.reload();</script>";
    }
   
   if(isset($_SESSION['language']))
@@ -22,6 +26,7 @@
    {
       include "includes/languages/en.php";
    }
+      
 
 ?>
 
