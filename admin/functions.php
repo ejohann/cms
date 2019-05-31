@@ -152,7 +152,7 @@ function users_online()
       if(!$connection)
         {
           session_start();
-          include("../includes/db.php");
+          include("includes/db.php");
           $minute = 60;
           $hour = 60;
           $day = 24;
