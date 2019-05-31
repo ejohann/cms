@@ -9,11 +9,12 @@
 <?php
   include "./includes/navigation.php";
 ?>
-    
+  <h1 class="page-header">Page Heading <small>Secondary Text</small></h1>   
 <!-- Page Content -->
 <div class="container">
+   
   <div class="row">
-    <h1 class="page-header">Page Heading <small>Secondary Text</small></h1>
+
 
     <!-- Blog Entries Column -->
     <div class="col-md-8">
@@ -68,14 +69,15 @@
               {   
                 $post_content = "" . substr(strip_tags($post_content), 0, 300) . "...";
         ?>
-                <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a></h2>
-                <p class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></p>
-                <p><span class="glyphicon glyphicon-time"></span><?php echo $post_date; ?></p>
-                <hr>
+                <h2><a href="/cms/post/<?php echo $post_id; ?>"><?php echo $post_title; ?></a>
+                     <span class="lead">by <a href="/cms/authorpost/<?php echo $post_author; ?>/<?php echo $post_id; ?>"><?php echo $post_author; ?></a></span>
+                    <small>
+                    <span class="glyphicon glyphicon-time"></span><?php echo " " .$post_date; ?></small>
+                </h2>
                 <a href="/cms/post/<?php echo $post_id; ?>"><img class="img-responsive" src="/cms/images/<?php echo image_placeholder($post_image); ?>" alt=""></img></a>
-                <hr>
-                <p><?php echo $post_content; ?></p>
-                <a class="btn btn-primary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                <p><?php echo $post_content; ?>
+                   <a class="btn btn-secondary" href="/cms/post/<?php echo $post_id; ?>">Read More <span class="glyphicon glyphicon-chevron-right"></span></a>
+                </p>
                 <hr>
             <?php          
               }
