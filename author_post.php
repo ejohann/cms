@@ -18,11 +18,10 @@
     <!-- Blog Entries Column -->
     <div class="col-md-8">
       <?php
-        if(isset($_GET['post_id']))
+        if(isset($_GET['author']))
           {
-            $the_post_id = $_GET['post_id'];
             $the_post_author = $_GET['author'];
-          }
+        
         
         $query = "SELECT * FROM posts WHERE post_author = '{$the_post_author}' ";
         $select_post_by_author = mysqli_query($connection, $query);
@@ -45,6 +44,11 @@
       <hr>
       <?php          
           }
+         }
+        else
+         {
+            redirect("index.php");
+        }
       ?>
 
                          
