@@ -58,7 +58,7 @@
     
 <!-- Page Content -->
 <div class="container">
-  <h1 class="page-header">Page Heading <small>Secondary Text</small></h1>
+ <!-- <h1 class="page-header">Page Heading <small>Secondary Text</small></h1>-->
   <div class="row">
     <!-- Blog Entries Column -->
     <div class="col-md-8">

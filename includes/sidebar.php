@@ -84,6 +84,6 @@
      </div><!-- /.row -->
    </div><!-- Side Widget Well -->
    <?php
-     include "widgets.php";
+    // include "widgets.php";
    ?>
 </div>
